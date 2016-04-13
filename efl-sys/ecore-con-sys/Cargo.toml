@@ -1,0 +1,16 @@
+[package]
+name = "ecore-con-sys"
+version = "0.1.0"
+authors = ["Nigel Tan <ntan2@gmail.com>"]
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.eina-sys]
+path = "../eina-sys"
+version = "0.1.0"
+
+[dependencies.eo-sys]
+path = "../eo-sys"
+version = "0.1.0"
+

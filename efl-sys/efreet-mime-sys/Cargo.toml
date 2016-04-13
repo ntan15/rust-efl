@@ -1,0 +1,7 @@
+[package]
+name = "efreet-mime-sys"
+version = "0.1.0"
+authors = ["Nigel Tan <ntan2@gmail.com>"]
+
+[dependencies]
+libc = "0.2"

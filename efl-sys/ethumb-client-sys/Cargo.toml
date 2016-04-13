@@ -1,0 +1,15 @@
+[package]
+name = "ethumb-client-sys"
+version = "0.1.0"
+authors = ["Nigel Tan <ntan2@gmail.com>"]
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.eina-sys]
+path = "../eina-sys"
+version = "0.1.0"
+
+[dependencies.ethumb-sys]
+path = "../ethumb-sys"
+version = "0.1.0"
