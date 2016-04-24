@@ -1,0 +1,21 @@
+[root]
+name = "eina"
+version = "0.1.0"
+dependencies = [
+ "eina-sys 0.1.0 (git+https://github.com/ntan15/rust-efl)",
+ "libc 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "eina-sys"
+version = "0.1.0"
+source = "git+https://github.com/ntan15/rust-efl#02dcbc155902b7436650bd9e25f858ef2b3a8942"
+dependencies = [
+ "libc 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "libc"
+version = "0.2.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
