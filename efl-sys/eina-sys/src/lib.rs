@@ -74,7 +74,7 @@ pub struct EinaIterator {
 }
 
 impl Drop for EinaIterator {
-        pub fn drop(&mut self) {
+        fn drop(&mut self) {
                 unsafe {
                         eina_iterator_free(self as *mut EinaIterator);
                 }
