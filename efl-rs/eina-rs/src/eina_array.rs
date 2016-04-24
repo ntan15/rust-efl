@@ -3,7 +3,23 @@ use eina_ffi::*;
 use libc::*;
 use std::ptr;
 
-impl EinaArray {
+trait EArray {
+	fn new(step: c_uint) -> Option<EinaArray>;
+	fn set_step(&mut self, sizeof_eina_array: c_uint, step: c_uint);
+	fn clean(&mut self);
+	fn flush(&mut self);
+	fn remove<T>(&mut self, keep: unsafe extern "C" fn(data: *mut c_void, data: *mut c_void) -> EinaBool, gdata: &mut T) -> bool;
+	fn push<T>(&mut self, data: &mut T) -> bool;
+	fn pop(&mut self) -> Option<*mut c_void>;
+	fn get_data(&self, idx: c_uint) -> Option<*mut c_void>;
+	fn set_data<T>(&mut self, idx: c_uint, data: &mut T);
+	fn get_count(&self) -> c_uint;
+	fn count(&self) -> c_uint;
+	fn new_iterator(&self) -> Option<EinaIterator>;
+	fn new_accessor(&self) -> Option<EinaAccessor>;
+}
+
+impl EArray for EinaArray {
 	/// Create a new array
 	pub fn new(step: c_uint) -> Option<EinaArray> {
 		unsafe {
@@ -27,7 +43,7 @@ impl EinaArray {
 	/// Does not free space only sets cound to 0
 	pub fn clean(&mut self) {
 		unsafe {
-			*self.count = 0;
+			self.count = 0;
 		}
 	}
 
@@ -41,9 +57,13 @@ impl EinaArray {
 	}
 
 	/// Rebuild an array by specifying the data to keep
-	pub fn remove<T>(&mut self, keep: extern "C" fn(data: *mut c_void, data: *mut c_void) -> EinaBool, gdata: &mut T) -> bool {
+	pub fn remove<T>(&mut self, keep: unsafe extern "C" fn(data: *mut c_void, data: *mut c_void) -> EinaBool, gdata: &mut T) -> bool {
 		unsafe {
-			let result = eina_array_remove(self as *mut EinaArray, keep, gdata as *mut _ as *mut c_void);
+			let keep_fn = match keep.is_null() {
+				true => None,
+				false => Some(keep),
+			};
+			let result = eina_array_remove(self as *mut EinaArray, keep_fn, gdata as *mut _ as *mut c_void);
 			match result {
 				EINA_TRUE => true,
 				_ => false,
@@ -52,16 +72,17 @@ impl EinaArray {
 	}
 
 	/// Append data to an array
-	pub fn push<T>(&mut self, data: &T) -> bool {
+	pub fn push<T>(&mut self, data: &mut T) -> bool {
 		unsafe {
 			// if(data.is_null())
 			// 	return false
-			if *self.count +1 > *self.total {
+			if self.count +1 > self.total {
 				if eina_array_grow(self as *mut EinaArray) == EINA_FALSE { 
 					return false
 				}
 			}
-			*self.data[*self.count+=1] = data as *const _ as *const c_void;
+			*self.data.offset(((self.count)+1) as isize) = data as *mut _ as *mut c_void;
+			true
 		}
 	}
 
@@ -69,11 +90,11 @@ impl EinaArray {
 	pub fn pop(&mut self) -> Option<*mut c_void> {
 		unsafe {
 			let ret = ptr::null_mut();
-			if *self.count <= 0  {
+			if self.count <= 0  {
 				return None
 			}
 
-			ret = *self.data[--(*self.count)];
+			ret = *self.data.offset((--(self.count)) as isize);
 			match ret.is_null() {
 				false => Some(ret),
 				true => None,
@@ -84,7 +105,7 @@ impl EinaArray {
 	/// Return the data at a given position in an array
 	pub fn get_data(&self, idx: c_uint) -> Option<*mut c_void> {
 		unsafe {
-			let stuff = *self.data[idx];
+			let stuff = *self.data.offset(idx as isize);
 			match stuff.is_null() {
 				true => None,
 				false => Some(stuff),
@@ -95,21 +116,21 @@ impl EinaArray {
 	/// Set the data at a given position in an array
 	pub fn set_data<T>(&mut self, idx: c_uint, data: &mut T) {
 		unsafe {
-			*self.data[idx] = data as *mut _ as *mut c_void;
+			*self.data.offset(idx as isize) = data as *mut _ as *mut c_void;
 		}
 	}
 
 	/// Return the number of elements in an array
 	pub fn get_count(&self) -> c_uint {
 		unsafe {
-			*self.count
+			self.count
 		}
 	}
 
 	/// Return the number of elements in an array (again)
 	pub fn count(&self) -> c_uint {
 		unsafe {
-			*self.count
+			self.count
 		}
 	}
 
@@ -125,7 +146,7 @@ impl EinaArray {
 	}
 
 	/// Get a new accessor associated to an array
-	pub fn new_accessor(&self) -> Option<EinaIterator> {
+	pub fn new_accessor(&self) -> Option<EinaAccessor> {
 		unsafe {
 			let access = eina_array_accessor_new(self as *const EinaArray);
 			match access.is_null() {

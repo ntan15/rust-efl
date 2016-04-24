@@ -1121,8 +1121,7 @@ extern "C" {
                                step: c_uint);
     pub fn eina_array_flush(array: *mut EinaArray);
     pub fn eina_array_remove(array: *mut EinaArray,
-                             keep:
-                                 Option<unsafe extern "C" fn(data:
+                             keep: extern "C" fn(data:
                                                                                 *mut c_void,
                                                                             gdata:
                                                                                 *mut c_void)

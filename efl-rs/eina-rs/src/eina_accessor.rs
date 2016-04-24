@@ -17,7 +17,7 @@ impl EAccessor for EinaAccessor {
 	pub fn get_data(&mut self, position: c_uint) -> Option<*mut c_void> {
 		unsafe {
 			let data: *mut c_void = ptr::null_mut();
-			let result = eina_ffi::eina_accessor_data_get(self as *mut EinaAccessor, position, &mut data as *mut _ as *mut c_void);
+			let result = eina_ffi::eina_accessor_data_get(self as *mut EinaAccessor, position, &mut data as *mut *mut _ as *mut *mut c_void);
 			match result {
 				EINA_TRUE => Some(data),
 				_ => None,

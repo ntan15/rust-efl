@@ -25,7 +25,7 @@ impl EIterator for EinaIterator {
 	pub fn next(&mut self) -> Option<*mut c_void> {
 		unsafe {
 			let data = ptr::null_mut();
-			let result = eina_iterator_next(self as *mut EinaIterator, &mut data as *mut _ as *mut c_void);
+			let result = eina_iterator_next(self as *mut EinaIterator, &mut data as *mut *mut _ as *mut *mut c_void);
 			match result {
 				EINA_TRUE => Some(data),
 				_ => None,
