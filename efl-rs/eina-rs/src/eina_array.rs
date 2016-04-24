@@ -139,11 +139,3 @@ impl EinaArray {
 
 
 }
-
-impl Drop for EinaArray {
-	fn drop(&mut self) {
-		unsafe {
-			eina_array_free(self as *mut EinaArray);
-		}
-	}
-}

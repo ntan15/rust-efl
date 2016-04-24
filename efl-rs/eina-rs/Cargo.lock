@@ -9,7 +9,7 @@ dependencies = [
 [[package]]
 name = "eina-sys"
 version = "0.1.0"
-source = "git+https://github.com/ntan15/rust-efl#b2a3eb62a4ce7791831fb69337a3b5112995de74"
+source = "git+https://github.com/ntan15/rust-efl#27939023d21b0d017c064bd040d6d6fdb42e23c0"
 dependencies = [
  "libc 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

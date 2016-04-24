@@ -73,6 +73,14 @@ pub struct EinaIterator {
     pub __magic: EinaMagic,
 }
 
+impl Drop for EinaIterator {
+        pub fn drop(&mut self) {
+                unsafe {
+                        eina_iterator_free(self as *mut EinaIterator);
+                }
+        }
+}
+
 pub type EinaAccessorGetAtCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor,
                                                                  idx: c_uint,
                                                                  data: *mut *mut c_void)
@@ -104,18 +112,6 @@ impl Drop for EinaAccessor {
 	}
 }
 
-impl Clone for EinaAccessor {
-        pub fn clone(&mut self) -> Option<EinaAccessor> {
-                unsafe {
-                        let new_clone = eina_accessor_clone(self as *mut EinaAccessor);
-                        match new_clone.is_null() {
-                                true => None,
-                                false => Some(*new_clone),
-                        }
-                }
-        }
-}
-
 pub enum EinaInlistSortedState { }
 
 #[repr(C)]
@@ -134,6 +130,14 @@ pub struct EinaArray {
     pub count: c_uint,
     pub step: c_uint,
     pub __magic: EinaMagic,
+}
+
+impl Drop for EinaArray {
+        fn drop(&mut self) {
+                unsafe {
+                        eina_array_free(self as *mut EinaArray);
+                }
+        }
 }
 
 pub type EinaTmpstr = c_char;
