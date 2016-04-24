@@ -93,7 +93,7 @@ impl EinaArray {
 	}
 
 	/// Set the data at a given position in an array
-	pub fn set_data(&mut self, idx: c_uint, data: &mut T) {
+	pub fn set_data<T>(&mut self, idx: c_uint, data: &mut T) {
 		unsafe {
 			*self.data[idx] = data as *mut _ as *mut c_void;
 		}

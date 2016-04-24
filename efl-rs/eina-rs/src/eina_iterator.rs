@@ -3,7 +3,15 @@ use eina_ffi::*;
 use libc::*;
 use std::ptr;
 
-impl EinaIterator {
+trait EIterator {
+	fn get_container(&mut self) -> Option<&mut c_void>;
+	fn next(&mut self) -> Option<*mut c_void>;
+	fn foreach<T>(&mut self, callback: EinaEachCb, fdata: &T);
+	fn lock(&mut self) -> bool;
+	fn unlock(&mut self) -> bool;
+}
+	
+impl EIterator for EinaIterator {
 	pub fn get_container(&mut self) -> Option<&mut c_void> {
 		unsafe {
 			let container = eina_iterator_container_get(self as *mut EinaIterator);
@@ -25,7 +33,7 @@ impl EinaIterator {
 		}
 	}
 
-	pub fn foreach<T>(&mut self, callback: EinaEachCallback, fdata: &T) {
+	pub fn foreach<T>(&mut self, callback: EinaEachCb, fdata: &T) {
 		unsafe {
 			eina_iterator_foreach(self as *mut EinaIterator, callback, fdata as *const _ as *const c_void);
 		}

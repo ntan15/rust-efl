@@ -96,6 +96,14 @@ pub struct EinaAccessor {
     pub clone: EinaAccessorCloneCallback,
 }
 
+impl Drop for EinaAccessor {
+	fn drop(&mut self) {
+		unsafe {
+			eina_accessor_free(self as *mut EinaAccessor);
+		}
+	}
+}
+
 pub enum EinaInlistSortedState { }
 
 #[repr(C)]
