@@ -104,6 +104,18 @@ impl Drop for EinaAccessor {
 	}
 }
 
+impl Clone for EinaAccessor {
+        pub fn clone(&mut self) -> Option<EinaAccessor> {
+                unsafe {
+                        let new_clone = eina_accessor_clone(self as *mut EinaAccessor);
+                        match new_clone.is_null() {
+                                true => None,
+                                false => Some(*new_clone),
+                        }
+                }
+        }
+}
+
 pub enum EinaInlistSortedState { }
 
 #[repr(C)]

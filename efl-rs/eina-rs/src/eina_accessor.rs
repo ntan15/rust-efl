@@ -64,22 +64,3 @@ impl EAccessor for EinaAccessor {
 	}
 }
 
-impl Drop for EinaAccessor {
-	fn drop(&mut self) {
-		unsafe {
-			eina_ffi::eina_accessor_free(self);
-		}
-	}
-}
-
-impl Clone for EinaAccessor {
-	pub fn clone(&mut self) -> Option<EinaAccessor> {
-		unsafe {
-			let new_clone = eina_ffi::eina_accessor_clone(self as *mut EinaAccessor);
-			match new_clone.is_null() {
-				true => None,
-				false => Some(*new_clone),
-			}
-		}
-	}
-}
