@@ -1125,7 +1125,7 @@ extern "C" {
                                                                                 *mut c_void,
                                                                             gdata:
                                                                                 *mut c_void)
-                                                           -> EinaBool>,
+                                                           -> EinaBool,
                              gdata: *mut c_void) -> EinaBool;
     pub fn eina_array_iterator_new(array: *const EinaArray)
      -> *mut EinaIterator;
