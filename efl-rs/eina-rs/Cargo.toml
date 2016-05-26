@@ -7,6 +7,5 @@ authors = ["Nigel Tan <ntan2@gmail.com>"]
 libc = "0.2"
 
 [dependencies.eina-sys]
-git = "https://github.com/ntan15/rust-efl"
-version = "0.1.0"
-
+path = "../../efl-sys/eina-sys"
+version = "0.1"

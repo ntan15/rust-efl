@@ -1,3 +1,4 @@
+#![allow(non_camel_case_types)]
 extern crate libc;
 
 use libc::*;
@@ -16,25 +17,26 @@ pub type EinaEachCb = Option<unsafe extern "C" fn(container: *const c_void,
 pub type EinaFreeCb = Option<unsafe extern "C" fn(data: *mut c_void)>;
 
 #[repr(C)]
-pub struct EinaVersion {
+pub struct Eina_Version {
     pub major: c_int,
     pub minor: c_int,
     pub micro: c_int,
     pub revision: c_int,
 }
 
+
 pub type EinaF32p32 = int64_t;
 pub type EinaF16p16 = int32_t;
 pub type EinaF8p24 = int32_t;
 
 #[repr(C)]
-pub struct EinaRectangle {
+pub struct Eina_Rectangle {
     pub x: c_int,
     pub y: c_int,
     pub w: c_int,
     pub h: c_int,
 }
-pub enum EinaRectanglePool { }
+pub enum Eina_Rectangle_Pool { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -47,100 +49,78 @@ pub enum EinaRectanglePacking {
 }
 
 #[repr(C)]
-pub struct EinaClist {
-    pub next: *mut EinaClist,
-    pub prev: *mut EinaClist,
+pub struct Eina_Clist {
+    pub next: *mut Eina_Clist,
+    pub prev: *mut Eina_Clist,
 }
 
-pub type EinaError = c_int;
-pub type EinaMagic = c_uint;
-pub type EinaIteratorNextCallback = Option<unsafe extern "C" fn(it: *mut EinaIterator,
+pub type Eina_Error = c_int;
+pub type Eina_Magic = c_uint;
+pub type EinaIteratorNextCallback = Option<unsafe extern "C" fn(it: *mut Eina_Iterator,
                                                                 data: *mut *mut c_void)
                                                                 -> EinaBool>;
-pub type EinaIteratorGetContainerCallback = Option<unsafe extern "C" fn(it: *mut EinaIterator)
+pub type EinaIteratorGetContainerCallback = Option<unsafe extern "C" fn(it: *mut Eina_Iterator)
                                                                         -> *mut c_void>;
-pub type EinaIteratorFreeCallback = Option<unsafe extern "C" fn(it: *mut EinaIterator)>;
-pub type EinaIteratorLockCallback = Option<unsafe extern "C" fn(it: *mut EinaIterator) 
+pub type EinaIteratorFreeCallback = Option<unsafe extern "C" fn(it: *mut Eina_Iterator)>;
+pub type EinaIteratorLockCallback = Option<unsafe extern "C" fn(it: *mut Eina_Iterator) 
                                                                 -> EinaBool>;
 #[repr(C)]
-pub struct EinaIterator {
+pub struct Eina_Iterator {
     pub version: c_int,
     pub next: EinaIteratorNextCallback,
     pub get_container: EinaIteratorGetContainerCallback,
     pub free: EinaIteratorFreeCallback,
     pub lock: EinaIteratorLockCallback,
     pub unlock: EinaIteratorLockCallback,
-    pub __magic: EinaMagic,
+    pub __magic: Eina_Magic,
 }
 
-impl Drop for EinaIterator {
-        fn drop(&mut self) {
-                unsafe {
-                        eina_iterator_free(self as *mut EinaIterator);
-                }
-        }
-}
-
-pub type EinaAccessorGetAtCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor,
+pub type EinaAccessorGetAtCallback = Option<unsafe extern "C" fn(it: *mut Eina_Accessor,
                                                                  idx: c_uint,
                                                                  data: *mut *mut c_void)
                                                                  -> EinaBool>;
-pub type EinaAccessorGetContainerCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor)
+pub type EinaAccessorGetContainerCallback = Option<unsafe extern "C" fn(it: *mut Eina_Accessor)
                                                                         -> *mut c_void>;
-pub type EinaAccessorFreeCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor)>;
-pub type EinaAccessorLockCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor)
+pub type EinaAccessorFreeCallback = Option<unsafe extern "C" fn(it: *mut Eina_Accessor)>;
+pub type EinaAccessorLockCallback = Option<unsafe extern "C" fn(it: *mut Eina_Accessor)
                                                                 -> EinaBool>;
-pub type EinaAccessorCloneCallback = Option<unsafe extern "C" fn(it: *mut EinaAccessor)
-                                                                 -> *mut EinaAccessor>;
+pub type EinaAccessorCloneCallback = Option<unsafe extern "C" fn(it: *mut Eina_Accessor)
+                                                                 -> *mut Eina_Accessor>;
+
 #[repr(C)]
-pub struct EinaAccessor {
+pub struct Eina_Accessor {
     pub version: c_int,
     pub get_at: EinaAccessorGetAtCallback,
     pub get_container: EinaAccessorGetContainerCallback,
     pub free: EinaAccessorFreeCallback,
     pub lock: EinaAccessorLockCallback,
     pub unlock: EinaAccessorLockCallback,
-    pub __magic: EinaMagic,
+    pub __magic: Eina_Magic,
     pub clone: EinaAccessorCloneCallback,
 }
 
-impl Drop for EinaAccessor {
-	fn drop(&mut self) {
-		unsafe {
-			eina_accessor_free(self as *mut EinaAccessor);
-		}
-	}
-}
-
-pub enum EinaInlistSortedState { }
+pub enum Eina_Inlist_Sorted_State { }
 
 #[repr(C)]
-pub struct EinaInlist {
-    pub next: *mut EinaInlist,
-    pub prev: *mut EinaInlist,
-    pub last: *mut EinaInlist,
+pub struct Eina_Inlist {
+    pub next: *mut Eina_Inlist,
+    pub prev: *mut Eina_Inlist,
+    pub last: *mut Eina_Inlist,
 }
 
 pub type EinaArrayIterator = *mut *mut c_void;
+
 #[repr(C)]
-pub struct EinaArray {
+pub struct Eina_Array {
     pub version: c_int,
     pub data: *mut *mut c_void,
     pub total: c_uint,
     pub count: c_uint,
     pub step: c_uint,
-    pub __magic: EinaMagic,
+    pub __magic: Eina_Magic,
 }
 
-impl Drop for EinaArray {
-        fn drop(&mut self) {
-                unsafe {
-                        eina_array_free(self as *mut EinaArray);
-                }
-        }
-}
-
-pub type EinaTmpstr = c_char;
+pub type Eina_Tmpstr = c_char;
 pub type EinaFileDirListCb = Option<unsafe extern "C" fn(name: *const c_char,
                                                          path: *const c_char,
                                                          data: *mut c_void)>;
@@ -158,7 +138,7 @@ pub enum EinaFileType {
     EinaFileWht = 8,
 }
 
-pub enum EinaFile { }
+pub enum Eina_File { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -172,7 +152,7 @@ pub enum EinaFilePopulate {
 }
 
 #[repr(C)]
-pub struct EinaFileDirectInfo {
+pub struct Eina_File_Direct_Info {
     pub path_length: size_t,
     pub name_length: size_t,
     pub name_start: size_t,
@@ -181,7 +161,7 @@ pub struct EinaFileDirectInfo {
 }
 
 #[repr(C)]
-pub struct EinaStat {
+pub struct Eina_Stat {
     pub dev: c_ulong,
     pub ino: c_ulong,
     pub mode: c_uint,
@@ -201,7 +181,7 @@ pub struct EinaStat {
 }
 
 #[repr(C)]
-pub struct EinaFileLine {
+pub struct Eina_File_Line {
     pub start: *const c_char,
     pub end: *const c_char,
     pub index: c_uint,
@@ -221,25 +201,25 @@ pub enum EinaFileCopyFlags {
 }
 
 #[repr(C)]
-pub struct EinaList {
+pub struct Eina_List {
     pub data: *mut c_void,
-    pub next: *mut EinaList,
-    pub prev: *mut EinaList,
-    pub accounting: *mut EinaListAccounting,
-    pub __magic: EinaMagic,
+    pub next: *mut Eina_List,
+    pub prev: *mut Eina_List,
+    pub accounting: *mut Eina_List_Accounting,
+    pub __magic: Eina_Magic,
 }
 
 #[repr(C)]
-pub struct EinaListAccounting {
-    pub last: *mut EinaList,
+pub struct Eina_List_Accounting {
+    pub last: *mut Eina_List,
     pub count: c_uint,
-    pub __magic: EinaMagic,
+    pub __magic: Eina_Magic,
 }
 
-pub enum EinaHash { }
+pub enum Eina_Hash { }
 
 #[repr(C)]
-pub struct EinaHashTuple {
+pub struct Eina_Hash_Tuple {
     pub key: *const c_void,
     pub data: *mut c_void,
     pub key_length: c_uint,
@@ -252,31 +232,34 @@ pub type EinaKeyCmp = Option<unsafe extern "C" fn(key1: *const c_void,
                                                   key2_length: c_int) -> c_int>;
 pub type EinaKeyHash = Option<unsafe extern "C" fn(key: *const c_void,
                                                    key_length: c_int) -> c_int>;
-pub type EinaHashForeach = Option<unsafe extern "C" fn(hash: *const EinaHash,
+pub type EinaHashForeach = Option<unsafe extern "C" fn(hash: *const Eina_Hash,
                                                        key: *const c_void,
                                                        data: *mut c_void,
                                                        fdata: *mut c_void) -> EinaBool>;
 
 #[repr(C)]
-pub struct EinaTrash {
-    pub next: *mut EinaTrash,
+pub struct Eina_Trash {
+    pub next: *mut Eina_Trash,
 }
 
 pub type EinaLallocAlloc = Option<unsafe extern "C" fn(user_data: *mut c_void, num: c_int)
                                                        -> EinaBool>;
 pub type EinaLallocFree = Option<unsafe extern "C" fn(user_data: *mut c_void)>;
-pub enum EinaLalloc { }
-pub enum EinaModule { }
-pub type EinaModuleCb = Option<unsafe extern "C" fn(m: *mut EinaModule, data: *mut c_void)
+pub enum Eina_Lalloc { }
+
+pub enum Eina_Module { }
+pub type EinaModuleCb = Option<unsafe extern "C" fn(m: *mut Eina_Module, data: *mut c_void)
                                                     -> EinaBool>;
 pub type EinaModuleInit = Option<extern "C" fn() -> EinaBool>;
 pub type EinaModuleShutdown = Option<extern "C" fn()>;
+
 pub type EinaMempoolRepackCb = Option<unsafe extern "C" fn(dst: *mut c_void, src: *mut c_void,
                                                            data: *mut c_void)>;
-pub enum EinaMempoolBackend {}
+pub enum Eina_Mempool_Backend {}
+
 /* Not sure if va_list crate will work
 #[repr(C)]
-pub struct EinaMempoolBackend {
+pub struct Eina_Mempool_Backend {
     pub name: *const c_char,
     pub init: Option<unsafe extern "C" fn(context: *const c_char, options: *const c_char,
                                           args: va_list) -> *mut c_void>,
@@ -292,10 +275,11 @@ pub struct EinaMempoolBackend {
 }
 */
 
-pub enum EinaMempoolRepackAbi1 {}
+pub enum Eina_Mempool_Repack_Abi1 {}
+
 /* va_list not supported natively
 #[repr(C)]
-pub struct EinaMempoolRepackAbi1 {
+pub struct Eina_Mempool_Repack_Abi1 {
     pub name: *const c_char,
     pub init: Option<unsafe extern "C" fn(context: *const c_char, options: *const c_char,
                                           args: va_list) -> *mut c_void>,
@@ -310,20 +294,20 @@ pub struct EinaMempoolRepackAbi1 {
 */
 
 #[repr(C)]
-pub struct EinaMempoolRepackAbi2 {
+pub struct Eina_Mempool_Repack_Abi2 {
     pub repack: Option<unsafe extern "C" fn(data: *mut c_void, cb: EinaMempoolRepackCb,
                                             cb_data: *mut c_void)>,
 }
 
 #[repr(C)]
-pub struct EinaMempool {
-    pub backend: EinaMempoolRepackAbi1,
+pub struct Eina_Mempool {
+    pub backend: Eina_Mempool_Repack_Abi1,
     pub backend_data: *mut c_void,
-    pub backend2: *mut EinaMempoolRepackAbi2,
+    pub backend2: *mut Eina_Mempool_Repack_Abi2,
 }
 
 #[repr(C)]
-pub struct EinaLogDomain {
+pub struct Eina_Log_Domain {
     pub level: c_int,
     pub domain_str: *const c_char,
     pub name: *const c_char,
@@ -333,7 +317,7 @@ pub struct EinaLogDomain {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[repr(i32)]
+#[repr(C)]
 pub enum EinaLogLevel {
     EinaLogLevelCritical = 0,
     EinaLogLevelErr = 1,
@@ -345,7 +329,7 @@ pub enum EinaLogLevel {
 }
 
 // va_list
-/*pub type EinaLogPrintCb = Option<unsafe extern "C" fn(d: *const EinaLogDomain,
+/*pub type EinaLogPrintCb = Option<unsafe extern "C" fn(d: *const Eina_Log_Domain,
                                                        level: EinaLogLevel,
                                                        file: *const c_char,
                                                        fnc: *const c_char,
@@ -362,19 +346,19 @@ pub enum EinaLogState {
 }
 
 #[repr(C)]
-pub struct EinaInarray {
+pub struct Eina_Inarray {
     pub version: c_int,
     pub member_size: c_uint,
     pub len: c_uint,
     pub max: c_uint,
     pub step: c_uint,
     pub members: *mut c_void,
-    pub __magic: EinaMagic,
+    pub __magic: Eina_Magic,
 }
 
-pub type EinaStringshare = c_char;
-pub type EinaUnicode = wchar_t;
-pub enum EinaCounter { }
+pub type Eina_Stringshare = c_char;
+pub type Eina_Unicode = wchar_t;
+pub enum Eina_Counter { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -391,21 +375,21 @@ pub enum EinaRbtreeDirection {
 }
 
 #[repr(C)]
-pub struct EinaRbtree {
-    pub son: [*mut EinaRbtree; 2usize],
+pub struct Eina_Rbtree {
+    pub son: [*mut Eina_Rbtree; 2usize],
     pub color: c_uint,
 }
 
-pub type EinaRbtreeCmpNodeCb = Option<unsafe extern "C" fn(left: *const EinaRbtree,
-                                                           right: *const EinaRbtree,
+pub type EinaRbtreeCmpNodeCb = Option<unsafe extern "C" fn(left: *const Eina_Rbtree,
+                                                           right: *const Eina_Rbtree,
                                                            data: *mut c_void)
                                                            -> EinaRbtreeDirection>;
-pub type EinaRbtreeCmpKeyCb = Option<unsafe extern "C" fn(node: *const EinaRbtree,
+pub type EinaRbtreeCmpKeyCb = Option<unsafe extern "C" fn(node: *const Eina_Rbtree,
                                                           key: *const c_void, length: c_int,
                                                           data: *mut c_void) -> c_int>;
-pub type EinaRbtreeFreeCb = Option<unsafe extern "C" fn(node: *mut EinaRbtree,
+pub type EinaRbtreeFreeCb = Option<unsafe extern "C" fn(node: *mut Eina_Rbtree,
                                                         data: *mut c_void)>;
-pub enum EinaBenchmark { }
+pub enum Eina_Benchmark { }
 
 pub type EinaBenchmarkSpecimens = Option<extern "C" fn(request: c_int)>;
 
@@ -424,18 +408,18 @@ pub enum EinaCpuFeatures {
     EinaCpuSse42 = 512,
 }
 
-pub enum EinaTiler { }
+pub enum Eina_Tiler { }
 
 #[repr(C)]
-pub struct EinaTileGridInfo {
+pub struct Eina_Tile_Grid_Info {
     pub col: c_ulong,
     pub row: c_ulong,
-    pub rect: EinaRectangle,
+    pub rect: Eina_Rectangle,
     pub full: EinaBool,
 }
 
 #[repr(C)]
-pub struct EinaTileGridSlicer {
+pub struct Eina_Tile_Grid_Slicer {
     pub col1: c_ulong,
     pub col2: c_ulong,
     pub row1: c_ulong,
@@ -448,7 +432,7 @@ pub struct EinaTileGridSlicer {
     pub h1_rel: c_int,
     pub w2_rel: c_int,
     pub h2_rel: c_int,
-    pub info: EinaTileGridInfo,
+    pub info: Eina_Tile_Grid_Info,
     pub first: EinaBool,
 }
 
@@ -464,14 +448,14 @@ pub enum EinaThreadPriority {
     EinaThreadIdle = 3,
 }
 
-pub enum EinaMatrixsparse { }
-pub enum EinaMatrixsparseRow { }
-pub enum EinaMatrixsparseCell { }
-pub enum EinaStrbuf { }
-pub type EinaBinbuf = EinaStrbuf;
-pub type EinaUStrbuf = EinaStrbuf;
-pub enum EinaQuadTree { }
-pub enum EinaQuadTreeItem { }
+pub enum Eina_Matrixsparse { }
+pub enum Eina_Matrixsparse_Row { }
+pub enum Eina_Matrixsparse_Cell { }
+pub enum Eina_Strbuf { }
+pub type Eina_Binbuf = Eina_Strbuf;
+pub type Eina_UStrbuf = Eina_Strbuf;
+pub enum Eina_Quad_Tree { }
+pub enum Eina_Quad_Tree_Item { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -484,18 +468,18 @@ pub enum EinaQuadDirection {
 pub type EinaQuadCallback = Option<unsafe extern "C" fn(object: *const c_void, middle: size_t)
                                                         -> EinaQuadDirection>;
 
-pub type EinaSimpleXmlNodeRoot = EinaSimpleXmlNodeTag;
-pub type EinaSimpleXmlNodeCData = EinaSimpleXmlNodeData;
-pub type EinaSimpleXmlNodeProcessing = EinaSimpleXmlNodeData;
-pub type EinaSimpleXmlNodeDoctype = EinaSimpleXmlNodeData;
-pub type EinaSimpleXmlNodeDoctypeChild = EinaSimpleXmlNodeData;
-pub type EinaSimpleXmlNodeComment = EinaSimpleXmlNodeData;
+pub type Eina_Simple_Xml_Node_Root = Eina_Simple_Xml_Node_Tag;
+pub type Eina_Simple_Xml_Node_CData = Eina_Simple_Xml_Node_Data;
+pub type Eina_Simple_Xml_Node_Processing = Eina_Simple_Xml_Node_Data;
+pub type Eina_Simple_Xml_Node_Doctype = Eina_Simple_Xml_Node_Data;
+pub type Eina_Simple_Xml_Node_DoctypeChild = Eina_Simple_Xml_Node_Data;
+pub type Eina_Simple_Xml_Node_Comment = Eina_Simple_Xml_Node_Data;
 
 #[repr(C)]
-pub struct EinaSimpleXmlAttribute {
-    pub __in_list: EinaInlist,
-    pub __magic: EinaMagic,
-    pub parent: *mut EinaSimpleXmlNodeTag,
+pub struct Eina_Simple_Xml_Attribute {
+    pub __in_list: Eina_Inlist,
+    pub __magic: Eina_Magic,
+    pub parent: *mut Eina_Simple_Xml_Node_Tag,
     pub key: *const c_char,
     pub value: *const c_char,
 }
@@ -503,7 +487,7 @@ pub struct EinaSimpleXmlAttribute {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EinaSimpleXmlNodeType {
-    EinaSimpleXmlNodeRoot = 0,
+    EinaSimpleXmlNode_Root = 0,
     EinaSimpleXmlNodeTag = 1,
     EinaSimpleXmlNodeData = 2,
     EinaSimpleXmlNodeCdata = 3,
@@ -514,24 +498,24 @@ pub enum EinaSimpleXmlNodeType {
 }
 
 #[repr(C)]
-pub struct EinaSimpleXmlNode {
-    pub __in_list: EinaInlist,
-    pub __magic: EinaMagic,
-    pub parent: *mut EinaSimpleXmlNodeTag,
+pub struct Eina_Simple_Xml_Node {
+    pub __in_list: Eina_Inlist,
+    pub __magic: Eina_Magic,
+    pub parent: *mut Eina_Simple_Xml_Node_Tag,
     pub _type: EinaSimpleXmlNodeType,
 }
 
 #[repr(C)]
-pub struct EinaSimpleXmlNodeTag {
-    pub base: EinaSimpleXmlNode,
-    pub children: *mut EinaInlist,
-    pub attributes: *mut EinaInlist,
+pub struct Eina_Simple_Xml_Node_Tag {
+    pub base: Eina_Simple_Xml_Node,
+    pub children: *mut Eina_Inlist,
+    pub attributes: *mut Eina_Inlist,
     pub name: *const c_char,
 }
 
 #[repr(C)]
-pub struct EinaSimpleXmlNodeData {
-    pub base: EinaSimpleXmlNode,
+pub struct Eina_Simple_Xml_Node_Data {
+    pub base: Eina_Simple_Xml_Node,
     pub length: size_t,
     pub data: *mut c_char,
 }
@@ -569,41 +553,41 @@ pub enum EinaLockResult {
 }
 
 pub type EinaTlsDeleteCb = Option<unsafe extern "C" fn(ptr: *mut c_void)>;
-pub type EinaTls = pthread_key_t;
-pub enum EinaSpinlock {}
-pub enum EinaSemaphore {}
-//pub type EinaSpinlock = pthread_spinlock_t; //pthread_spinlock_t not supported in libc
-//pub type EinaSemaphore = sem_t; //sem_t not supported in libc
+pub type Eina_Tls = pthread_key_t;
+pub enum Eina_Spinlock {}
+pub enum Eina_Semaphore {}
+//pub type Eina_Spinlock = pthread_spinlock_t; //pthread_spinlock_t not supported in libc
+//pub type Eina_Semaphore = sem_t; //sem_t not supported in libc
 
 #[repr(C)]
-pub struct EinaLock {
+pub struct Eina_Lock {
     pub mutex: pthread_mutex_t,
 }
 
-pub enum EinaCondition {}
+pub enum Eina_Condition {}
 /* clockid_t not supported in libc
 #[repr(C)]
-pub struct EinaCondition {
-    pub lock: *mut EinaLock,
+pub struct Eina_Condition {
+    pub lock: *mut Eina_Lock,
     pub condition: pthread_cond_t,
     pub clkid: clockid_t,
 }
 */
 
 #[repr(C)]
-pub struct EinaRwLock {
+pub struct Eina_Rw_Lock {
     pub mutex: pthread_rwlock_t,
 }
 
-pub enum EinaBarrier {}
+pub enum Eina_Barrier {}
 /* pthread_barrier_t not supported in libc
 #[repr(C)]
-pub struct EinaBarrier {
+pub struct Eina_Barrier {
     pub barrier: pthread_barrier_t,
 }
 */
 
-pub enum EinaPrefix { }
+pub enum Eina_Prefix { }
 pub type EinaRefcount = c_int;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -615,17 +599,17 @@ pub enum EinaXattrFlags {
 }
 
 #[repr(C)]
-pub struct EinaXattr {
+pub struct Eina_Xattr {
     pub name: *const c_char,
     pub value: *const c_char,
     pub length: size_t,
 }
 
 #[repr(C)]
-pub struct EinaValueUnion {
+pub struct Eina_Value_Union {
     pub _bindgen_data_: [u64; 1usize],
 }
-impl EinaValueUnion {
+impl Eina_Value_Union {
     pub unsafe fn buf(&mut self) -> *mut [c_uchar; 8usize] {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
@@ -641,146 +625,146 @@ impl EinaValueUnion {
 }
 
 #[repr(C)]
-pub struct EinaValue {
-    pub _type: *const EinaValueType,
-    pub value: EinaValueUnion,
+pub struct Eina_Value {
+    pub _type: *const Eina_Value_Type,
+    pub value: Eina_Value_Union,
 }
 
 #[repr(C)]
-pub struct EinaValueArray {
-    pub subtype: *const EinaValueType,
+pub struct Eina_Value_Array {
+    pub subtype: *const Eina_Value_Type,
     pub step: c_uint,
-    pub array: *mut EinaInarray,
+    pub array: *mut Eina_Inarray,
 }
 
 #[repr(C)]
-pub struct EinaValueList {
-    pub subtype: *const EinaValueType,
-    pub list: *mut EinaList,
+pub struct Eina_Value_List {
+    pub subtype: *const Eina_Value_Type,
+    pub list: *mut Eina_List,
 }
 
 #[repr(C)]
-pub struct EinaValueHash {
-    pub subtype: *const EinaValueType,
+pub struct Eina_Value_Hash {
+    pub subtype: *const Eina_Value_Type,
     pub buckets_power_size: c_uint,
-    pub hash: *mut EinaHash,
+    pub hash: *mut Eina_Hash,
 }
 
 #[repr(C)]
-pub struct EinaValueBlobOperations {
+pub struct Eina_Value_Blob_Operations {
     pub version: c_uint,
-    pub free: Option<unsafe extern "C" fn(ops: *const EinaValueBlobOperations,
+    pub free: Option<unsafe extern "C" fn(ops: *const Eina_Value_Blob_Operations,
                                           memory: *mut c_void, size: size_t)>,
-    pub copy: Option<unsafe extern "C" fn(ops: *const EinaValueBlobOperations,
+    pub copy: Option<unsafe extern "C" fn(ops: *const Eina_Value_Blob_Operations,
                                           memory: *const c_void, size: size_t) -> *mut c_void>,
-    pub compare: Option<unsafe extern "C" fn(ops: *const EinaValueBlobOperations,
+    pub compare: Option<unsafe extern "C" fn(ops: *const Eina_Value_Blob_Operations,
                                              data1: *const c_void, size_data1: size_t,
                                              data2: *const c_void, size_data2: size_t)
                                              -> c_int>,
-    pub to_string: Option<unsafe extern "C" fn(ops: *const EinaValueBlobOperations,
+    pub to_string: Option<unsafe extern "C" fn(ops: *const Eina_Value_Blob_Operations,
                                                memory: *const c_void, size: size_t)
                                                -> *mut c_char>,
 }
 
 #[repr(C)]
-pub struct EinaValueBlob {
-    pub ops: *const EinaValueBlobOperations,
+pub struct Eina_Value_Blob {
+    pub ops: *const Eina_Value_Blob_Operations,
     pub memory: *const c_void,
     pub size: c_uint,
 }
 
 #[repr(C)]
-pub struct EinaValueStructOperations {
+pub struct Eina_Value_Struct_Operations {
     pub version: c_uint,
-    pub alloc: Option<unsafe extern "C" fn(ops: *const EinaValueStructOperations,
-                                           desc: *const EinaValueStructDesc) -> *mut c_void>,
-    pub free: Option<unsafe extern "C" fn(ops: *const EinaValueStructOperations,
-                                          desc: *const EinaValueStructDesc,
+    pub alloc: Option<unsafe extern "C" fn(ops: *const Eina_Value_Struct_Operations,
+                                           desc: *const Eina_Value_Struct_Desc) -> *mut c_void>,
+    pub free: Option<unsafe extern "C" fn(ops: *const Eina_Value_Struct_Operations,
+                                          desc: *const Eina_Value_Struct_Desc,
                                           memory: *mut c_void)>,
-    pub copy: Option<unsafe extern "C" fn(ops: *const EinaValueStructOperations,
-                                          desc: *const EinaValueStructDesc,
+    pub copy: Option<unsafe extern "C" fn(ops: *const Eina_Value_Struct_Operations,
+                                          desc: *const Eina_Value_Struct_Desc,
                                           memory: *const c_void) -> *mut c_void>,
-    pub compare: Option<unsafe extern "C" fn(ops: *const EinaValueStructOperations,
-                                             desc: *const EinaValueStructDesc,
+    pub compare: Option<unsafe extern "C" fn(ops: *const Eina_Value_Struct_Operations,
+                                             desc: *const Eina_Value_Struct_Desc,
                                              data1: *const c_void, data2: *const c_void)
                                              -> c_int>,
-    pub find_member: Option<unsafe extern "C" fn(ops: *const EinaValueStructOperations,
-                                                 desc: *const EinaValueStructDesc,
+    pub find_member: Option<unsafe extern "C" fn(ops: *const Eina_Value_Struct_Operations,
+                                                 desc: *const Eina_Value_Struct_Desc,
                                                  name: *const c_char)
-                                                 -> *const EinaValueStructMember>,
+                                                 -> *const Eina_Value_Struct_Member>,
 }
 
 #[repr(C)]
-pub struct EinaValueStructMember {
+pub struct Eina_Value_Struct_Member {
     pub name: *const c_char,
-    pub _type: *const EinaValueType,
+    pub _type: *const Eina_Value_Type,
     pub offset: c_uint,
 }
 
 #[repr(C)]
-pub struct EinaValueStructDesc {
+pub struct Eina_Value_Struct_Desc {
     pub version: c_uint,
-    pub ops: *const EinaValueStructOperations,
-    pub members: *const EinaValueStructMember,
+    pub ops: *const Eina_Value_Struct_Operations,
+    pub members: *const Eina_Value_Struct_Member,
     pub member_count: c_uint,
     pub size: c_uint,
 }
 
 #[repr(C)]
-pub struct EinaValueStruct {
-    pub desc: *const EinaValueStructDesc,
+pub struct Eina_Value_Struct {
+    pub desc: *const Eina_Value_Struct_Desc,
     pub memory: *mut c_void,
 }
 
-pub enum EinaValueType {}
+pub enum Eina_Value_Type {}
 /* No va_list
 #[repr(C)]
-pub struct EinaValueType {
+pub struct Eina_Value_Type {
     pub version: c_uint,
     pub value_size: c_uint,
     pub name: *const c_char,
-    pub setup: Option<unsafe extern "C" fn(_type: *const EinaValueType, mem: *mut c_void)
+    pub setup: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, mem: *mut c_void)
                                            -> EinaBool>,
-    pub flush: Option<unsafe extern "C" fn(_type: *const EinaValueType, mem: *mut c_void)
+    pub flush: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, mem: *mut c_void)
                                            -> EinaBool>,
-    pub copy: Option<unsafe extern "C" fn(_type: *const EinaValueType, src: *const c_void,
+    pub copy: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, src: *const c_void,
                                           dst: *mut c_void) -> EinaBool>,
-    pub compare: Option<unsafe extern "C" fn(_type: *const EinaValueType, a: *const c_void,
+    pub compare: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, a: *const c_void,
                                              b: *const c_void) -> c_int>,
-    pub convert_to: Option<unsafe extern "C" fn(_type: *const EinaValueType,
-                                                convert: *const EinaValueType,
+    pub convert_to: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type,
+                                                convert: *const Eina_Value_Type,
                                                 type_mem: *const c_void,
                                                 convert_mem: *mut c_void) -> EinaBool>,
-    pub convert_from: Option<unsafe extern "C" fn(_type: *const EinaValueType,
-                                                  convert: *const EinaValueType,
+    pub convert_from: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type,
+                                                  convert: *const Eina_Value_Type,
                                                   type_mem: *mut c_void,
                                                   convert_mem: *const c_void) -> EinaBool>,
-    pub vset: Option<unsafe extern "C" fn(_type: *const EinaValueType, mem: *mut c_void,
+    pub vset: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, mem: *mut c_void,
                                           args: va_list) -> EinaBool>,
-    pub pset: Option<unsafe extern "C" fn(_type: *const EinaValueType, mem: *mut c_void,
+    pub pset: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, mem: *mut c_void,
                                           ptr: *const c_void) -> EinaBool>,
-    pub pget: Option<unsafe extern "C" fn(_type: *const EinaValueType, mem: *const c_void,
+    pub pget: Option<unsafe extern "C" fn(_type: *const Eina_Value_Type, mem: *const c_void,
                                           ptr: *mut c_void) -> EinaBool>,
 }
 */
 
-pub enum EinaCow { }
-pub type EinaCowData = c_void;
-pub enum EinaThreadQueue { }
+pub enum Eina_Cow { }
+pub type Eina_Cow_Data = c_void;
+pub enum Eina_Thread_Queue { }
 
 #[repr(C)]
-pub struct EinaThreadQueueMsg {
+pub struct Eina_Thread_Queue_Msg {
     pub size: c_int,
 }
 
 #[repr(C)]
-pub struct EinaThreadQueueMsgSub {
-    pub head: EinaThreadQueueMsg,
-    pub queue: *mut EinaThreadQueue,
+pub struct Eina_Thread_Queue_Msg_Sub {
+    pub head: Eina_Thread_Queue_Msg,
+    pub queue: *mut Eina_Thread_Queue,
 }
 
 #[repr(C)]
-pub struct EinaQuad {
+pub struct Eina_Quad {
     pub x0: c_double,
     pub y0: c_double,
     pub x1: c_double,
@@ -801,7 +785,7 @@ pub enum EinaMatrixType {
 }
 
 #[repr(C)]
-pub struct EinaMatrix3F16p16 {
+pub struct Eina_Matrix3_F16p16 {
     pub xx: EinaF16p16,
     pub xy: EinaF16p16,
     pub xz: EinaF16p16,
@@ -814,7 +798,7 @@ pub struct EinaMatrix3F16p16 {
 }
 
 #[repr(C)]
-pub struct EinaMatrix3 {
+pub struct Eina_Matrix3 {
     pub xx: c_double,
     pub xy: c_double,
     pub xz: c_double,
@@ -827,7 +811,7 @@ pub struct EinaMatrix3 {
 }
 
 #[repr(C)]
-pub struct EinaMatrix4 {
+pub struct Eina_Matrix4 {
     pub xx: c_double,
     pub xy: c_double,
     pub xz: c_double,
@@ -847,7 +831,7 @@ pub struct EinaMatrix4 {
 }
 
 #[repr(C)]
-pub struct EinaEvlogItem {
+pub struct Eina_Evlog_Item {
     pub tim: c_double,
     pub srctim: c_double,
     pub thread: c_ulonglong,
@@ -858,7 +842,7 @@ pub struct EinaEvlogItem {
 }
 
 #[repr(C)]
-pub struct EinaEvlogBuf {
+pub struct Eina_Evlog_Buf {
     pub buf: *mut c_uchar,
     pub size: c_uint,
     pub top: c_uint,
@@ -866,7 +850,7 @@ pub struct EinaEvlogBuf {
 }
 
 #[repr(C)]
-pub struct EinaQuaternion {
+pub struct Eina_Quaternion {
     pub x: c_double,
     pub y: c_double,
     pub z: c_double,
@@ -874,7 +858,7 @@ pub struct EinaQuaternion {
 }
 
 #[repr(C)]
-pub struct EinaQuaternionF16p16 {
+pub struct Eina_Quaternion_F16p16 {
     pub x: EinaF16p16,
     pub y: EinaF16p16,
     pub z: EinaF16p16,
@@ -882,21 +866,21 @@ pub struct EinaQuaternionF16p16 {
 }
 
 #[repr(C)]
-pub struct EinaPoint3d {
+pub struct Eina_Point3d {
     pub x: c_double,
     pub y: c_double,
     pub z: c_double,
 }
 
 #[repr(C)]
-pub struct EinaPoint3dF16p16 {
+pub struct Eina_Point3d_F16p16 {
     pub x: EinaF16p16,
     pub y: EinaF16p16,
     pub z: EinaF16p16,
 }
 
 #[repr(C)]
-pub struct EinaBezier {
+pub struct Eina_Bezier {
     pub start: Struct_Unnamed10,
     pub ctrl_start: Struct_Unnamed11,
     pub ctrl_end: Struct_Unnamed12,
@@ -930,54 +914,54 @@ pub struct Struct_Unnamed13 {
 #[link(name = "eina")]
 extern "C" {
     pub static mut eina_prime_table: *const c_uint;
-    pub static mut eina_version: *mut EinaVersion;
-    pub static mut EINA_ERROR_OUT_OF_MEMORY: EinaError;
-    pub static mut EINA_ERROR_MAGIC_FAILED: EinaError;
+    pub static mut eina_version: *mut Eina_Version;
+    pub static mut EINA_ERROR_OUT_OF_MEMORY: Eina_Error;
+    pub static mut EINA_ERROR_MAGIC_FAILED: Eina_Error;
     pub static mut eina_seed: c_uint;
-    pub static mut EINA_ERROR_WRONG_MODULE: EinaError;
-    pub static mut EINA_ERROR_MODULE_INIT_FAILED: EinaError;
-    pub static mut EINA_ERROR_NOT_MEMPOOL_MODULE: EinaError;
+    pub static mut EINA_ERROR_WRONG_MODULE: Eina_Error;
+    pub static mut EINA_ERROR_MODULE_INIT_FAILED: Eina_Error;
+    pub static mut EINA_ERROR_NOT_MEMPOOL_MODULE: Eina_Error;
     pub static mut EINA_LOG_DOMAIN_GLOBAL: c_int;
     pub static mut _eina_log_state_init: *const c_char;
     pub static mut _eina_log_state_shutdown: *const c_char;
-    pub static mut EINA_UNICODE_EMPTY_STRING: *const EinaUnicode;
-    pub static mut EINA_ERROR_CONVERT_P_NOT_FOUND: EinaError;
-    pub static mut EINA_ERROR_CONVERT_0X_NOT_FOUND: EinaError;
-    pub static mut EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH: EinaError;
+    pub static mut EINA_UNICODE_EMPTY_STRING: *const Eina_Unicode;
+    pub static mut EINA_ERROR_CONVERT_P_NOT_FOUND: Eina_Error;
+    pub static mut EINA_ERROR_CONVERT_0X_NOT_FOUND: Eina_Error;
+    pub static mut EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH: Eina_Error;
     pub static mut EINA_CPU_FEATURES: EinaCpuFeatures;
-    pub static mut EINA_ERROR_SAFETY_FAILED: EinaError;
+    pub static mut EINA_ERROR_SAFETY_FAILED: Eina_Error;
     pub static mut _eina_threads_activated: EinaBool;
-    pub static mut EINA_ERROR_NOT_MAIN_LOOP: EinaError;
-    pub static mut EINA_VALUE_TYPE_UCHAR: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_USHORT: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_UINT: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_ULONG: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_TIMESTAMP: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_UINT64: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_CHAR: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_SHORT: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_INT: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_LONG: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_INT64: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_FLOAT: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_DOUBLE: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_STRINGSHARE: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_STRING: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_ARRAY: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_LIST: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_HASH: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_TIMEVAL: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_BLOB: *const EinaValueType;
-    pub static mut EINA_VALUE_TYPE_STRUCT: *const EinaValueType;
-    pub static mut EINA_ERROR_VALUE_FAILED: EinaError;
+    pub static mut EINA_ERROR_NOT_MAIN_LOOP: Eina_Error;
+    pub static mut EINA_VALUE_TYPE_UCHAR: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_USHORT: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_UINT: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_ULONG: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_TIMESTAMP: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_UINT64: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_CHAR: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_SHORT: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_INT: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_LONG: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_INT64: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_FLOAT: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_DOUBLE: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_STRINGSHARE: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_STRING: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_ARRAY: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_LIST: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_HASH: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_TIMEVAL: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_BLOB: *const Eina_Value_Type;
+    pub static mut EINA_VALUE_TYPE_STRUCT: *const Eina_Value_Type;
+    pub static mut EINA_ERROR_VALUE_FAILED: Eina_Error;
     pub static mut EINA_VALUE_BLOB_OPERATIONS_MALLOC:
-               *const EinaValueBlobOperations;
+               *const Eina_Value_Blob_Operations;
     pub static mut EINA_VALUE_STRUCT_OPERATIONS_BINSEARCH:
-               *const EinaValueStructOperations;
+               *const Eina_Value_Struct_Operations;
     pub static mut EINA_VALUE_STRUCT_OPERATIONS_STRINGSHARE:
-               *const EinaValueStructOperations;
-    pub static mut _EINA_VALUE_TYPE_BASICS_START: *const EinaValueType;
-    pub static mut _EINA_VALUE_TYPE_BASICS_END: *const EinaValueType;
+               *const Eina_Value_Struct_Operations;
+    pub static mut _EINA_VALUE_TYPE_BASICS_START: *const Eina_Value_Type;
+    pub static mut _EINA_VALUE_TYPE_BASICS_END: *const Eina_Value_Type;
 }
 #[link(name = "eina")]
 extern "C" {
@@ -991,154 +975,154 @@ extern "C" {
     pub fn eina_f32p32_sin(a: EinaF32p32) -> EinaF32p32;
     pub fn eina_rectangle_pool_new(w: c_int,
                                    h: c_int)
-     -> *mut EinaRectanglePool;
-    pub fn eina_rectangle_pool_get(rect: *mut EinaRectangle)
-     -> *mut EinaRectanglePool;
-    pub fn eina_rectangle_pool_geometry_get(pool: *mut EinaRectanglePool,
+     -> *mut Eina_Rectangle_Pool;
+    pub fn eina_rectangle_pool_get(rect: *mut Eina_Rectangle)
+     -> *mut Eina_Rectangle_Pool;
+    pub fn eina_rectangle_pool_geometry_get(pool: *mut Eina_Rectangle_Pool,
                                             w: *mut c_int,
                                             h: *mut c_int)
      -> EinaBool;
-    pub fn eina_rectangle_pool_data_get(pool: *mut EinaRectanglePool)
+    pub fn eina_rectangle_pool_data_get(pool: *mut Eina_Rectangle_Pool)
      -> *mut c_void;
-    pub fn eina_rectangle_pool_data_set(pool: *mut EinaRectanglePool,
+    pub fn eina_rectangle_pool_data_set(pool: *mut Eina_Rectangle_Pool,
                                         data: *const c_void);
-    pub fn eina_rectangle_pool_free(pool: *mut EinaRectanglePool);
-    pub fn eina_rectangle_pool_count(pool: *mut EinaRectanglePool)
+    pub fn eina_rectangle_pool_free(pool: *mut Eina_Rectangle_Pool);
+    pub fn eina_rectangle_pool_count(pool: *mut Eina_Rectangle_Pool)
      -> c_int;
-    pub fn eina_rectangle_pool_request(pool: *mut EinaRectanglePool,
+    pub fn eina_rectangle_pool_request(pool: *mut Eina_Rectangle_Pool,
                                        w: c_int,
                                        h: c_int)
-     -> *mut EinaRectangle;
-    pub fn eina_rectangle_pool_release(rect: *mut EinaRectangle);
+     -> *mut Eina_Rectangle;
+    pub fn eina_rectangle_pool_release(rect: *mut Eina_Rectangle);
     pub fn eina_rectangle_new(x: c_int,
                               y: c_int,
                               w: c_int,
                               h: c_int)
-     -> *mut EinaRectangle;
-    pub fn eina_rectangle_free(rect: *mut EinaRectangle);
-    pub fn eina_rectangle_pool_packing_set(pool: *mut EinaRectanglePool,
+     -> *mut Eina_Rectangle;
+    pub fn eina_rectangle_free(rect: *mut Eina_Rectangle);
+    pub fn eina_rectangle_pool_packing_set(pool: *mut Eina_Rectangle_Pool,
                                            _type: EinaRectanglePacking);
     pub fn eina_error_msg_register(msg: *const c_char)
-     -> EinaError;
+     -> Eina_Error;
     pub fn eina_error_msg_static_register(msg: *const c_char)
-     -> EinaError;
-    pub fn eina_error_msg_modify(error: EinaError,
+     -> Eina_Error;
+    pub fn eina_error_msg_modify(error: Eina_Error,
                                  msg: *const c_char)
      -> EinaBool;
-    pub fn eina_error_get() -> EinaError;
-    pub fn eina_error_set(err: EinaError);
-    pub fn eina_error_msg_get(error: EinaError)
+    pub fn eina_error_get() -> Eina_Error;
+    pub fn eina_error_set(err: Eina_Error);
+    pub fn eina_error_msg_get(error: Eina_Error)
      -> *const c_char;
-    pub fn eina_error_find(msg: *const c_char) -> EinaError;
-    pub fn eina_magic_string_get(magic: EinaMagic)
+    pub fn eina_error_find(msg: *const c_char) -> Eina_Error;
+    pub fn eina_magic_string_get(magic: Eina_Magic)
      -> *const c_char;
-    pub fn eina_magic_string_set(magic: EinaMagic,
+    pub fn eina_magic_string_set(magic: Eina_Magic,
                                  magic_name: *const c_char)
      -> EinaBool;
-    pub fn eina_magic_string_static_set(magic: EinaMagic,
+    pub fn eina_magic_string_static_set(magic: Eina_Magic,
                                         magic_name:
                                             *const c_char)
      -> EinaBool;
-    pub fn eina_magic_fail(d: *mut c_void, m: EinaMagic,
-                           req_m: EinaMagic,
+    pub fn eina_magic_fail(d: *mut c_void, m: Eina_Magic,
+                           req_m: Eina_Magic,
                            file: *const c_char,
                            fnc: *const c_char,
                            line: c_int);
-    pub fn eina_iterator_free(iterator: *mut EinaIterator);
-    pub fn eina_iterator_container_get(iterator: *mut EinaIterator)
+    pub fn eina_iterator_free(iterator: *mut Eina_Iterator);
+    pub fn eina_iterator_container_get(iterator: *mut Eina_Iterator)
      -> *mut c_void;
-    pub fn eina_iterator_next(iterator: *mut EinaIterator,
+    pub fn eina_iterator_next(iterator: *mut Eina_Iterator,
                               data: *mut *mut c_void)
      -> EinaBool;
-    pub fn eina_iterator_foreach(iterator: *mut EinaIterator,
+    pub fn eina_iterator_foreach(iterator: *mut Eina_Iterator,
                                  callback: EinaEachCb,
                                  fdata: *const c_void);
-    pub fn eina_iterator_lock(iterator: *mut EinaIterator) -> EinaBool;
-    pub fn eina_iterator_unlock(iterator: *mut EinaIterator) -> EinaBool;
-    pub fn eina_accessor_free(accessor: *mut EinaAccessor);
-    pub fn eina_accessor_data_get(accessor: *mut EinaAccessor,
+    pub fn eina_iterator_lock(iterator: *mut Eina_Iterator) -> EinaBool;
+    pub fn eina_iterator_unlock(iterator: *mut Eina_Iterator) -> EinaBool;
+    pub fn eina_accessor_free(accessor: *mut Eina_Accessor);
+    pub fn eina_accessor_data_get(accessor: *mut Eina_Accessor,
                                   position: c_uint,
                                   data: *mut *mut c_void)
      -> EinaBool;
-    pub fn eina_accessor_container_get(accessor: *mut EinaAccessor)
+    pub fn eina_accessor_container_get(accessor: *mut Eina_Accessor)
      -> *mut c_void;
-    pub fn eina_accessor_over(accessor: *mut EinaAccessor, cb: EinaEachCb,
+    pub fn eina_accessor_over(accessor: *mut Eina_Accessor, cb: EinaEachCb,
                               start: c_uint,
                               end: c_uint,
                               fdata: *const c_void);
-    pub fn eina_accessor_lock(accessor: *mut EinaAccessor) -> EinaBool;
-    pub fn eina_accessor_clone(accessor: *mut EinaAccessor)
-     -> *mut EinaAccessor;
-    pub fn eina_accessor_unlock(accessor: *mut EinaAccessor) -> EinaBool;
-    pub fn eina_inlist_append(in_list: *mut EinaInlist,
-                              in_item: *mut EinaInlist) -> *mut EinaInlist;
-    pub fn eina_inlist_prepend(in_list: *mut EinaInlist,
-                               in_item: *mut EinaInlist) -> *mut EinaInlist;
-    pub fn eina_inlist_append_relative(in_list: *mut EinaInlist,
-                                       in_item: *mut EinaInlist,
-                                       in_relative: *mut EinaInlist)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_prepend_relative(in_list: *mut EinaInlist,
-                                        in_item: *mut EinaInlist,
-                                        in_relative: *mut EinaInlist)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_remove(in_list: *mut EinaInlist,
-                              in_item: *mut EinaInlist) -> *mut EinaInlist;
-    pub fn eina_inlist_find(in_list: *mut EinaInlist,
-                            in_item: *mut EinaInlist) -> *mut EinaInlist;
-    pub fn eina_inlist_promote(list: *mut EinaInlist, item: *mut EinaInlist)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_demote(list: *mut EinaInlist, item: *mut EinaInlist)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_count(list: *const EinaInlist)
+    pub fn eina_accessor_lock(accessor: *mut Eina_Accessor) -> EinaBool;
+    pub fn eina_accessor_clone(accessor: *mut Eina_Accessor)
+     -> *mut Eina_Accessor;
+    pub fn eina_accessor_unlock(accessor: *mut Eina_Accessor) -> EinaBool;
+    pub fn eina_inlist_append(in_list: *mut Eina_Inlist,
+                              in_item: *mut Eina_Inlist) -> *mut Eina_Inlist;
+    pub fn eina_inlist_prepend(in_list: *mut Eina_Inlist,
+                               in_item: *mut Eina_Inlist) -> *mut Eina_Inlist;
+    pub fn eina_inlist_append_relative(in_list: *mut Eina_Inlist,
+                                       in_item: *mut Eina_Inlist,
+                                       in_relative: *mut Eina_Inlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_prepend_relative(in_list: *mut Eina_Inlist,
+                                        in_item: *mut Eina_Inlist,
+                                        in_relative: *mut Eina_Inlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_remove(in_list: *mut Eina_Inlist,
+                              in_item: *mut Eina_Inlist) -> *mut Eina_Inlist;
+    pub fn eina_inlist_find(in_list: *mut Eina_Inlist,
+                            in_item: *mut Eina_Inlist) -> *mut Eina_Inlist;
+    pub fn eina_inlist_promote(list: *mut Eina_Inlist, item: *mut Eina_Inlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_demote(list: *mut Eina_Inlist, item: *mut Eina_Inlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_count(list: *const Eina_Inlist)
      -> c_uint;
-    pub fn eina_inlist_iterator_new(in_list: *const EinaInlist)
-     -> *mut EinaIterator;
-    pub fn eina_inlist_accessor_new(in_list: *const EinaInlist)
-     -> *mut EinaAccessor;
-    pub fn eina_inlist_sorted_insert(list: *mut EinaInlist,
-                                     item: *mut EinaInlist,
+    pub fn eina_inlist_iterator_new(in_list: *const Eina_Inlist)
+     -> *mut Eina_Iterator;
+    pub fn eina_inlist_accessor_new(in_list: *const Eina_Inlist)
+     -> *mut Eina_Accessor;
+    pub fn eina_inlist_sorted_insert(list: *mut Eina_Inlist,
+                                     item: *mut Eina_Inlist,
                                      func: EinaCompareCb)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_sorted_state_new() -> *mut EinaInlistSortedState;
-    pub fn eina_inlist_sorted_state_init(state: *mut EinaInlistSortedState,
-                                         list: *mut EinaInlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_sorted_state_new() -> *mut Eina_Inlist_Sorted_State;
+    pub fn eina_inlist_sorted_state_init(state: *mut Eina_Inlist_Sorted_State,
+                                         list: *mut Eina_Inlist)
      -> c_int;
     pub fn eina_inlist_sorted_state_free(state:
-                                             *mut EinaInlistSortedState);
-    pub fn eina_inlist_sorted_state_insert(list: *mut EinaInlist,
-                                           item: *mut EinaInlist,
+                                             *mut Eina_Inlist_Sorted_State);
+    pub fn eina_inlist_sorted_state_insert(list: *mut Eina_Inlist,
+                                           item: *mut Eina_Inlist,
                                            func: EinaCompareCb,
                                            state:
-                                               *mut EinaInlistSortedState)
-     -> *mut EinaInlist;
-    pub fn eina_inlist_sort(head: *mut EinaInlist, func: EinaCompareCb)
-     -> *mut EinaInlist;
-    pub fn eina_array_new(step: c_uint) -> *mut EinaArray;
-    pub fn eina_array_free(array: *mut EinaArray);
-    pub fn eina_array_step_set(array: *mut EinaArray,
+                                               *mut Eina_Inlist_Sorted_State)
+     -> *mut Eina_Inlist;
+    pub fn eina_inlist_sort(head: *mut Eina_Inlist, func: EinaCompareCb)
+     -> *mut Eina_Inlist;
+    pub fn eina_array_new(step: c_uint) -> *mut Eina_Array;
+    pub fn eina_array_free(array: *mut Eina_Array);
+    pub fn eina_array_step_set(array: *mut Eina_Array,
                                sizeof_eina_array: c_uint,
                                step: c_uint);
-    pub fn eina_array_flush(array: *mut EinaArray);
-    pub fn eina_array_remove(array: *mut EinaArray,
+    pub fn eina_array_flush(array: *mut Eina_Array);
+    pub fn eina_array_remove(array: *mut Eina_Array,
                              keep: extern "C" fn(data:
                                                                                 *mut c_void,
                                                                             gdata:
                                                                                 *mut c_void)
                                                            -> EinaBool,
                              gdata: *mut c_void) -> EinaBool;
-    pub fn eina_array_iterator_new(array: *const EinaArray)
-     -> *mut EinaIterator;
-    pub fn eina_array_accessor_new(array: *const EinaArray)
-     -> *mut EinaAccessor;
-    pub fn eina_array_grow(array: *mut EinaArray) -> EinaBool;
+    pub fn eina_array_iterator_new(array: *const Eina_Array)
+     -> *mut Eina_Iterator;
+    pub fn eina_array_accessor_new(array: *const Eina_Array)
+     -> *mut Eina_Accessor;
+    pub fn eina_array_grow(array: *mut Eina_Array) -> EinaBool;
     pub fn eina_tmpstr_add(str: *const c_char)
-     -> *mut EinaTmpstr;
+     -> *mut Eina_Tmpstr;
     pub fn eina_tmpstr_add_length(str: *const c_char,
-                                  length: size_t) -> *mut EinaTmpstr;
-    pub fn eina_tmpstr_strlen(tmpstr: *mut EinaTmpstr) -> size_t;
-    pub fn eina_tmpstr_len(tmpstr: *mut EinaTmpstr) -> size_t;
-    pub fn eina_tmpstr_del(tmpstr: *mut EinaTmpstr);
+                                  length: size_t) -> *mut Eina_Tmpstr;
+    pub fn eina_tmpstr_strlen(tmpstr: *mut Eina_Tmpstr) -> size_t;
+    pub fn eina_tmpstr_len(tmpstr: *mut Eina_Tmpstr) -> size_t;
+    pub fn eina_tmpstr_del(tmpstr: *mut Eina_Tmpstr);
     pub fn eina_strlcpy(dst: *mut c_char,
                         src: *const c_char, siz: size_t)
      -> size_t;
@@ -1187,21 +1171,21 @@ extern "C" {
                               recursive: EinaBool, cb: EinaFileDirListCb,
                               data: *mut c_void) -> EinaBool;
     pub fn eina_file_split(path: *mut c_char)
-     -> *mut EinaArray;
+     -> *mut Eina_Array;
     pub fn eina_file_ls(dir: *const c_char)
-     -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
     pub fn eina_file_stat_ls(dir: *const c_char)
-     -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
     pub fn eina_file_statat(container: *mut c_void,
-                            info: *mut EinaFileDirectInfo,
-                            buf: *mut EinaStat) -> c_int;
+                            info: *mut Eina_File_Direct_Info,
+                            buf: *mut Eina_Stat) -> c_int;
     pub fn eina_file_mkstemp(templatename: *const c_char,
-                             path: *mut *mut EinaTmpstr)
+                             path: *mut *mut Eina_Tmpstr)
      -> c_int;
     pub fn eina_file_mkdtemp(templatename: *const c_char,
-                             path: *mut *mut EinaTmpstr) -> EinaBool;
+                             path: *mut *mut Eina_Tmpstr) -> EinaBool;
     pub fn eina_file_direct_ls(dir: *const c_char)
-     -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
     pub fn eina_file_path_sanitize(path: *const c_char)
      -> *mut c_char;
     pub fn eina_file_copy(src: *const c_char,
@@ -1211,242 +1195,242 @@ extern "C" {
                           cb_data: *const c_void)
      -> EinaBool;
     pub fn eina_file_open(name: *const c_char,
-                          shared: EinaBool) -> *mut EinaFile;
+                          shared: EinaBool) -> *mut Eina_File;
     pub fn eina_file_virtualize(virtual_name: *const c_char,
                                 data: *const c_void,
                                 length: c_ulonglong,
-                                copy: EinaBool) -> *mut EinaFile;
-    pub fn eina_file_virtual(file: *mut EinaFile) -> EinaBool;
-    pub fn eina_file_refresh(file: *mut EinaFile) -> EinaBool;
-    pub fn eina_file_dup(file: *const EinaFile) -> *mut EinaFile;
-    pub fn eina_file_close(file: *mut EinaFile);
-    pub fn eina_file_size_get(file: *const EinaFile) -> size_t;
-    pub fn eina_file_mtime_get(file: *const EinaFile) -> time_t;
-    pub fn eina_file_filename_get(file: *const EinaFile)
+                                copy: EinaBool) -> *mut Eina_File;
+    pub fn eina_file_virtual(file: *mut Eina_File) -> EinaBool;
+    pub fn eina_file_refresh(file: *mut Eina_File) -> EinaBool;
+    pub fn eina_file_dup(file: *const Eina_File) -> *mut Eina_File;
+    pub fn eina_file_close(file: *mut Eina_File);
+    pub fn eina_file_size_get(file: *const Eina_File) -> size_t;
+    pub fn eina_file_mtime_get(file: *const Eina_File) -> time_t;
+    pub fn eina_file_filename_get(file: *const Eina_File)
      -> *const c_char;
-    pub fn eina_file_xattr_get(file: *mut EinaFile) -> *mut EinaIterator;
-    pub fn eina_file_xattr_value_get(file: *mut EinaFile)
-     -> *mut EinaIterator;
-    pub fn eina_file_map_all(file: *mut EinaFile, rule: EinaFilePopulate)
+    pub fn eina_file_xattr_get(file: *mut Eina_File) -> *mut Eina_Iterator;
+    pub fn eina_file_xattr_value_get(file: *mut Eina_File)
+     -> *mut Eina_Iterator;
+    pub fn eina_file_map_all(file: *mut Eina_File, rule: EinaFilePopulate)
      -> *mut c_void;
-    pub fn eina_file_map_new(file: *mut EinaFile, rule: EinaFilePopulate,
+    pub fn eina_file_map_new(file: *mut Eina_File, rule: EinaFilePopulate,
                              offset: c_ulong,
                              length: c_ulong)
      -> *mut c_void;
-    pub fn eina_file_map_free(file: *mut EinaFile,
+    pub fn eina_file_map_free(file: *mut Eina_File,
                               map: *mut c_void);
-    pub fn eina_file_map_populate(file: *mut EinaFile,
+    pub fn eina_file_map_populate(file: *mut Eina_File,
                                   rule: EinaFilePopulate,
                                   map: *const c_void,
                                   offset: c_ulong,
                                   length: c_ulong);
-    pub fn eina_file_map_lines(file: *mut EinaFile) -> *mut EinaIterator;
-    pub fn eina_file_map_faulted(file: *mut EinaFile,
+    pub fn eina_file_map_lines(file: *mut Eina_File) -> *mut Eina_Iterator;
+    pub fn eina_file_map_faulted(file: *mut Eina_File,
                                  map: *mut c_void)
      -> EinaBool;
-    pub fn eina_list_append(list: *mut EinaList,
+    pub fn eina_list_append(list: *mut Eina_List,
                             data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_prepend(list: *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_prepend(list: *mut Eina_List,
                              data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_append_relative(list: *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_append_relative(list: *mut Eina_List,
                                      data: *const c_void,
                                      relative: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_append_relative_list(list: *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_append_relative_list(list: *mut Eina_List,
                                           data: *const c_void,
-                                          relative: *mut EinaList)
-     -> *mut EinaList;
-    pub fn eina_list_prepend_relative(list: *mut EinaList,
+                                          relative: *mut Eina_List)
+     -> *mut Eina_List;
+    pub fn eina_list_prepend_relative(list: *mut Eina_List,
                                       data: *const c_void,
                                       relative: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_prepend_relative_list(list: *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_prepend_relative_list(list: *mut Eina_List,
                                            data:
                                                *const c_void,
-                                           relative: *mut EinaList)
-     -> *mut EinaList;
-    pub fn eina_list_sorted_insert(list: *mut EinaList,
+                                           relative: *mut Eina_List)
+     -> *mut Eina_List;
+    pub fn eina_list_sorted_insert(list: *mut Eina_List,
                                    func: EinaCompareCb,
                                    data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_remove(list: *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_remove(list: *mut Eina_List,
                             data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_remove_list(list: *mut EinaList,
-                                 remove_list: *mut EinaList)
-     -> *mut EinaList;
-    pub fn eina_list_promote_list(list: *mut EinaList,
-                                  move_list: *mut EinaList)
-     -> *mut EinaList;
-    pub fn eina_list_demote_list(list: *mut EinaList,
-                                 move_list: *mut EinaList) -> *mut EinaList;
-    pub fn eina_list_data_find(list: *const EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_remove_list(list: *mut Eina_List,
+                                 remove_list: *mut Eina_List)
+     -> *mut Eina_List;
+    pub fn eina_list_promote_list(list: *mut Eina_List,
+                                  move_list: *mut Eina_List)
+     -> *mut Eina_List;
+    pub fn eina_list_demote_list(list: *mut Eina_List,
+                                 move_list: *mut Eina_List) -> *mut Eina_List;
+    pub fn eina_list_data_find(list: *const Eina_List,
                                data: *const c_void)
      -> *mut c_void;
-    pub fn eina_list_data_find_list(list: *const EinaList,
+    pub fn eina_list_data_find_list(list: *const Eina_List,
                                     data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_move(to: *mut *mut EinaList, from: *mut *mut EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_move(to: *mut *mut Eina_List, from: *mut *mut Eina_List,
                           data: *mut c_void) -> EinaBool;
-    pub fn eina_list_move_list(to: *mut *mut EinaList,
-                               from: *mut *mut EinaList,
-                               data: *mut EinaList) -> EinaBool;
-    pub fn eina_list_free(list: *mut EinaList) -> *mut EinaList;
-    pub fn eina_list_nth(list: *const EinaList, n: c_uint)
+    pub fn eina_list_move_list(to: *mut *mut Eina_List,
+                               from: *mut *mut Eina_List,
+                               data: *mut Eina_List) -> EinaBool;
+    pub fn eina_list_free(list: *mut Eina_List) -> *mut Eina_List;
+    pub fn eina_list_nth(list: *const Eina_List, n: c_uint)
      -> *mut c_void;
-    pub fn eina_list_nth_list(list: *const EinaList,
-                              n: c_uint) -> *mut EinaList;
-    pub fn eina_list_reverse(list: *mut EinaList) -> *mut EinaList;
-    pub fn eina_list_reverse_clone(list: *const EinaList) -> *mut EinaList;
-    pub fn eina_list_clone(list: *const EinaList) -> *mut EinaList;
-    pub fn eina_list_sort(list: *mut EinaList, limit: c_uint,
-                          func: EinaCompareCb) -> *mut EinaList;
-    pub fn eina_list_shuffle(list: *mut EinaList, func: EinaRandomCb)
-     -> *mut EinaList;
-    pub fn eina_list_merge(left: *mut EinaList, right: *mut EinaList)
-     -> *mut EinaList;
-    pub fn eina_list_sorted_merge(left: *mut EinaList, right: *mut EinaList,
-                                  func: EinaCompareCb) -> *mut EinaList;
-    pub fn eina_list_split_list(list: *mut EinaList,
-                                relative: *mut EinaList,
-                                right: *mut *mut EinaList) -> *mut EinaList;
-    pub fn eina_list_search_sorted_near_list(list: *const EinaList,
+    pub fn eina_list_nth_list(list: *const Eina_List,
+                              n: c_uint) -> *mut Eina_List;
+    pub fn eina_list_reverse(list: *mut Eina_List) -> *mut Eina_List;
+    pub fn eina_list_reverse_clone(list: *const Eina_List) -> *mut Eina_List;
+    pub fn eina_list_clone(list: *const Eina_List) -> *mut Eina_List;
+    pub fn eina_list_sort(list: *mut Eina_List, limit: c_uint,
+                          func: EinaCompareCb) -> *mut Eina_List;
+    pub fn eina_list_shuffle(list: *mut Eina_List, func: EinaRandomCb)
+     -> *mut Eina_List;
+    pub fn eina_list_merge(left: *mut Eina_List, right: *mut Eina_List)
+     -> *mut Eina_List;
+    pub fn eina_list_sorted_merge(left: *mut Eina_List, right: *mut Eina_List,
+                                  func: EinaCompareCb) -> *mut Eina_List;
+    pub fn eina_list_split_list(list: *mut Eina_List,
+                                relative: *mut Eina_List,
+                                right: *mut *mut Eina_List) -> *mut Eina_List;
+    pub fn eina_list_search_sorted_near_list(list: *const Eina_List,
                                              func: EinaCompareCb,
                                              data:
                                                  *const c_void,
                                              result_cmp:
                                                  *mut c_int)
-     -> *mut EinaList;
-    pub fn eina_list_search_sorted_list(list: *const EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_search_sorted_list(list: *const Eina_List,
                                         func: EinaCompareCb,
                                         data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_search_sorted(list: *const EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_search_sorted(list: *const Eina_List,
                                    func: EinaCompareCb,
                                    data: *const c_void)
      -> *mut c_void;
-    pub fn eina_list_search_unsorted_list(list: *const EinaList,
+    pub fn eina_list_search_unsorted_list(list: *const Eina_List,
                                           func: EinaCompareCb,
                                           data: *const c_void)
-     -> *mut EinaList;
-    pub fn eina_list_search_unsorted(list: *const EinaList,
+     -> *mut Eina_List;
+    pub fn eina_list_search_unsorted(list: *const Eina_List,
                                      func: EinaCompareCb,
                                      data: *const c_void)
      -> *mut c_void;
-    pub fn eina_list_iterator_new(list: *const EinaList)
-     -> *mut EinaIterator;
-    pub fn eina_list_iterator_reversed_new(list: *const EinaList)
-     -> *mut EinaIterator;
-    pub fn eina_list_accessor_new(list: *const EinaList)
-     -> *mut EinaAccessor;
-    pub fn eina_list_data_idx(list: *const EinaList,
+    pub fn eina_list_iterator_new(list: *const Eina_List)
+     -> *mut Eina_Iterator;
+    pub fn eina_list_iterator_reversed_new(list: *const Eina_List)
+     -> *mut Eina_Iterator;
+    pub fn eina_list_accessor_new(list: *const Eina_List)
+     -> *mut Eina_Accessor;
+    pub fn eina_list_data_idx(list: *const Eina_List,
                               data: *mut c_void)
      -> c_int;
     pub fn eina_hash_new(key_length_cb: EinaKeyLength,
                          key_cmp_cb: EinaKeyCmp, key_hash_cb: EinaKeyHash,
                          data_free_cb: EinaFreeCb,
                          buckets_power_size: c_int)
-     -> *mut EinaHash;
-    pub fn eina_hash_free_cb_set(hash: *mut EinaHash,
+     -> *mut Eina_Hash;
+    pub fn eina_hash_free_cb_set(hash: *mut Eina_Hash,
                                  data_free_cb: EinaFreeCb);
     pub fn eina_hash_string_djb2_new(data_free_cb: EinaFreeCb)
-     -> *mut EinaHash;
+     -> *mut Eina_Hash;
     pub fn eina_hash_string_superfast_new(data_free_cb: EinaFreeCb)
-     -> *mut EinaHash;
+     -> *mut Eina_Hash;
     pub fn eina_hash_string_small_new(data_free_cb: EinaFreeCb)
-     -> *mut EinaHash;
-    pub fn eina_hash_int32_new(data_free_cb: EinaFreeCb) -> *mut EinaHash;
-    pub fn eina_hash_int64_new(data_free_cb: EinaFreeCb) -> *mut EinaHash;
+     -> *mut Eina_Hash;
+    pub fn eina_hash_int32_new(data_free_cb: EinaFreeCb) -> *mut Eina_Hash;
+    pub fn eina_hash_int64_new(data_free_cb: EinaFreeCb) -> *mut Eina_Hash;
     pub fn eina_hash_pointer_new(data_free_cb: EinaFreeCb)
-     -> *mut EinaHash;
+     -> *mut Eina_Hash;
     pub fn eina_hash_stringshared_new(data_free_cb: EinaFreeCb)
-     -> *mut EinaHash;
-    pub fn eina_hash_add(hash: *mut EinaHash,
+     -> *mut Eina_Hash;
+    pub fn eina_hash_add(hash: *mut Eina_Hash,
                          key: *const c_void,
                          data: *const c_void) -> EinaBool;
-    pub fn eina_hash_direct_add(hash: *mut EinaHash,
+    pub fn eina_hash_direct_add(hash: *mut Eina_Hash,
                                 key: *const c_void,
                                 data: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_del(hash: *mut EinaHash,
+    pub fn eina_hash_del(hash: *mut Eina_Hash,
                          key: *const c_void,
                          data: *const c_void) -> EinaBool;
-    pub fn eina_hash_find(hash: *const EinaHash,
+    pub fn eina_hash_find(hash: *const Eina_Hash,
                           key: *const c_void)
      -> *mut c_void;
-    pub fn eina_hash_modify(hash: *mut EinaHash,
+    pub fn eina_hash_modify(hash: *mut Eina_Hash,
                             key: *const c_void,
                             data: *const c_void)
      -> *mut c_void;
-    pub fn eina_hash_set(hash: *mut EinaHash,
+    pub fn eina_hash_set(hash: *mut Eina_Hash,
                          key: *const c_void,
                          data: *const c_void)
      -> *mut c_void;
-    pub fn eina_hash_move(hash: *mut EinaHash,
+    pub fn eina_hash_move(hash: *mut Eina_Hash,
                           old_key: *const c_void,
                           new_key: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_free(hash: *mut EinaHash);
-    pub fn eina_hash_free_buckets(hash: *mut EinaHash);
-    pub fn eina_hash_population(hash: *const EinaHash)
+    pub fn eina_hash_free(hash: *mut Eina_Hash);
+    pub fn eina_hash_free_buckets(hash: *mut Eina_Hash);
+    pub fn eina_hash_population(hash: *const Eina_Hash)
      -> c_int;
-    pub fn eina_hash_add_by_hash(hash: *mut EinaHash,
+    pub fn eina_hash_add_by_hash(hash: *mut Eina_Hash,
                                  key: *const c_void,
                                  key_length: c_int,
                                  key_hash: c_int,
                                  data: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_direct_add_by_hash(hash: *mut EinaHash,
+    pub fn eina_hash_direct_add_by_hash(hash: *mut Eina_Hash,
                                         key: *const c_void,
                                         key_length: c_int,
                                         key_hash: c_int,
                                         data: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_del_by_key_hash(hash: *mut EinaHash,
+    pub fn eina_hash_del_by_key_hash(hash: *mut Eina_Hash,
                                      key: *const c_void,
                                      key_length: c_int,
                                      key_hash: c_int)
      -> EinaBool;
-    pub fn eina_hash_del_by_key(hash: *mut EinaHash,
+    pub fn eina_hash_del_by_key(hash: *mut Eina_Hash,
                                 key: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_del_by_data(hash: *mut EinaHash,
+    pub fn eina_hash_del_by_data(hash: *mut Eina_Hash,
                                  data: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_del_by_hash(hash: *mut EinaHash,
+    pub fn eina_hash_del_by_hash(hash: *mut Eina_Hash,
                                  key: *const c_void,
                                  key_length: c_int,
                                  key_hash: c_int,
                                  data: *const c_void)
      -> EinaBool;
-    pub fn eina_hash_find_by_hash(hash: *const EinaHash,
+    pub fn eina_hash_find_by_hash(hash: *const Eina_Hash,
                                   key: *const c_void,
                                   key_length: c_int,
                                   key_hash: c_int)
      -> *mut c_void;
-    pub fn eina_hash_modify_by_hash(hash: *mut EinaHash,
+    pub fn eina_hash_modify_by_hash(hash: *mut Eina_Hash,
                                     key: *const c_void,
                                     key_length: c_int,
                                     key_hash: c_int,
                                     data: *const c_void)
      -> *mut c_void;
-    pub fn eina_hash_iterator_key_new(hash: *const EinaHash)
-     -> *mut EinaIterator;
-    pub fn eina_hash_iterator_data_new(hash: *const EinaHash)
-     -> *mut EinaIterator;
-    pub fn eina_hash_iterator_tuple_new(hash: *const EinaHash)
-     -> *mut EinaIterator;
-    pub fn eina_hash_foreach(hash: *const EinaHash, func: EinaHashForeach,
+    pub fn eina_hash_iterator_key_new(hash: *const Eina_Hash)
+     -> *mut Eina_Iterator;
+    pub fn eina_hash_iterator_data_new(hash: *const Eina_Hash)
+     -> *mut Eina_Iterator;
+    pub fn eina_hash_iterator_tuple_new(hash: *const Eina_Hash)
+     -> *mut Eina_Iterator;
+    pub fn eina_hash_foreach(hash: *const Eina_Hash, func: EinaHashForeach,
                              fdata: *const c_void);
-    pub fn eina_hash_list_append(hash: *mut EinaHash,
+    pub fn eina_hash_list_append(hash: *mut Eina_Hash,
                                  key: *const c_void,
                                  data: *const c_void);
-    pub fn eina_hash_list_prepend(hash: *mut EinaHash,
+    pub fn eina_hash_list_prepend(hash: *mut Eina_Hash,
                                   key: *const c_void,
                                   data: *const c_void);
-    pub fn eina_hash_list_remove(hash: *mut EinaHash,
+    pub fn eina_hash_list_remove(hash: *mut Eina_Hash,
                                  key: *const c_void,
                                  data: *const c_void);
     pub fn eina_hash_superfast(key: *const c_char,
@@ -1459,22 +1443,22 @@ extern "C" {
                            alloc_cb: EinaLallocAlloc,
                            free_cb: EinaLallocFree,
                            num_init: c_int)
-     -> *mut EinaLalloc;
-    pub fn eina_lalloc_free(a: *mut EinaLalloc);
-    pub fn eina_lalloc_elements_add(a: *mut EinaLalloc,
+     -> *mut Eina_Lalloc;
+    pub fn eina_lalloc_free(a: *mut Eina_Lalloc);
+    pub fn eina_lalloc_elements_add(a: *mut Eina_Lalloc,
                                     num: c_int) -> EinaBool;
-    pub fn eina_lalloc_element_add(a: *mut EinaLalloc) -> EinaBool;
+    pub fn eina_lalloc_element_add(a: *mut Eina_Lalloc) -> EinaBool;
     pub fn eina_module_new(file: *const c_char)
-     -> *mut EinaModule;
-    pub fn eina_module_free(module: *mut EinaModule) -> EinaBool;
-    pub fn eina_module_load(module: *mut EinaModule) -> EinaBool;
-    pub fn eina_module_unload(module: *mut EinaModule) -> EinaBool;
-    pub fn eina_module_symbol_get(module: *const EinaModule,
+     -> *mut Eina_Module;
+    pub fn eina_module_free(module: *mut Eina_Module) -> EinaBool;
+    pub fn eina_module_load(module: *mut Eina_Module) -> EinaBool;
+    pub fn eina_module_unload(module: *mut Eina_Module) -> EinaBool;
+    pub fn eina_module_symbol_get(module: *const Eina_Module,
                                   symbol: *const c_char)
      -> *mut c_void;
-    pub fn eina_module_file_get(module: *const EinaModule)
+    pub fn eina_module_file_get(module: *const Eina_Module)
      -> *const c_char;
-    pub fn eina_module_symbol_global_set(module: *mut EinaModule,
+    pub fn eina_module_symbol_global_set(module: *mut Eina_Module,
                                          global: EinaBool);
     pub fn eina_module_symbol_path_get(symbol: *const c_void,
                                        sub_dir: *const c_char)
@@ -1484,33 +1468,33 @@ extern "C" {
                                             sub_dir:
                                                 *const c_char)
      -> *mut c_char;
-    pub fn eina_module_arch_list_get(array: *mut EinaArray,
+    pub fn eina_module_arch_list_get(array: *mut Eina_Array,
                                      path: *const c_char,
                                      arch: *const c_char)
-     -> *mut EinaArray;
-    pub fn eina_module_list_get(array: *mut EinaArray,
+     -> *mut Eina_Array;
+    pub fn eina_module_list_get(array: *mut Eina_Array,
                                 path: *const c_char,
                                 recursive: EinaBool, cb: EinaModuleCb,
                                 data: *mut c_void)
-     -> *mut EinaArray;
-    pub fn eina_module_list_load(array: *mut EinaArray);
-    pub fn eina_module_list_unload(array: *mut EinaArray);
-    pub fn eina_module_list_free(array: *mut EinaArray);
-    pub fn eina_module_find(array: *const EinaArray,
+     -> *mut Eina_Array;
+    pub fn eina_module_list_load(array: *mut Eina_Array);
+    pub fn eina_module_list_unload(array: *mut Eina_Array);
+    pub fn eina_module_list_free(array: *mut Eina_Array);
+    pub fn eina_module_find(array: *const Eina_Array,
                             module: *const c_char)
-     -> *mut EinaModule;
+     -> *mut Eina_Module;
     pub fn eina_mempool_add(name: *const c_char,
                             context: *const c_char,
                             options: *const c_char, ...)
-     -> *mut EinaMempool;
-    pub fn eina_mempool_del(mp: *mut EinaMempool);
-    pub fn eina_mempool_repack(mp: *mut EinaMempool,
+     -> *mut Eina_Mempool;
+    pub fn eina_mempool_del(mp: *mut Eina_Mempool);
+    pub fn eina_mempool_repack(mp: *mut Eina_Mempool,
                                cb: EinaMempoolRepackCb,
                                data: *mut c_void);
-    pub fn eina_mempool_gc(mp: *mut EinaMempool);
-    pub fn eina_mempool_statistics(mp: *mut EinaMempool);
-//    pub fn eina_mempool_register(be: *mut EinaMempoolBackend) -> EinaBool;
-//    pub fn eina_mempool_unregister(be: *mut EinaMempoolBackend);
+    pub fn eina_mempool_gc(mp: *mut Eina_Mempool);
+    pub fn eina_mempool_statistics(mp: *mut Eina_Mempool);
+//    pub fn eina_mempool_register(be: *mut Eina_Mempool_Backend) -> EinaBool;
+//    pub fn eina_mempool_unregister(be: *mut Eina_Mempool_Backend);
     pub fn eina_log_threads_enable();
 //    pub fn eina_log_print_cb_set(cb: EinaLogPrintCb,
 //                                 data: *mut c_void);
@@ -1555,7 +1539,7 @@ extern "C" {
                            line: c_int,
                            fmt: *const c_char, args: va_list);
 
-    pub fn eina_log_print_cb_stdout(d: *const EinaLogDomain,
+    pub fn eina_log_print_cb_stdout(d: *const Eina_Log_Domain,
                                     level: EinaLogLevel,
                                     file: *const c_char,
                                     fnc: *const c_char,
@@ -1563,7 +1547,7 @@ extern "C" {
                                     fmt: *const c_char,
                                     data: *mut c_void,
                                     args: va_list);
-    pub fn eina_log_print_cb_stderr(d: *const EinaLogDomain,
+    pub fn eina_log_print_cb_stderr(d: *const Eina_Log_Domain,
                                     level: EinaLogLevel,
                                     file: *const c_char,
                                     fnc: *const c_char,
@@ -1571,7 +1555,7 @@ extern "C" {
                                     fmt: *const c_char,
                                     data: *mut c_void,
                                     args: va_list);
-    pub fn eina_log_print_cb_file(d: *const EinaLogDomain,
+    pub fn eina_log_print_cb_file(d: *const Eina_Log_Domain,
                                   level: EinaLogLevel,
                                   file: *const c_char,
                                   fnc: *const c_char,
@@ -1579,7 +1563,7 @@ extern "C" {
                                   fmt: *const c_char,
                                   data: *mut c_void,
                                   args: va_list);
-    pub fn eina_log_print_cb_journald(d: *const EinaLogDomain,
+    pub fn eina_log_print_cb_journald(d: *const Eina_Log_Domain,
                                       level: EinaLogLevel,
                                       file: *const c_char,
                                       fnc: *const c_char,
@@ -1595,80 +1579,80 @@ extern "C" {
                            phase: *const c_char);
     pub fn eina_inarray_new(member_size: c_uint,
                             step: c_uint)
-     -> *mut EinaInarray;
-    pub fn eina_inarray_free(array: *mut EinaInarray);
-    pub fn eina_inarray_step_set(array: *mut EinaInarray,
+     -> *mut Eina_Inarray;
+    pub fn eina_inarray_free(array: *mut Eina_Inarray);
+    pub fn eina_inarray_step_set(array: *mut Eina_Inarray,
                                  sizeof_eina_inarray: c_uint,
                                  member_size: c_uint,
                                  step: c_uint);
-    pub fn eina_inarray_flush(array: *mut EinaInarray);
-    pub fn eina_inarray_push(array: *mut EinaInarray,
+    pub fn eina_inarray_flush(array: *mut Eina_Inarray);
+    pub fn eina_inarray_push(array: *mut Eina_Inarray,
                              data: *const c_void)
      -> c_int;
-    pub fn eina_inarray_grow(array: *mut EinaInarray,
+    pub fn eina_inarray_grow(array: *mut Eina_Inarray,
                              size: c_uint)
      -> *mut c_void;
-    pub fn eina_inarray_insert(array: *mut EinaInarray,
+    pub fn eina_inarray_insert(array: *mut Eina_Inarray,
                                data: *const c_void,
                                compare: EinaCompareCb)
      -> c_int;
-    pub fn eina_inarray_insert_sorted(array: *mut EinaInarray,
+    pub fn eina_inarray_insert_sorted(array: *mut Eina_Inarray,
                                       data: *const c_void,
                                       compare: EinaCompareCb)
      -> c_int;
-    pub fn eina_inarray_remove(array: *mut EinaInarray,
+    pub fn eina_inarray_remove(array: *mut Eina_Inarray,
                                data: *const c_void)
      -> c_int;
-    pub fn eina_inarray_pop(array: *mut EinaInarray)
+    pub fn eina_inarray_pop(array: *mut Eina_Inarray)
      -> *mut c_void;
-    pub fn eina_inarray_nth(array: *const EinaInarray,
+    pub fn eina_inarray_nth(array: *const Eina_Inarray,
                             position: c_uint)
      -> *mut c_void;
-    pub fn eina_inarray_insert_at(array: *mut EinaInarray,
+    pub fn eina_inarray_insert_at(array: *mut Eina_Inarray,
                                   position: c_uint,
                                   data: *const c_void)
      -> EinaBool;
-    pub fn eina_inarray_alloc_at(array: *mut EinaInarray,
+    pub fn eina_inarray_alloc_at(array: *mut Eina_Inarray,
                                  position: c_uint,
                                  member_count: c_uint)
      -> *mut c_void;
-    pub fn eina_inarray_replace_at(array: *mut EinaInarray,
+    pub fn eina_inarray_replace_at(array: *mut Eina_Inarray,
                                    position: c_uint,
                                    data: *const c_void)
      -> EinaBool;
-    pub fn eina_inarray_remove_at(array: *mut EinaInarray,
+    pub fn eina_inarray_remove_at(array: *mut Eina_Inarray,
                                   position: c_uint)
      -> EinaBool;
-    pub fn eina_inarray_reverse(array: *mut EinaInarray);
-    pub fn eina_inarray_sort(array: *mut EinaInarray,
+    pub fn eina_inarray_reverse(array: *mut Eina_Inarray);
+    pub fn eina_inarray_sort(array: *mut Eina_Inarray,
                              compare: EinaCompareCb);
-    pub fn eina_inarray_search(array: *const EinaInarray,
+    pub fn eina_inarray_search(array: *const Eina_Inarray,
                                data: *const c_void,
                                compare: EinaCompareCb)
      -> c_int;
-    pub fn eina_inarray_search_sorted(array: *const EinaInarray,
+    pub fn eina_inarray_search_sorted(array: *const Eina_Inarray,
                                       data: *const c_void,
                                       compare: EinaCompareCb)
      -> c_int;
-    pub fn eina_inarray_foreach(array: *const EinaInarray,
+    pub fn eina_inarray_foreach(array: *const Eina_Inarray,
                                 function: EinaEachCb,
                                 user_data: *const c_void)
      -> EinaBool;
-    pub fn eina_inarray_foreach_remove(array: *mut EinaInarray,
+    pub fn eina_inarray_foreach_remove(array: *mut Eina_Inarray,
                                        _match: EinaEachCb,
                                        user_data:
                                            *const c_void)
      -> c_int;
-    pub fn eina_inarray_resize(array: *mut EinaInarray,
+    pub fn eina_inarray_resize(array: *mut Eina_Inarray,
                                new_size: c_uint) -> EinaBool;
-    pub fn eina_inarray_count(array: *const EinaInarray)
+    pub fn eina_inarray_count(array: *const Eina_Inarray)
      -> c_uint;
-    pub fn eina_inarray_iterator_new(array: *const EinaInarray)
-     -> *mut EinaIterator;
-    pub fn eina_inarray_iterator_reversed_new(array: *const EinaInarray)
-     -> *mut EinaIterator;
-    pub fn eina_inarray_accessor_new(array: *const EinaInarray)
-     -> *mut EinaAccessor;
+    pub fn eina_inarray_iterator_new(array: *const Eina_Inarray)
+     -> *mut Eina_Iterator;
+    pub fn eina_inarray_iterator_reversed_new(array: *const Eina_Inarray)
+     -> *mut Eina_Iterator;
+    pub fn eina_inarray_accessor_new(array: *const Eina_Inarray)
+     -> *mut Eina_Accessor;
     pub fn eina_binshare_add_length(obj: *const c_void,
                                     olen: c_uint)
      -> *const c_void;
@@ -1680,110 +1664,110 @@ extern "C" {
     pub fn eina_binshare_dump();
     pub fn eina_stringshare_add_length(str: *const c_char,
                                        slen: c_uint)
-     -> *mut EinaStringshare;
+     -> *mut Eina_Stringshare;
     pub fn eina_stringshare_add(str: *const c_char)
-     -> *mut EinaStringshare;
+     -> *mut Eina_Stringshare;
     pub fn eina_stringshare_printf(fmt: *const c_char, ...)
-     -> *mut EinaStringshare;
+     -> *mut Eina_Stringshare;
 //    pub fn eina_stringshare_vprintf(fmt: *const c_char,
-//                                    args: va_list) -> *mut EinaStringshare;
+//                                    args: va_list) -> *mut Eina_Stringshare;
     pub fn eina_stringshare_nprintf(len: c_uint,
                                     fmt: *const c_char, ...)
-     -> *mut EinaStringshare;
-    pub fn eina_stringshare_ref(str: *mut EinaStringshare)
-     -> *mut EinaStringshare;
-    pub fn eina_stringshare_del(str: *mut EinaStringshare);
-    pub fn eina_stringshare_strlen(str: *mut EinaStringshare)
+     -> *mut Eina_Stringshare;
+    pub fn eina_stringshare_ref(str: *mut Eina_Stringshare)
+     -> *mut Eina_Stringshare;
+    pub fn eina_stringshare_del(str: *mut Eina_Stringshare);
+    pub fn eina_stringshare_strlen(str: *mut Eina_Stringshare)
      -> c_int;
     pub fn eina_stringshare_dump();
-    pub fn eina_unicode_strlen(ustr: *const EinaUnicode) -> size_t;
-    pub fn eina_unicode_strnlen(ustr: *const EinaUnicode,
+    pub fn eina_unicode_strlen(ustr: *const Eina_Unicode) -> size_t;
+    pub fn eina_unicode_strnlen(ustr: *const Eina_Unicode,
                                 n: c_int) -> size_t;
-    pub fn eina_unicode_strdup(text: *const EinaUnicode)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_strndup(text: *const EinaUnicode, n: size_t)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_strcmp(a: *const EinaUnicode, b: *const EinaUnicode)
+    pub fn eina_unicode_strdup(text: *const Eina_Unicode)
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_strndup(text: *const Eina_Unicode, n: size_t)
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_strcmp(a: *const Eina_Unicode, b: *const Eina_Unicode)
      -> c_int;
-    pub fn eina_unicode_strcpy(dest: *mut EinaUnicode,
-                               source: *const EinaUnicode)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_strstr(haystack: *const EinaUnicode,
-                               needle: *const EinaUnicode)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_strncpy(dest: *mut EinaUnicode,
-                                source: *const EinaUnicode, n: size_t)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_escape(str: *const EinaUnicode) -> *mut EinaUnicode;
+    pub fn eina_unicode_strcpy(dest: *mut Eina_Unicode,
+                               source: *const Eina_Unicode)
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_strstr(haystack: *const Eina_Unicode,
+                               needle: *const Eina_Unicode)
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_strncpy(dest: *mut Eina_Unicode,
+                                source: *const Eina_Unicode, n: size_t)
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_escape(str: *const Eina_Unicode) -> *mut Eina_Unicode;
     pub fn eina_unicode_utf8_get_next(buf: *const c_char,
                                       iindex: *mut c_int)
-     -> EinaUnicode;
+     -> Eina_Unicode;
     pub fn eina_unicode_utf8_get_prev(buf: *const c_char,
                                       iindex: *mut c_int)
-     -> EinaUnicode;
+     -> Eina_Unicode;
     pub fn eina_unicode_utf8_get_len(buf: *const c_char)
      -> c_int;
     pub fn eina_unicode_utf8_to_unicode(utf: *const c_char,
                                         _len: *mut c_int)
-     -> *mut EinaUnicode;
-    pub fn eina_unicode_unicode_to_utf8(uni: *const EinaUnicode,
+     -> *mut Eina_Unicode;
+    pub fn eina_unicode_unicode_to_utf8(uni: *const Eina_Unicode,
                                         _len: *mut c_int)
      -> *mut c_char;
     pub fn _eina_unicode_utf8_next_get(ind: c_int,
                                        d: c_uchar,
                                        buf: *const c_char,
                                        iindex: *mut c_int)
-     -> EinaUnicode;
-    pub fn eina_ustringshare_add_length(str: *const EinaUnicode,
+     -> Eina_Unicode;
+    pub fn eina_ustringshare_add_length(str: *const Eina_Unicode,
                                         slen: c_uint)
-     -> *const EinaUnicode;
-    pub fn eina_ustringshare_add(str: *const EinaUnicode)
-     -> *const EinaUnicode;
-    pub fn eina_ustringshare_ref(str: *const EinaUnicode)
-     -> *const EinaUnicode;
-    pub fn eina_ustringshare_del(str: *const EinaUnicode);
-    pub fn eina_ustringshare_strlen(str: *const EinaUnicode)
+     -> *const Eina_Unicode;
+    pub fn eina_ustringshare_add(str: *const Eina_Unicode)
+     -> *const Eina_Unicode;
+    pub fn eina_ustringshare_ref(str: *const Eina_Unicode)
+     -> *const Eina_Unicode;
+    pub fn eina_ustringshare_del(str: *const Eina_Unicode);
+    pub fn eina_ustringshare_strlen(str: *const Eina_Unicode)
      -> c_int;
     pub fn eina_ustringshare_dump();
     pub fn eina_counter_new(name: *const c_char)
-     -> *mut EinaCounter;
-    pub fn eina_counter_free(counter: *mut EinaCounter);
-    pub fn eina_counter_start(counter: *mut EinaCounter);
-    pub fn eina_counter_stop(counter: *mut EinaCounter,
+     -> *mut Eina_Counter;
+    pub fn eina_counter_free(counter: *mut Eina_Counter);
+    pub fn eina_counter_start(counter: *mut Eina_Counter);
+    pub fn eina_counter_stop(counter: *mut Eina_Counter,
                              specimen: c_int);
-    pub fn eina_counter_dump(counter: *mut EinaCounter)
+    pub fn eina_counter_dump(counter: *mut Eina_Counter)
      -> *mut c_char;
-    pub fn eina_rbtree_inline_insert(root: *mut EinaRbtree,
-                                     node: *mut EinaRbtree,
+    pub fn eina_rbtree_inline_insert(root: *mut Eina_Rbtree,
+                                     node: *mut Eina_Rbtree,
                                      cmp: EinaRbtreeCmpNodeCb,
                                      data: *const c_void)
-     -> *mut EinaRbtree;
-    pub fn eina_rbtree_inline_remove(root: *mut EinaRbtree,
-                                     node: *mut EinaRbtree,
+     -> *mut Eina_Rbtree;
+    pub fn eina_rbtree_inline_remove(root: *mut Eina_Rbtree,
+                                     node: *mut Eina_Rbtree,
                                      cmp: EinaRbtreeCmpNodeCb,
                                      data: *const c_void)
-     -> *mut EinaRbtree;
-    pub fn eina_rbtree_delete(root: *mut EinaRbtree,
+     -> *mut Eina_Rbtree;
+    pub fn eina_rbtree_delete(root: *mut Eina_Rbtree,
                               func: EinaRbtreeFreeCb,
                               data: *mut c_void);
-    pub fn eina_rbtree_iterator_prefix(root: *const EinaRbtree)
-     -> *mut EinaIterator;
-    pub fn eina_rbtree_iterator_infix(root: *const EinaRbtree)
-     -> *mut EinaIterator;
-    pub fn eina_rbtree_iterator_postfix(root: *const EinaRbtree)
-     -> *mut EinaIterator;
+    pub fn eina_rbtree_iterator_prefix(root: *const Eina_Rbtree)
+     -> *mut Eina_Iterator;
+    pub fn eina_rbtree_iterator_infix(root: *const Eina_Rbtree)
+     -> *mut Eina_Iterator;
+    pub fn eina_rbtree_iterator_postfix(root: *const Eina_Rbtree)
+     -> *mut Eina_Iterator;
     pub fn eina_benchmark_new(name: *const c_char,
                               run: *const c_char)
-     -> *mut EinaBenchmark;
-    pub fn eina_benchmark_free(bench: *mut EinaBenchmark);
-    pub fn eina_benchmark_register(bench: *mut EinaBenchmark,
+     -> *mut Eina_Benchmark;
+    pub fn eina_benchmark_free(bench: *mut Eina_Benchmark);
+    pub fn eina_benchmark_register(bench: *mut Eina_Benchmark,
                                    name: *const c_char,
                                    bench_cb: EinaBenchmarkSpecimens,
                                    count_start: c_int,
                                    count_end: c_int,
                                    count_step: c_int)
      -> EinaBool;
-    pub fn eina_benchmark_run(bench: *mut EinaBenchmark) -> *mut EinaArray;
+    pub fn eina_benchmark_run(bench: *mut Eina_Benchmark) -> *mut Eina_Array;
     pub fn eina_convert_itoa(n: c_int,
                              s: *mut c_char)
      -> c_int;
@@ -1808,39 +1792,39 @@ extern "C" {
     pub fn eina_cpu_page_size() -> c_int;
     pub fn eina_sched_prio_drop();
     pub fn eina_tiler_new(w: c_int, h: c_int)
-     -> *mut EinaTiler;
-    pub fn eina_tiler_free(t: *mut EinaTiler);
-    pub fn eina_tiler_tile_size_set(t: *mut EinaTiler,
+     -> *mut Eina_Tiler;
+    pub fn eina_tiler_free(t: *mut Eina_Tiler);
+    pub fn eina_tiler_tile_size_set(t: *mut Eina_Tiler,
                                     w: c_int,
                                     h: c_int);
-    pub fn eina_tiler_area_size_set(t: *mut EinaTiler,
+    pub fn eina_tiler_area_size_set(t: *mut Eina_Tiler,
                                     w: c_int,
                                     h: c_int);
-    pub fn eina_tiler_area_size_get(t: *const EinaTiler,
+    pub fn eina_tiler_area_size_get(t: *const Eina_Tiler,
                                     w: *mut c_int,
                                     h: *mut c_int);
-    pub fn eina_tiler_strict_set(t: *mut EinaTiler, strict: EinaBool);
-    pub fn eina_tiler_empty(t: *mut EinaTiler) -> EinaBool;
-    pub fn eina_tiler_rect_add(t: *mut EinaTiler, r: *const EinaRectangle)
+    pub fn eina_tiler_strict_set(t: *mut Eina_Tiler, strict: EinaBool);
+    pub fn eina_tiler_empty(t: *mut Eina_Tiler) -> EinaBool;
+    pub fn eina_tiler_rect_add(t: *mut Eina_Tiler, r: *const Eina_Rectangle)
      -> EinaBool;
-    pub fn eina_tiler_rect_del(t: *mut EinaTiler, r: *const EinaRectangle);
-    pub fn eina_tiler_clear(t: *mut EinaTiler);
-    pub fn eina_tiler_iterator_new(t: *const EinaTiler)
-     -> *mut EinaIterator;
+    pub fn eina_tiler_rect_del(t: *mut Eina_Tiler, r: *const Eina_Rectangle);
+    pub fn eina_tiler_clear(t: *mut Eina_Tiler);
+    pub fn eina_tiler_iterator_new(t: *const Eina_Tiler)
+     -> *mut Eina_Iterator;
     pub fn eina_tile_grid_slicer_iterator_new(x: c_int,
                                               y: c_int,
                                               w: c_int,
                                               h: c_int,
                                               tile_w: c_int,
                                               tile_h: c_int)
-     -> *mut EinaIterator;
-    pub fn eina_tiler_union(dst: *mut EinaTiler, src: *mut EinaTiler)
+     -> *mut Eina_Iterator;
+    pub fn eina_tiler_union(dst: *mut Eina_Tiler, src: *mut Eina_Tiler)
      -> EinaBool;
-    pub fn eina_tiler_subtract(dst: *mut EinaTiler, src: *mut EinaTiler)
+    pub fn eina_tiler_subtract(dst: *mut Eina_Tiler, src: *mut Eina_Tiler)
      -> EinaBool;
-    pub fn eina_tiler_intersection(t1: *mut EinaTiler, t2: *mut EinaTiler)
-     -> *mut EinaTiler;
-    pub fn eina_tiler_equal(t1: *mut EinaTiler, t2: *mut EinaTiler)
+    pub fn eina_tiler_intersection(t1: *mut Eina_Tiler, t2: *mut Eina_Tiler)
+     -> *mut Eina_Tiler;
+    pub fn eina_tiler_equal(t1: *mut Eina_Tiler, t2: *mut Eina_Tiler)
      -> EinaBool;
     pub fn eina_thread_self() -> EinaThread;
     pub fn eina_thread_equal(t1: EinaThread, t2: EinaThread) -> EinaBool;
@@ -1862,47 +1846,47 @@ extern "C" {
                                                                                 cell_data:
                                                                                     *mut c_void)>,
                                  user_data: *const c_void)
-     -> *mut EinaMatrixsparse;
-    pub fn eina_matrixsparse_free(m: *mut EinaMatrixsparse);
-    pub fn eina_matrixsparse_size_get(m: *const EinaMatrixsparse,
+     -> *mut Eina_Matrixsparse;
+    pub fn eina_matrixsparse_free(m: *mut Eina_Matrixsparse);
+    pub fn eina_matrixsparse_size_get(m: *const Eina_Matrixsparse,
                                       rows: *mut c_ulong,
                                       cols: *mut c_ulong);
-    pub fn eina_matrixsparse_size_set(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_size_set(m: *mut Eina_Matrixsparse,
                                       rows: c_ulong,
                                       cols: c_ulong)
      -> EinaBool;
-    pub fn eina_matrixsparse_cell_idx_get(m: *const EinaMatrixsparse,
+    pub fn eina_matrixsparse_cell_idx_get(m: *const Eina_Matrixsparse,
                                           row: c_ulong,
                                           col: c_ulong,
                                           cell:
-                                              *mut *mut EinaMatrixsparseCell)
+                                              *mut *mut Eina_Matrixsparse_Cell)
      -> EinaBool;
     pub fn eina_matrixsparse_cell_data_get(cell:
-                                               *const EinaMatrixsparseCell)
+                                               *const Eina_Matrixsparse_Cell)
      -> *mut c_void;
-    pub fn eina_matrixsparse_data_idx_get(m: *const EinaMatrixsparse,
+    pub fn eina_matrixsparse_data_idx_get(m: *const Eina_Matrixsparse,
                                           row: c_ulong,
                                           col: c_ulong)
      -> *mut c_void;
     pub fn eina_matrixsparse_cell_position_get(cell:
-                                                   *const EinaMatrixsparseCell,
+                                                   *const Eina_Matrixsparse_Cell,
                                                row:
                                                    *mut c_ulong,
                                                col:
                                                    *mut c_ulong)
      -> EinaBool;
     pub fn eina_matrixsparse_cell_data_replace(cell:
-                                                   *mut EinaMatrixsparseCell,
+                                                   *mut Eina_Matrixsparse_Cell,
                                                data:
                                                    *const c_void,
                                                p_old:
                                                    *mut *mut c_void)
      -> EinaBool;
-    pub fn eina_matrixsparse_cell_data_set(cell: *mut EinaMatrixsparseCell,
+    pub fn eina_matrixsparse_cell_data_set(cell: *mut Eina_Matrixsparse_Cell,
                                            data:
                                                *const c_void)
      -> EinaBool;
-    pub fn eina_matrixsparse_data_idx_replace(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_data_idx_replace(m: *mut Eina_Matrixsparse,
                                               row: c_ulong,
                                               col: c_ulong,
                                               data:
@@ -1910,204 +1894,204 @@ extern "C" {
                                               p_old:
                                                   *mut *mut c_void)
      -> EinaBool;
-    pub fn eina_matrixsparse_data_idx_set(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_data_idx_set(m: *mut Eina_Matrixsparse,
                                           row: c_ulong,
                                           col: c_ulong,
                                           data: *const c_void)
      -> EinaBool;
-    pub fn eina_matrixsparse_row_idx_clear(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_row_idx_clear(m: *mut Eina_Matrixsparse,
                                            row: c_ulong)
      -> EinaBool;
-    pub fn eina_matrixsparse_column_idx_clear(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_column_idx_clear(m: *mut Eina_Matrixsparse,
                                               col: c_ulong)
      -> EinaBool;
-    pub fn eina_matrixsparse_cell_idx_clear(m: *mut EinaMatrixsparse,
+    pub fn eina_matrixsparse_cell_idx_clear(m: *mut Eina_Matrixsparse,
                                             row: c_ulong,
                                             col: c_ulong)
      -> EinaBool;
-    pub fn eina_matrixsparse_cell_clear(cell: *mut EinaMatrixsparseCell)
+    pub fn eina_matrixsparse_cell_clear(cell: *mut Eina_Matrixsparse_Cell)
      -> EinaBool;
-    pub fn eina_matrixsparse_iterator_new(m: *const EinaMatrixsparse)
-     -> *mut EinaIterator;
+    pub fn eina_matrixsparse_iterator_new(m: *const Eina_Matrixsparse)
+     -> *mut Eina_Iterator;
     pub fn eina_matrixsparse_iterator_complete_new(m:
-                                                       *const EinaMatrixsparse)
-     -> *mut EinaIterator;
-    pub fn eina_strbuf_new() -> *mut EinaStrbuf;
+                                                       *const Eina_Matrixsparse)
+     -> *mut Eina_Iterator;
+    pub fn eina_strbuf_new() -> *mut Eina_Strbuf;
     pub fn eina_strbuf_manage_new(str: *mut c_char)
-     -> *mut EinaStrbuf;
+     -> *mut Eina_Strbuf;
     pub fn eina_strbuf_manage_new_length(str: *mut c_char,
-                                         length: size_t) -> *mut EinaStrbuf;
+                                         length: size_t) -> *mut Eina_Strbuf;
     pub fn eina_strbuf_manage_read_only_new_length(str:
                                                        *const c_char,
                                                    length: size_t)
-     -> *mut EinaStrbuf;
-    pub fn eina_strbuf_free(buf: *mut EinaStrbuf);
-    pub fn eina_strbuf_reset(buf: *mut EinaStrbuf);
-    pub fn eina_strbuf_append(buf: *mut EinaStrbuf,
+     -> *mut Eina_Strbuf;
+    pub fn eina_strbuf_free(buf: *mut Eina_Strbuf);
+    pub fn eina_strbuf_reset(buf: *mut Eina_Strbuf);
+    pub fn eina_strbuf_append(buf: *mut Eina_Strbuf,
                               str: *const c_char)
      -> EinaBool;
-    pub fn eina_strbuf_append_escaped(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_append_escaped(buf: *mut Eina_Strbuf,
                                       str: *const c_char)
      -> EinaBool;
-    pub fn eina_strbuf_append_n(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_append_n(buf: *mut Eina_Strbuf,
                                 str: *const c_char,
                                 maxlen: size_t) -> EinaBool;
-    pub fn eina_strbuf_append_length(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_append_length(buf: *mut Eina_Strbuf,
                                      str: *const c_char,
                                      length: size_t) -> EinaBool;
-    pub fn eina_strbuf_append_buffer(buf: *mut EinaStrbuf,
-                                     data: *const EinaStrbuf) -> EinaBool;
-    pub fn eina_strbuf_append_char(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_append_buffer(buf: *mut Eina_Strbuf,
+                                     data: *const Eina_Strbuf) -> EinaBool;
+    pub fn eina_strbuf_append_char(buf: *mut Eina_Strbuf,
                                    c: c_char) -> EinaBool;
-    pub fn eina_strbuf_append_printf(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_append_printf(buf: *mut Eina_Strbuf,
                                      fmt: *const c_char, ...)
      -> EinaBool;
-/*    pub fn eina_strbuf_append_vprintf(buf: *mut EinaStrbuf,
+/*    pub fn eina_strbuf_append_vprintf(buf: *mut Eina_Strbuf,
                                       fmt: *const c_char,
                                       args: va_list) -> EinaBool;
 */
-    pub fn eina_strbuf_insert(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert(buf: *mut Eina_Strbuf,
                               str: *const c_char, pos: size_t)
      -> EinaBool;
-    pub fn eina_strbuf_insert_escaped(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert_escaped(buf: *mut Eina_Strbuf,
                                       str: *const c_char,
                                       pos: size_t) -> EinaBool;
-    pub fn eina_strbuf_insert_n(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert_n(buf: *mut Eina_Strbuf,
                                 str: *const c_char,
                                 maxlen: size_t, pos: size_t) -> EinaBool;
-    pub fn eina_strbuf_insert_length(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert_length(buf: *mut Eina_Strbuf,
                                      str: *const c_char,
                                      length: size_t, pos: size_t)
      -> EinaBool;
-    pub fn eina_strbuf_insert_char(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert_char(buf: *mut Eina_Strbuf,
                                    c: c_char, pos: size_t)
      -> EinaBool;
-    pub fn eina_strbuf_insert_printf(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_insert_printf(buf: *mut Eina_Strbuf,
                                      fmt: *const c_char,
                                      pos: size_t, ...) -> EinaBool;
-/*    pub fn eina_strbuf_insert_vprintf(buf: *mut EinaStrbuf,
+/*    pub fn eina_strbuf_insert_vprintf(buf: *mut Eina_Strbuf,
                                       fmt: *const c_char,
                                       pos: size_t, args: va_list)
      -> EinaBool;
 */
-    pub fn eina_strbuf_remove(buf: *mut EinaStrbuf, start: size_t,
+    pub fn eina_strbuf_remove(buf: *mut Eina_Strbuf, start: size_t,
                               end: size_t) -> EinaBool;
-    pub fn eina_strbuf_string_get(buf: *const EinaStrbuf)
+    pub fn eina_strbuf_string_get(buf: *const Eina_Strbuf)
      -> *const c_char;
-    pub fn eina_strbuf_string_steal(buf: *mut EinaStrbuf)
+    pub fn eina_strbuf_string_steal(buf: *mut Eina_Strbuf)
      -> *mut c_char;
-    pub fn eina_strbuf_string_free(buf: *mut EinaStrbuf);
-    pub fn eina_strbuf_length_get(buf: *const EinaStrbuf) -> size_t;
-    pub fn eina_strbuf_replace(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_string_free(buf: *mut Eina_Strbuf);
+    pub fn eina_strbuf_length_get(buf: *const Eina_Strbuf) -> size_t;
+    pub fn eina_strbuf_replace(buf: *mut Eina_Strbuf,
                                str: *const c_char,
                                with: *const c_char,
                                n: c_uint) -> EinaBool;
-    pub fn eina_strbuf_replace_all(buf: *mut EinaStrbuf,
+    pub fn eina_strbuf_replace_all(buf: *mut Eina_Strbuf,
                                    str: *const c_char,
                                    with: *const c_char)
      -> c_int;
-    pub fn eina_strbuf_trim(buf: *mut EinaStrbuf);
-    pub fn eina_strbuf_ltrim(buf: *mut EinaStrbuf);
-    pub fn eina_strbuf_rtrim(buf: *mut EinaStrbuf);
-    pub fn eina_binbuf_new() -> *mut EinaBinbuf;
+    pub fn eina_strbuf_trim(buf: *mut Eina_Strbuf);
+    pub fn eina_strbuf_ltrim(buf: *mut Eina_Strbuf);
+    pub fn eina_strbuf_rtrim(buf: *mut Eina_Strbuf);
+    pub fn eina_binbuf_new() -> *mut Eina_Binbuf;
     pub fn eina_binbuf_manage_new_length(str: *mut c_uchar,
-                                         length: size_t) -> *mut EinaBinbuf;
+                                         length: size_t) -> *mut Eina_Binbuf;
     pub fn eina_binbuf_manage_new(str: *const c_uchar,
                                   length: size_t, ro: EinaBool)
-     -> *mut EinaBinbuf;
+     -> *mut Eina_Binbuf;
     pub fn eina_binbuf_manage_read_only_new_length(str:
                                                        *const c_uchar,
                                                    length: size_t)
-     -> *mut EinaBinbuf;
-    pub fn eina_binbuf_free(buf: *mut EinaBinbuf);
-    pub fn eina_binbuf_reset(buf: *mut EinaBinbuf);
-    pub fn eina_binbuf_append_length(buf: *mut EinaBinbuf,
+     -> *mut Eina_Binbuf;
+    pub fn eina_binbuf_free(buf: *mut Eina_Binbuf);
+    pub fn eina_binbuf_reset(buf: *mut Eina_Binbuf);
+    pub fn eina_binbuf_append_length(buf: *mut Eina_Binbuf,
                                      str: *const c_uchar,
                                      length: size_t) -> EinaBool;
-    pub fn eina_binbuf_append_buffer(buf: *mut EinaBinbuf,
-                                     data: *const EinaBinbuf) -> EinaBool;
-    pub fn eina_binbuf_append_char(buf: *mut EinaBinbuf,
+    pub fn eina_binbuf_append_buffer(buf: *mut Eina_Binbuf,
+                                     data: *const Eina_Binbuf) -> EinaBool;
+    pub fn eina_binbuf_append_char(buf: *mut Eina_Binbuf,
                                    c: c_uchar) -> EinaBool;
-    pub fn eina_binbuf_insert_length(buf: *mut EinaBinbuf,
+    pub fn eina_binbuf_insert_length(buf: *mut Eina_Binbuf,
                                      str: *const c_uchar,
                                      length: size_t, pos: size_t)
      -> EinaBool;
-    pub fn eina_binbuf_insert_char(buf: *mut EinaBinbuf,
+    pub fn eina_binbuf_insert_char(buf: *mut Eina_Binbuf,
                                    c: c_uchar, pos: size_t)
      -> EinaBool;
-    pub fn eina_binbuf_remove(buf: *mut EinaBinbuf, start: size_t,
+    pub fn eina_binbuf_remove(buf: *mut Eina_Binbuf, start: size_t,
                               end: size_t) -> EinaBool;
-    pub fn eina_binbuf_string_get(buf: *const EinaBinbuf)
+    pub fn eina_binbuf_string_get(buf: *const Eina_Binbuf)
      -> *const c_uchar;
-    pub fn eina_binbuf_string_steal(buf: *mut EinaBinbuf)
+    pub fn eina_binbuf_string_steal(buf: *mut Eina_Binbuf)
      -> *mut c_uchar;
-    pub fn eina_binbuf_string_free(buf: *mut EinaBinbuf);
-    pub fn eina_binbuf_length_get(buf: *const EinaBinbuf) -> size_t;
-    pub fn eina_ustrbuf_new() -> *mut EinaUStrbuf;
-    pub fn eina_ustrbuf_manage_new(str: *mut EinaUnicode)
-     -> *mut EinaUStrbuf;
-    pub fn eina_ustrbuf_manage_new_length(str: *mut EinaUnicode,
+    pub fn eina_binbuf_string_free(buf: *mut Eina_Binbuf);
+    pub fn eina_binbuf_length_get(buf: *const Eina_Binbuf) -> size_t;
+    pub fn eina_ustrbuf_new() -> *mut Eina_UStrbuf;
+    pub fn eina_ustrbuf_manage_new(str: *mut Eina_Unicode)
+     -> *mut Eina_UStrbuf;
+    pub fn eina_ustrbuf_manage_new_length(str: *mut Eina_Unicode,
                                           length: size_t)
-     -> *mut EinaUStrbuf;
-    pub fn eina_ustrbuf_free(buf: *mut EinaUStrbuf);
-    pub fn eina_ustrbuf_reset(buf: *mut EinaUStrbuf);
-    pub fn eina_ustrbuf_append(buf: *mut EinaUStrbuf,
-                               str: *const EinaUnicode) -> EinaBool;
-    pub fn eina_ustrbuf_append_escaped(buf: *mut EinaUStrbuf,
-                                       str: *const EinaUnicode) -> EinaBool;
-    pub fn eina_ustrbuf_append_n(buf: *mut EinaUStrbuf,
-                                 str: *const EinaUnicode, maxlen: size_t)
+     -> *mut Eina_UStrbuf;
+    pub fn eina_ustrbuf_free(buf: *mut Eina_UStrbuf);
+    pub fn eina_ustrbuf_reset(buf: *mut Eina_UStrbuf);
+    pub fn eina_ustrbuf_append(buf: *mut Eina_UStrbuf,
+                               str: *const Eina_Unicode) -> EinaBool;
+    pub fn eina_ustrbuf_append_escaped(buf: *mut Eina_UStrbuf,
+                                       str: *const Eina_Unicode) -> EinaBool;
+    pub fn eina_ustrbuf_append_n(buf: *mut Eina_UStrbuf,
+                                 str: *const Eina_Unicode, maxlen: size_t)
      -> EinaBool;
-    pub fn eina_ustrbuf_append_length(buf: *mut EinaUStrbuf,
-                                      str: *const EinaUnicode,
+    pub fn eina_ustrbuf_append_length(buf: *mut Eina_UStrbuf,
+                                      str: *const Eina_Unicode,
                                       length: size_t) -> EinaBool;
-    pub fn eina_ustrbuf_append_char(buf: *mut EinaUStrbuf, c: EinaUnicode)
+    pub fn eina_ustrbuf_append_char(buf: *mut Eina_UStrbuf, c: Eina_Unicode)
      -> EinaBool;
-    pub fn eina_ustrbuf_insert(buf: *mut EinaUStrbuf,
-                               str: *const EinaUnicode, pos: size_t)
+    pub fn eina_ustrbuf_insert(buf: *mut Eina_UStrbuf,
+                               str: *const Eina_Unicode, pos: size_t)
      -> EinaBool;
-    pub fn eina_ustrbuf_insert_escaped(buf: *mut EinaUStrbuf,
-                                       str: *const EinaUnicode, pos: size_t)
+    pub fn eina_ustrbuf_insert_escaped(buf: *mut Eina_UStrbuf,
+                                       str: *const Eina_Unicode, pos: size_t)
      -> EinaBool;
-    pub fn eina_ustrbuf_insert_n(buf: *mut EinaUStrbuf,
-                                 str: *const EinaUnicode, maxlen: size_t,
+    pub fn eina_ustrbuf_insert_n(buf: *mut Eina_UStrbuf,
+                                 str: *const Eina_Unicode, maxlen: size_t,
                                  pos: size_t) -> EinaBool;
-    pub fn eina_ustrbuf_insert_length(buf: *mut EinaUStrbuf,
-                                      str: *const EinaUnicode,
+    pub fn eina_ustrbuf_insert_length(buf: *mut Eina_UStrbuf,
+                                      str: *const Eina_Unicode,
                                       length: size_t, pos: size_t)
      -> EinaBool;
-    pub fn eina_ustrbuf_insert_char(buf: *mut EinaUStrbuf, c: EinaUnicode,
+    pub fn eina_ustrbuf_insert_char(buf: *mut Eina_UStrbuf, c: Eina_Unicode,
                                     pos: size_t) -> EinaBool;
-    pub fn eina_ustrbuf_remove(buf: *mut EinaUStrbuf, start: size_t,
+    pub fn eina_ustrbuf_remove(buf: *mut Eina_UStrbuf, start: size_t,
                                end: size_t) -> EinaBool;
-    pub fn eina_ustrbuf_string_get(buf: *const EinaUStrbuf)
-     -> *const EinaUnicode;
-    pub fn eina_ustrbuf_string_steal(buf: *mut EinaUStrbuf)
-     -> *mut EinaUnicode;
-    pub fn eina_ustrbuf_string_free(buf: *mut EinaUStrbuf);
-    pub fn eina_ustrbuf_length_get(buf: *const EinaUStrbuf) -> size_t;
+    pub fn eina_ustrbuf_string_get(buf: *const Eina_UStrbuf)
+     -> *const Eina_Unicode;
+    pub fn eina_ustrbuf_string_steal(buf: *mut Eina_UStrbuf)
+     -> *mut Eina_Unicode;
+    pub fn eina_ustrbuf_string_free(buf: *mut Eina_UStrbuf);
+    pub fn eina_ustrbuf_length_get(buf: *const Eina_UStrbuf) -> size_t;
     pub fn eina_quadtree_new(w: size_t, h: size_t,
                              vertical: EinaQuadCallback,
                              horizontal: EinaQuadCallback)
-     -> *mut EinaQuadTree;
-    pub fn eina_quadtree_free(q: *mut EinaQuadTree);
-    pub fn eina_quadtree_resize(q: *mut EinaQuadTree, w: size_t, h: size_t);
-    pub fn eina_quadtree_cycle(q: *mut EinaQuadTree);
-    pub fn eina_quadtree_increase(object: *mut EinaQuadTreeItem);
-    pub fn eina_quadtree_add(q: *mut EinaQuadTree,
+     -> *mut Eina_Quad_Tree;
+    pub fn eina_quadtree_free(q: *mut Eina_Quad_Tree);
+    pub fn eina_quadtree_resize(q: *mut Eina_Quad_Tree, w: size_t, h: size_t);
+    pub fn eina_quadtree_cycle(q: *mut Eina_Quad_Tree);
+    pub fn eina_quadtree_increase(object: *mut Eina_Quad_Tree_Item);
+    pub fn eina_quadtree_add(q: *mut Eina_Quad_Tree,
                              object: *const c_void)
-     -> *mut EinaQuadTreeItem;
-    pub fn eina_quadtree_del(object: *mut EinaQuadTreeItem) -> EinaBool;
-    pub fn eina_quadtree_change(object: *mut EinaQuadTreeItem) -> EinaBool;
-    pub fn eina_quadtree_hide(object: *mut EinaQuadTreeItem) -> EinaBool;
-    pub fn eina_quadtree_show(object: *mut EinaQuadTreeItem) -> EinaBool;
-    pub fn eina_quadtree_collide(q: *mut EinaQuadTree,
+     -> *mut Eina_Quad_Tree_Item;
+    pub fn eina_quadtree_del(object: *mut Eina_Quad_Tree_Item) -> EinaBool;
+    pub fn eina_quadtree_change(object: *mut Eina_Quad_Tree_Item) -> EinaBool;
+    pub fn eina_quadtree_hide(object: *mut Eina_Quad_Tree_Item) -> EinaBool;
+    pub fn eina_quadtree_show(object: *mut Eina_Quad_Tree_Item) -> EinaBool;
+    pub fn eina_quadtree_collide(q: *mut Eina_Quad_Tree,
                                  x: c_int,
                                  y: c_int,
                                  w: c_int,
                                  h: c_int)
-     -> *mut EinaInlist;
-    pub fn eina_quadtree_object(list: *mut EinaInlist)
+     -> *mut Eina_Inlist;
+    pub fn eina_quadtree_object(list: *mut Eina_Inlist)
      -> *mut c_void;
     pub fn eina_simple_xml_parse(buf: *const c_char,
                                  buflen: c_uint,
@@ -2134,71 +2118,71 @@ extern "C" {
                                                    *const c_void)
      -> EinaBool;
     pub fn eina_simple_xml_attribute_new(parent:
-                                             *mut EinaSimpleXmlNodeTag,
+                                             *mut Eina_Simple_Xml_Node_Tag,
                                          key: *const c_char,
                                          value: *const c_char)
-     -> *mut EinaSimpleXmlAttribute;
+     -> *mut Eina_Simple_Xml_Attribute;
     pub fn eina_simple_xml_attribute_free(attr:
-                                              *mut EinaSimpleXmlAttribute);
-    pub fn eina_simple_xml_node_tag_new(parent: *mut EinaSimpleXmlNodeTag,
+                                              *mut Eina_Simple_Xml_Attribute);
+    pub fn eina_simple_xml_node_tag_new(parent: *mut Eina_Simple_Xml_Node_Tag,
                                         name: *const c_char)
-     -> *mut EinaSimpleXmlNodeTag;
-    pub fn eina_simple_xml_node_tag_free(tag: *mut EinaSimpleXmlNodeTag);
+     -> *mut Eina_Simple_Xml_Node_Tag;
+    pub fn eina_simple_xml_node_tag_free(tag: *mut Eina_Simple_Xml_Node_Tag);
     pub fn eina_simple_xml_node_data_new(parent:
-                                             *mut EinaSimpleXmlNodeTag,
+                                             *mut Eina_Simple_Xml_Node_Tag,
                                          contents:
                                              *const c_char,
                                          length: size_t)
-     -> *mut EinaSimpleXmlNodeData;
+     -> *mut Eina_Simple_Xml_Node_Data;
     pub fn eina_simple_xml_node_data_free(node:
-                                              *mut EinaSimpleXmlNodeData);
+                                              *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_cdata_new(parent:
-                                              *mut EinaSimpleXmlNodeTag,
+                                              *mut Eina_Simple_Xml_Node_Tag,
                                           contents:
                                               *const c_char,
                                           length: size_t)
-     -> *mut EinaSimpleXmlNodeCData;
+     -> *mut Eina_Simple_Xml_Node_CData;
     pub fn eina_simple_xml_node_cdata_free(node:
-                                               *mut EinaSimpleXmlNodeData);
+                                               *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_doctype_child_new(parent:
-                                                      *mut EinaSimpleXmlNodeTag,
+                                                      *mut Eina_Simple_Xml_Node_Tag,
                                                   contents:
                                                       *const c_char,
                                                   length: size_t)
-     -> *mut EinaSimpleXmlNodeDoctypeChild;
+     -> *mut Eina_Simple_Xml_Node_DoctypeChild;
     pub fn eina_simple_xml_node_doctype_child_free(node:
-                                                       *mut EinaSimpleXmlNodeData);
+                                                       *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_processing_new(parent:
-                                                   *mut EinaSimpleXmlNodeTag,
+                                                   *mut Eina_Simple_Xml_Node_Tag,
                                                contents:
                                                    *const c_char,
                                                length: size_t)
-     -> *mut EinaSimpleXmlNodeProcessing;
+     -> *mut Eina_Simple_Xml_Node_Processing;
     pub fn eina_simple_xml_node_processing_free(node:
-                                                    *mut EinaSimpleXmlNodeData);
+                                                    *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_doctype_new(parent:
-                                                *mut EinaSimpleXmlNodeTag,
+                                                *mut Eina_Simple_Xml_Node_Tag,
                                             contents:
                                                 *const c_char,
                                             length: size_t)
-     -> *mut EinaSimpleXmlNodeDoctype;
+     -> *mut Eina_Simple_Xml_Node_Doctype;
     pub fn eina_simple_xml_node_doctype_free(node:
-                                                 *mut EinaSimpleXmlNodeData);
+                                                 *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_comment_new(parent:
-                                                *mut EinaSimpleXmlNodeTag,
+                                                *mut Eina_Simple_Xml_Node_Tag,
                                             contents:
                                                 *const c_char,
                                             length: size_t)
-     -> *mut EinaSimpleXmlNodeComment;
+     -> *mut Eina_Simple_Xml_Node_Comment;
     pub fn eina_simple_xml_node_comment_free(node:
-                                                 *mut EinaSimpleXmlNodeData);
+                                                 *mut Eina_Simple_Xml_Node_Data);
     pub fn eina_simple_xml_node_load(buf: *const c_char,
                                      buflen: c_uint,
                                      strip: EinaBool)
-     -> *mut EinaSimpleXmlNodeRoot;
+     -> *mut Eina_Simple_Xml_Node_Root;
     pub fn eina_simple_xml_node_root_free(root:
-                                              *mut EinaSimpleXmlNodeRoot);
-    pub fn eina_simple_xml_node_dump(node: *mut EinaSimpleXmlNode,
+                                              *mut Eina_Simple_Xml_Node_Root);
+    pub fn eina_simple_xml_node_dump(node: *mut Eina_Simple_Xml_Node,
                                      indent: *const c_char)
      -> *mut c_char;
     pub fn eina_prefix_new(argv0: *const c_char,
@@ -2210,27 +2194,27 @@ extern "C" {
                            pkg_lib: *const c_char,
                            pkg_data: *const c_char,
                            pkg_locale: *const c_char)
-     -> *mut EinaPrefix;
-    pub fn eina_prefix_free(pfx: *mut EinaPrefix);
-    pub fn eina_prefix_get(pfx: *mut EinaPrefix)
+     -> *mut Eina_Prefix;
+    pub fn eina_prefix_free(pfx: *mut Eina_Prefix);
+    pub fn eina_prefix_get(pfx: *mut Eina_Prefix)
      -> *const c_char;
-    pub fn eina_prefix_bin_get(pfx: *mut EinaPrefix)
+    pub fn eina_prefix_bin_get(pfx: *mut Eina_Prefix)
      -> *const c_char;
-    pub fn eina_prefix_lib_get(pfx: *mut EinaPrefix)
+    pub fn eina_prefix_lib_get(pfx: *mut Eina_Prefix)
      -> *const c_char;
-    pub fn eina_prefix_data_get(pfx: *mut EinaPrefix)
+    pub fn eina_prefix_data_get(pfx: *mut Eina_Prefix)
      -> *const c_char;
-    pub fn eina_prefix_locale_get(pfx: *mut EinaPrefix)
+    pub fn eina_prefix_locale_get(pfx: *mut Eina_Prefix)
      -> *const c_char;
     pub fn eina_mmap_safety_enabled_set(enabled: EinaBool) -> EinaBool;
     pub fn eina_mmap_safety_enabled_get() -> EinaBool;
     pub fn eina_xattr_ls(file: *const c_char)
-     -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
     pub fn eina_xattr_value_ls(file: *const c_char)
-     -> *mut EinaIterator;
-    pub fn eina_xattr_fd_ls(fd: c_int) -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
+    pub fn eina_xattr_fd_ls(fd: c_int) -> *mut Eina_Iterator;
     pub fn eina_xattr_value_fd_ls(fd: c_int)
-     -> *mut EinaIterator;
+     -> *mut Eina_Iterator;
     pub fn eina_xattr_copy(src: *const c_char,
                            dst: *const c_char) -> EinaBool;
     pub fn eina_xattr_fd_copy(src: c_int,
@@ -2280,87 +2264,87 @@ extern "C" {
     pub fn eina_xattr_int_get(file: *const c_char,
                               attribute: *const c_char,
                               value: *mut c_int) -> EinaBool;
-    pub fn eina_value_new(_type: *const EinaValueType) -> *mut EinaValue;
-    pub fn eina_value_free(value: *mut EinaValue);
-    pub fn eina_value_copy(value: *const EinaValue, copy: *mut EinaValue)
+    pub fn eina_value_new(_type: *const Eina_Value_Type) -> *mut Eina_Value;
+    pub fn eina_value_free(value: *mut Eina_Value);
+    pub fn eina_value_copy(value: *const Eina_Value, copy: *mut Eina_Value)
      -> EinaBool;
-    pub fn eina_value_convert(value: *const EinaValue,
-                              convert: *mut EinaValue) -> EinaBool;
-    pub fn eina_value_to_string(value: *const EinaValue)
+    pub fn eina_value_convert(value: *const Eina_Value,
+                              convert: *mut Eina_Value) -> EinaBool;
+    pub fn eina_value_to_string(value: *const Eina_Value)
      -> *mut c_char;
-    pub fn eina_value_array_new(subtype: *const EinaValueType,
+    pub fn eina_value_array_new(subtype: *const Eina_Value_Type,
                                 step: c_uint)
-     -> *mut EinaValue;
-    pub fn eina_value_list_new(subtype: *const EinaValueType)
-     -> *mut EinaValue;
-    pub fn eina_value_hash_new(subtype: *const EinaValueType,
+     -> *mut Eina_Value;
+    pub fn eina_value_list_new(subtype: *const Eina_Value_Type)
+     -> *mut Eina_Value;
+    pub fn eina_value_hash_new(subtype: *const Eina_Value_Type,
                                buckets_power_size: c_uint)
-     -> *mut EinaValue;
-    pub fn eina_value_struct_new(desc: *const EinaValueStructDesc)
-     -> *mut EinaValue;
-    pub fn eina_value_type_name_get(_type: *const EinaValueType)
+     -> *mut Eina_Value;
+    pub fn eina_value_struct_new(desc: *const Eina_Value_Struct_Desc)
+     -> *mut Eina_Value;
+    pub fn eina_value_type_name_get(_type: *const Eina_Value_Type)
      -> *const c_char;
-    pub fn eina_value_type_check(_type: *const EinaValueType) -> EinaBool;
+    pub fn eina_value_type_check(_type: *const Eina_Value_Type) -> EinaBool;
     pub fn eina_value_inner_alloc(size: size_t)
      -> *mut c_void;
     pub fn eina_value_inner_free(size: size_t,
                                  mem: *mut c_void);
-    pub fn eina_value_struct_member_find(st: *const EinaValueStruct,
+    pub fn eina_value_struct_member_find(st: *const Eina_Value_Struct,
                                          name: *const c_char)
-     -> *const EinaValueStructMember;
-    pub fn eina_value_util_struct_desc_new() -> *mut EinaValueStructDesc;
+     -> *const Eina_Value_Struct_Member;
+    pub fn eina_value_util_struct_desc_new() -> *mut Eina_Value_Struct_Desc;
     pub fn eina_value_util_time_string_new(timestr:
                                                *const c_char)
-     -> *mut EinaValue;
+     -> *mut Eina_Value;
     pub fn eina_cow_add(name: *const c_char,
                         struct_size: c_uint,
                         step: c_uint,
                         default_value: *const c_void,
-                        gc: EinaBool) -> *mut EinaCow;
-    pub fn eina_cow_del(cow: *mut EinaCow);
-    pub fn eina_cow_alloc(cow: *mut EinaCow) -> *const EinaCowData;
-    pub fn eina_cow_free(cow: *mut EinaCow, data: *mut *const EinaCowData);
-    pub fn eina_cow_write(cow: *mut EinaCow,
-                          src: *const *const EinaCowData)
+                        gc: EinaBool) -> *mut Eina_Cow;
+    pub fn eina_cow_del(cow: *mut Eina_Cow);
+    pub fn eina_cow_alloc(cow: *mut Eina_Cow) -> *const Eina_Cow_Data;
+    pub fn eina_cow_free(cow: *mut Eina_Cow, data: *mut *const Eina_Cow_Data);
+    pub fn eina_cow_write(cow: *mut Eina_Cow,
+                          src: *const *const Eina_Cow_Data)
      -> *mut c_void;
-    pub fn eina_cow_done(cow: *mut EinaCow, dst: *const *const EinaCowData,
+    pub fn eina_cow_done(cow: *mut Eina_Cow, dst: *const *const Eina_Cow_Data,
                          data: *const c_void,
                          needed_gc: EinaBool);
-    pub fn eina_cow_memcpy(cow: *mut EinaCow,
-                           dst: *const *const EinaCowData,
-                           src: *const EinaCowData);
-    pub fn eina_cow_gc(cow: *mut EinaCow) -> EinaBool;
-    pub fn eina_thread_queue_new() -> *mut EinaThreadQueue;
-    pub fn eina_thread_queue_free(thq: *mut EinaThreadQueue);
-    pub fn eina_thread_queue_send(thq: *mut EinaThreadQueue,
+    pub fn eina_cow_memcpy(cow: *mut Eina_Cow,
+                           dst: *const *const Eina_Cow_Data,
+                           src: *const Eina_Cow_Data);
+    pub fn eina_cow_gc(cow: *mut Eina_Cow) -> EinaBool;
+    pub fn eina_thread_queue_new() -> *mut Eina_Thread_Queue;
+    pub fn eina_thread_queue_free(thq: *mut Eina_Thread_Queue);
+    pub fn eina_thread_queue_send(thq: *mut Eina_Thread_Queue,
                                   size: c_int,
                                   allocref: *mut *mut c_void)
      -> *mut c_void;
-    pub fn eina_thread_queue_send_done(thq: *mut EinaThreadQueue,
+    pub fn eina_thread_queue_send_done(thq: *mut Eina_Thread_Queue,
                                        allocref: *mut c_void);
-    pub fn eina_thread_queue_wait(thq: *mut EinaThreadQueue,
+    pub fn eina_thread_queue_wait(thq: *mut Eina_Thread_Queue,
                                   allocref: *mut *mut c_void)
      -> *mut c_void;
-    pub fn eina_thread_queue_wait_done(thq: *mut EinaThreadQueue,
+    pub fn eina_thread_queue_wait_done(thq: *mut Eina_Thread_Queue,
                                        allocref: *mut c_void);
-    pub fn eina_thread_queue_poll(thq: *mut EinaThreadQueue,
+    pub fn eina_thread_queue_poll(thq: *mut Eina_Thread_Queue,
                                   allocref: *mut *mut c_void)
      -> *mut c_void;
-    pub fn eina_thread_queue_pending_get(thq: *const EinaThreadQueue)
+    pub fn eina_thread_queue_pending_get(thq: *const Eina_Thread_Queue)
      -> c_int;
-    pub fn eina_thread_queue_parent_set(thq: *mut EinaThreadQueue,
-                                        thq_parent: *mut EinaThreadQueue);
-    pub fn eina_thread_queue_parent_get(thq: *const EinaThreadQueue)
-     -> *mut EinaThreadQueue;
-    pub fn eina_thread_queue_fd_set(thq: *mut EinaThreadQueue,
+    pub fn eina_thread_queue_parent_set(thq: *mut Eina_Thread_Queue,
+                                        thq_parent: *mut Eina_Thread_Queue);
+    pub fn eina_thread_queue_parent_get(thq: *const Eina_Thread_Queue)
+     -> *mut Eina_Thread_Queue;
+    pub fn eina_thread_queue_fd_set(thq: *mut Eina_Thread_Queue,
                                     fd: c_int);
-    pub fn eina_thread_queue_fd_get(thq: *const EinaThreadQueue)
+    pub fn eina_thread_queue_fd_get(thq: *const Eina_Thread_Queue)
      -> c_int;
-    pub fn eina_quad_rectangle_to(q: *const EinaQuad,
-                                  r: *mut EinaRectangle);
-    pub fn eina_quad_rectangle_from(q: *mut EinaQuad,
-                                    r: *const EinaRectangle);
-    pub fn eina_quad_coords_set(q: *mut EinaQuad,
+    pub fn eina_quad_rectangle_to(q: *const Eina_Quad,
+                                  r: *mut Eina_Rectangle);
+    pub fn eina_quad_rectangle_from(q: *mut Eina_Quad,
+                                    r: *const Eina_Rectangle);
+    pub fn eina_quad_coords_set(q: *mut Eina_Quad,
                                 x1: c_double,
                                 y1: c_double,
                                 x2: c_double,
@@ -2369,7 +2353,7 @@ extern "C" {
                                 y3: c_double,
                                 x4: c_double,
                                 y4: c_double);
-    pub fn eina_quad_coords_get(q: *const EinaQuad,
+    pub fn eina_quad_coords_get(q: *const Eina_Quad,
                                 x1: *mut c_double,
                                 y1: *mut c_double,
                                 x2: *mut c_double,
@@ -2378,14 +2362,14 @@ extern "C" {
                                 y3: *mut c_double,
                                 x4: *mut c_double,
                                 y4: *mut c_double);
-    pub fn eina_matrix3_f16p16_identity(m: *mut EinaMatrix3F16p16);
-    pub fn eina_matrix3_f16p16_compose(m1: *const EinaMatrix3F16p16,
-                                       m2: *const EinaMatrix3F16p16,
-                                       dst: *mut EinaMatrix3F16p16);
-    pub fn eina_matrix3_f16p16_type_get(m: *const EinaMatrix3F16p16)
+    pub fn eina_matrix3_f16p16_identity(m: *mut Eina_Matrix3_F16p16);
+    pub fn eina_matrix3_f16p16_compose(m1: *const Eina_Matrix3_F16p16,
+                                       m2: *const Eina_Matrix3_F16p16,
+                                       dst: *mut Eina_Matrix3_F16p16);
+    pub fn eina_matrix3_f16p16_type_get(m: *const Eina_Matrix3_F16p16)
      -> EinaMatrixType;
-    pub fn eina_matrix3_type_get(m: *const EinaMatrix3) -> EinaMatrixType;
-    pub fn eina_matrix3_values_set(m: *mut EinaMatrix3,
+    pub fn eina_matrix3_type_get(m: *const Eina_Matrix3) -> EinaMatrixType;
+    pub fn eina_matrix3_values_set(m: *mut Eina_Matrix3,
                                    xx: c_double,
                                    xy: c_double,
                                    xz: c_double,
@@ -2395,7 +2379,7 @@ extern "C" {
                                    zx: c_double,
                                    zy: c_double,
                                    zz: c_double);
-    pub fn eina_matrix3_values_get(m: *const EinaMatrix3,
+    pub fn eina_matrix3_values_get(m: *const Eina_Matrix3,
                                    xx: *mut c_double,
                                    xy: *mut c_double,
                                    xz: *mut c_double,
@@ -2405,7 +2389,7 @@ extern "C" {
                                    zx: *mut c_double,
                                    zy: *mut c_double,
                                    zz: *mut c_double);
-    pub fn eina_matrix3_fixed_values_get(m: *const EinaMatrix3,
+    pub fn eina_matrix3_fixed_values_get(m: *const Eina_Matrix3,
                                          xx: *mut EinaF16p16,
                                          xy: *mut EinaF16p16,
                                          xz: *mut EinaF16p16,
@@ -2415,50 +2399,50 @@ extern "C" {
                                          zx: *mut EinaF16p16,
                                          zy: *mut EinaF16p16,
                                          zz: *mut EinaF16p16);
-    pub fn eina_matrix3_matrix3_f16p16_to(m: *const EinaMatrix3,
-                                          fm: *mut EinaMatrix3F16p16);
-    pub fn eina_matrix3_equal(m1: *const EinaMatrix3,
-                              m2: *const EinaMatrix3) -> EinaBool;
-    pub fn eina_matrix3_compose(m1: *const EinaMatrix3,
-                                m2: *const EinaMatrix3,
-                                dst: *mut EinaMatrix3);
-    pub fn eina_matrix3_translate(t: *mut EinaMatrix3,
+    pub fn eina_matrix3_matrix3_f16p16_to(m: *const Eina_Matrix3,
+                                          fm: *mut Eina_Matrix3_F16p16);
+    pub fn eina_matrix3_equal(m1: *const Eina_Matrix3,
+                              m2: *const Eina_Matrix3) -> EinaBool;
+    pub fn eina_matrix3_compose(m1: *const Eina_Matrix3,
+                                m2: *const Eina_Matrix3,
+                                dst: *mut Eina_Matrix3);
+    pub fn eina_matrix3_translate(t: *mut Eina_Matrix3,
                                   tx: c_double,
                                   ty: c_double);
-    pub fn eina_matrix3_scale(t: *mut EinaMatrix3,
+    pub fn eina_matrix3_scale(t: *mut Eina_Matrix3,
                               sx: c_double,
                               sy: c_double);
-    pub fn eina_matrix3_rotate(t: *mut EinaMatrix3,
+    pub fn eina_matrix3_rotate(t: *mut Eina_Matrix3,
                                rad: c_double);
-    pub fn eina_matrix3_identity(t: *mut EinaMatrix3);
-    pub fn eina_matrix3_determinant(m: *const EinaMatrix3)
+    pub fn eina_matrix3_identity(t: *mut Eina_Matrix3);
+    pub fn eina_matrix3_determinant(m: *const Eina_Matrix3)
      -> c_double;
-    pub fn eina_matrix3_divide(m: *mut EinaMatrix3,
+    pub fn eina_matrix3_divide(m: *mut Eina_Matrix3,
                                scalar: c_double);
-    pub fn eina_matrix3_inverse(m: *const EinaMatrix3,
-                                m2: *mut EinaMatrix3);
-    pub fn eina_matrix3_transpose(m: *const EinaMatrix3,
-                                  a: *mut EinaMatrix3);
-    pub fn eina_matrix3_cofactor(m: *const EinaMatrix3,
-                                 a: *mut EinaMatrix3);
-    pub fn eina_matrix3_adjoint(m: *const EinaMatrix3, a: *mut EinaMatrix3);
-    pub fn eina_matrix3_point_transform(m: *const EinaMatrix3,
+    pub fn eina_matrix3_inverse(m: *const Eina_Matrix3,
+                                m2: *mut Eina_Matrix3);
+    pub fn eina_matrix3_transpose(m: *const Eina_Matrix3,
+                                  a: *mut Eina_Matrix3);
+    pub fn eina_matrix3_cofactor(m: *const Eina_Matrix3,
+                                 a: *mut Eina_Matrix3);
+    pub fn eina_matrix3_adjoint(m: *const Eina_Matrix3, a: *mut Eina_Matrix3);
+    pub fn eina_matrix3_point_transform(m: *const Eina_Matrix3,
                                         x: c_double,
                                         y: c_double,
                                         xr: *mut c_double,
                                         yr: *mut c_double);
-    pub fn eina_matrix3_rectangle_transform(m: *const EinaMatrix3,
-                                            r: *const EinaRectangle,
-                                            q: *const EinaQuad);
-    pub fn eina_matrix3_quad_quad_map(m: *mut EinaMatrix3,
-                                      src: *const EinaQuad,
-                                      dst: *const EinaQuad) -> EinaBool;
-    pub fn eina_matrix3_square_quad_map(m: *mut EinaMatrix3,
-                                        q: *const EinaQuad) -> EinaBool;
-    pub fn eina_matrix3_quad_square_map(m: *mut EinaMatrix3,
-                                        q: *const EinaQuad) -> EinaBool;
-    pub fn eina_matrix4_type_get(m: *const EinaMatrix4) -> EinaMatrixType;
-    pub fn eina_matrix4_values_set(m: *mut EinaMatrix4,
+    pub fn eina_matrix3_rectangle_transform(m: *const Eina_Matrix3,
+                                            r: *const Eina_Rectangle,
+                                            q: *const Eina_Quad);
+    pub fn eina_matrix3_quad_quad_map(m: *mut Eina_Matrix3,
+                                      src: *const Eina_Quad,
+                                      dst: *const Eina_Quad) -> EinaBool;
+    pub fn eina_matrix3_square_quad_map(m: *mut Eina_Matrix3,
+                                        q: *const Eina_Quad) -> EinaBool;
+    pub fn eina_matrix3_quad_square_map(m: *mut Eina_Matrix3,
+                                        q: *const Eina_Quad) -> EinaBool;
+    pub fn eina_matrix4_type_get(m: *const Eina_Matrix4) -> EinaMatrixType;
+    pub fn eina_matrix4_values_set(m: *mut Eina_Matrix4,
                                    xx: c_double,
                                    xy: c_double,
                                    xz: c_double,
@@ -2475,7 +2459,7 @@ extern "C" {
                                    wy: c_double,
                                    wz: c_double,
                                    ww: c_double);
-    pub fn eina_matrix4_values_get(m: *const EinaMatrix4,
+    pub fn eina_matrix4_values_get(m: *const Eina_Matrix4,
                                    xx: *mut c_double,
                                    xy: *mut c_double,
                                    xz: *mut c_double,
@@ -2492,127 +2476,127 @@ extern "C" {
                                    wy: *mut c_double,
                                    wz: *mut c_double,
                                    ww: *mut c_double);
-    pub fn eina_matrix4_determinant(m: *const EinaMatrix4)
+    pub fn eina_matrix4_determinant(m: *const Eina_Matrix4)
      -> c_double;
-    pub fn eina_matrix4_normalized(out: *mut EinaMatrix4,
-                                   _in: *const EinaMatrix4) -> EinaBool;
-    pub fn eina_matrix4_inverse(out: *mut EinaMatrix4,
-                                _in: *const EinaMatrix4) -> EinaBool;
-    pub fn eina_matrix4_transpose(out: *mut EinaMatrix4,
-                                  _in: *const EinaMatrix4);
-    pub fn eina_matrix4_matrix3_to(m3: *mut EinaMatrix3,
-                                   m4: *const EinaMatrix4);
-    pub fn eina_matrix3_matrix4_to(m4: *mut EinaMatrix4,
-                                   m3: *const EinaMatrix3);
-    pub fn eina_matrix4_identity(out: *mut EinaMatrix4);
-    pub fn eina_matrix4_multiply(out: *mut EinaMatrix4,
-                                 a: *const EinaMatrix4,
-                                 b: *const EinaMatrix4);
+    pub fn eina_matrix4_normalized(out: *mut Eina_Matrix4,
+                                   _in: *const Eina_Matrix4) -> EinaBool;
+    pub fn eina_matrix4_inverse(out: *mut Eina_Matrix4,
+                                _in: *const Eina_Matrix4) -> EinaBool;
+    pub fn eina_matrix4_transpose(out: *mut Eina_Matrix4,
+                                  _in: *const Eina_Matrix4);
+    pub fn eina_matrix4_matrix3_to(m3: *mut Eina_Matrix3,
+                                   m4: *const Eina_Matrix4);
+    pub fn eina_matrix3_matrix4_to(m4: *mut Eina_Matrix4,
+                                   m3: *const Eina_Matrix3);
+    pub fn eina_matrix4_identity(out: *mut Eina_Matrix4);
+    pub fn eina_matrix4_multiply(out: *mut Eina_Matrix4,
+                                 a: *const Eina_Matrix4,
+                                 b: *const Eina_Matrix4);
     pub fn eina_evlog(event: *const c_char,
                       obj: *mut c_void,
                       srctime: c_double,
                       detail: *const c_char);
-    pub fn eina_evlog_steal() -> *mut EinaEvlogBuf;
+    pub fn eina_evlog_steal() -> *mut Eina_Evlog_Buf;
     pub fn eina_evlog_start();
     pub fn eina_evlog_stop();
     pub fn eina_environment_home_get() -> *const c_char;
     pub fn eina_environment_tmp_get() -> *const c_char;
-    pub fn eina_quaternion_f16p16_set(out: *mut EinaQuaternion,
+    pub fn eina_quaternion_f16p16_set(out: *mut Eina_Quaternion,
                                       x: EinaF16p16, y: EinaF16p16,
                                       z: EinaF16p16, w: EinaF16p16);
-    pub fn eina_quaternion_f16p16_norm(q: *const EinaQuaternionF16p16)
+    pub fn eina_quaternion_f16p16_norm(q: *const Eina_Quaternion_F16p16)
      -> EinaF16p16;
-    pub fn eina_quaternion_f16p16_negative(out: *mut EinaQuaternionF16p16,
+    pub fn eina_quaternion_f16p16_negative(out: *mut Eina_Quaternion_F16p16,
                                            _in:
-                                               *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_f16p16_add(out: *mut EinaQuaternionF16p16,
-                                      a: *const EinaQuaternionF16p16,
-                                      b: *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_f16p16_mul(out: *mut EinaQuaternionF16p16,
-                                      a: *const EinaQuaternionF16p16,
-                                      b: *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_f16p16_scale(out: *mut EinaQuaternionF16p16,
-                                        a: *const EinaQuaternionF16p16,
+                                               *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_f16p16_add(out: *mut Eina_Quaternion_F16p16,
+                                      a: *const Eina_Quaternion_F16p16,
+                                      b: *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_f16p16_mul(out: *mut Eina_Quaternion_F16p16,
+                                      a: *const Eina_Quaternion_F16p16,
+                                      b: *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_f16p16_scale(out: *mut Eina_Quaternion_F16p16,
+                                        a: *const Eina_Quaternion_F16p16,
                                         b: EinaF16p16);
-    pub fn eina_quaternion_f16p16_conjugate(out: *mut EinaQuaternionF16p16,
-                                            _in: *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_f16p16_dot(a: *const EinaQuaternionF16p16,
-                                      b: *const EinaQuaternionF16p16)
+    pub fn eina_quaternion_f16p16_conjugate(out: *mut Eina_Quaternion_F16p16,
+                                            _in: *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_f16p16_dot(a: *const Eina_Quaternion_F16p16,
+                                      b: *const Eina_Quaternion_F16p16)
      -> EinaF16p16;
-    pub fn eina_quaternion_f16p16_lerp(out: *mut EinaQuaternionF16p16,
-                                       a: *const EinaQuaternionF16p16,
-                                       b: *const EinaQuaternionF16p16,
+    pub fn eina_quaternion_f16p16_lerp(out: *mut Eina_Quaternion_F16p16,
+                                       a: *const Eina_Quaternion_F16p16,
+                                       b: *const Eina_Quaternion_F16p16,
                                        pos: EinaF16p16);
-    pub fn eina_quaternion_f16p16_slerp(out: *mut EinaQuaternionF16p16,
-                                        a: *const EinaQuaternionF16p16,
-                                        b: *const EinaQuaternionF16p16,
+    pub fn eina_quaternion_f16p16_slerp(out: *mut Eina_Quaternion_F16p16,
+                                        a: *const Eina_Quaternion_F16p16,
+                                        b: *const Eina_Quaternion_F16p16,
                                         pos: EinaF16p16);
-    pub fn eina_quaternion_f16p16_nlerp(out: *mut EinaQuaternionF16p16,
-                                        a: *const EinaQuaternionF16p16,
-                                        b: *const EinaQuaternionF16p16,
+    pub fn eina_quaternion_f16p16_nlerp(out: *mut Eina_Quaternion_F16p16,
+                                        a: *const Eina_Quaternion_F16p16,
+                                        b: *const Eina_Quaternion_F16p16,
                                         pos: EinaF16p16);
-    pub fn eina_quaternion_f16p16_rotate(p: *mut EinaPoint3dF16p16,
-                                         center: *const EinaPoint3dF16p16,
-                                         q: *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_f16p16_rotation_matrix3_get(m: *mut EinaMatrix3F16p16,
-                                                       q: *const EinaQuaternionF16p16);
-    pub fn eina_quaternion_set(q: *mut EinaQuaternion,
+    pub fn eina_quaternion_f16p16_rotate(p: *mut Eina_Point3d_F16p16,
+                                         center: *const Eina_Point3d_F16p16,
+                                         q: *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_f16p16_rotation_matrix3_get(m: *mut Eina_Matrix3_F16p16,
+                                                       q: *const Eina_Quaternion_F16p16);
+    pub fn eina_quaternion_set(q: *mut Eina_Quaternion,
                                x: c_double,
                                y: c_double,
                                z: c_double,
                                w: c_double);
-    pub fn eina_quaternion_norm(q: *const EinaQuaternion)
+    pub fn eina_quaternion_norm(q: *const Eina_Quaternion)
      -> c_double;
-    pub fn eina_quaternion_negative(out: *mut EinaQuaternion,
-                                    _in: *const EinaQuaternion);
-    pub fn eina_quaternion_add(out: *mut EinaQuaternion,
-                               a: *const EinaQuaternion,
-                               b: *const EinaQuaternion);
-    pub fn eina_quaternion_mul(out: *mut EinaQuaternion,
-                               a: *const EinaQuaternion,
-                               b: *const EinaQuaternion);
-    pub fn eina_quaternion_scale(out: *mut EinaQuaternion,
-                                 a: *const EinaQuaternion,
+    pub fn eina_quaternion_negative(out: *mut Eina_Quaternion,
+                                    _in: *const Eina_Quaternion);
+    pub fn eina_quaternion_add(out: *mut Eina_Quaternion,
+                               a: *const Eina_Quaternion,
+                               b: *const Eina_Quaternion);
+    pub fn eina_quaternion_mul(out: *mut Eina_Quaternion,
+                               a: *const Eina_Quaternion,
+                               b: *const Eina_Quaternion);
+    pub fn eina_quaternion_scale(out: *mut Eina_Quaternion,
+                                 a: *const Eina_Quaternion,
                                  b: c_double);
-    pub fn eina_quaternion_conjugate(out: *mut EinaQuaternion,
-                                     _in: *const EinaQuaternion);
-    pub fn eina_quaternion_dot(a: *const EinaQuaternion,
-                               b: *const EinaQuaternion)
+    pub fn eina_quaternion_conjugate(out: *mut Eina_Quaternion,
+                                     _in: *const Eina_Quaternion);
+    pub fn eina_quaternion_dot(a: *const Eina_Quaternion,
+                               b: *const Eina_Quaternion)
      -> c_double;
-    pub fn eina_quaternion_normalized(out: *mut EinaQuaternion,
-                                      _in: *const EinaQuaternion);
-    pub fn eina_quaternion_lerp(out: *mut EinaQuaternion,
-                                a: *const EinaQuaternion,
-                                b: *const EinaQuaternion,
+    pub fn eina_quaternion_normalized(out: *mut Eina_Quaternion,
+                                      _in: *const Eina_Quaternion);
+    pub fn eina_quaternion_lerp(out: *mut Eina_Quaternion,
+                                a: *const Eina_Quaternion,
+                                b: *const Eina_Quaternion,
                                 pos: c_double);
-    pub fn eina_quaternion_slerp(out: *mut EinaQuaternion,
-                                 a: *const EinaQuaternion,
-                                 b: *const EinaQuaternion,
+    pub fn eina_quaternion_slerp(out: *mut Eina_Quaternion,
+                                 a: *const Eina_Quaternion,
+                                 b: *const Eina_Quaternion,
                                  pos: c_double);
-    pub fn eina_quaternion_nlerp(out: *mut EinaQuaternion,
-                                 a: *const EinaQuaternion,
-                                 b: *const EinaQuaternion,
+    pub fn eina_quaternion_nlerp(out: *mut Eina_Quaternion,
+                                 a: *const Eina_Quaternion,
+                                 b: *const Eina_Quaternion,
                                  pos: c_double);
-    pub fn eina_quaternion_rotate(p: *mut EinaPoint3d,
-                                  center: *const EinaPoint3d,
-                                  q: *const EinaQuaternion);
-    pub fn eina_quaternion_rotation_matrix3_get(m: *mut EinaMatrix3,
-                                                q: *const EinaQuaternion);
-    pub fn eina_matrix3_quaternion_get(q: *mut EinaQuaternion,
-                                       m: *const EinaMatrix3);
-    pub fn eina_matrix4_quaternion_to(rotation: *mut EinaQuaternion,
-                                      perspective: *mut EinaQuaternion,
-                                      translation: *mut EinaPoint3d,
-                                      scale: *mut EinaPoint3d,
-                                      skew: *mut EinaPoint3d,
-                                      m: *const EinaMatrix4) -> EinaBool;
-    pub fn eina_quaternion_matrix4_to(m: *mut EinaMatrix4,
-                                      rotation: *const EinaQuaternion,
-                                      perspective: *const EinaQuaternion,
-                                      translation: *const EinaPoint3d,
-                                      scale: *const EinaPoint3d,
-                                      skew: *const EinaPoint3d);
-    pub fn eina_bezier_values_set(b: *mut EinaBezier,
+    pub fn eina_quaternion_rotate(p: *mut Eina_Point3d,
+                                  center: *const Eina_Point3d,
+                                  q: *const Eina_Quaternion);
+    pub fn eina_quaternion_rotation_matrix3_get(m: *mut Eina_Matrix3,
+                                                q: *const Eina_Quaternion);
+    pub fn eina_matrix3_quaternion_get(q: *mut Eina_Quaternion,
+                                       m: *const Eina_Matrix3);
+    pub fn eina_matrix4_quaternion_to(rotation: *mut Eina_Quaternion,
+                                      perspective: *mut Eina_Quaternion,
+                                      translation: *mut Eina_Point3d,
+                                      scale: *mut Eina_Point3d,
+                                      skew: *mut Eina_Point3d,
+                                      m: *const Eina_Matrix4) -> EinaBool;
+    pub fn eina_quaternion_matrix4_to(m: *mut Eina_Matrix4,
+                                      rotation: *const Eina_Quaternion,
+                                      perspective: *const Eina_Quaternion,
+                                      translation: *const Eina_Point3d,
+                                      scale: *const Eina_Point3d,
+                                      skew: *const Eina_Point3d);
+    pub fn eina_bezier_values_set(b: *mut Eina_Bezier,
                                   start_x: c_double,
                                   start_y: c_double,
                                   ctrl_start_x: c_double,
@@ -2621,7 +2605,7 @@ extern "C" {
                                   ctrl_end_y: c_double,
                                   end_x: c_double,
                                   end_y: c_double);
-    pub fn eina_bezier_values_get(b: *const EinaBezier,
+    pub fn eina_bezier_values_get(b: *const Eina_Bezier,
                                   start_x: *mut c_double,
                                   start_y: *mut c_double,
                                   ctrl_start_x: *mut c_double,
@@ -2630,20 +2614,20 @@ extern "C" {
                                   ctrl_end_y: *mut c_double,
                                   end_x: *mut c_double,
                                   end_y: *mut c_double);
-    pub fn eina_bezier_length_get(b: *const EinaBezier)
+    pub fn eina_bezier_length_get(b: *const Eina_Bezier)
      -> c_double;
-    pub fn eina_bezier_t_at(b: *const EinaBezier,
+    pub fn eina_bezier_t_at(b: *const Eina_Bezier,
                             len: c_double)
      -> c_double;
-    pub fn eina_bezier_point_at(b: *const EinaBezier,
+    pub fn eina_bezier_point_at(b: *const Eina_Bezier,
                                 t: c_double,
                                 px: *mut c_double,
                                 py: *mut c_double);
-    pub fn eina_bezier_angle_at(b: *const EinaBezier,
+    pub fn eina_bezier_angle_at(b: *const Eina_Bezier,
                                 t: c_double)
      -> c_double;
-    pub fn eina_bezier_split_at_length(b: *const EinaBezier,
+    pub fn eina_bezier_split_at_length(b: *const Eina_Bezier,
                                        len: c_double,
-                                       left: *mut EinaBezier,
-                                       right: *mut EinaBezier);
+                                       left: *mut Eina_Bezier,
+                                       right: *mut Eina_Bezier);
 }

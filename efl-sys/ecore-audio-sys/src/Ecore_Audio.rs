@@ -22,10 +22,10 @@ pub enum EcoreAudioFormat {
     EcoreAudioFormatMp3 = 5,
     EcoreAudioFormatLast = 6,
 }
-pub enum EcoreAudioModule { }
-pub enum EcoreAudioObject { }
+pub enum Ecore_Audio_Module { }
+pub enum Ecore_Audio_Object { }
 #[repr(C)]
-pub struct EcoreAudioVio {
+pub struct Ecore_Audio_Vio {
     pub get_length: Option<unsafe extern "C" fn(data: *mut c_void,
                                                 eo_obj: *mut Eo)
                                               -> c_int>,
@@ -48,13 +48,13 @@ pub struct EcoreAudioVio {
                                            length: c_int)
                                          -> c_int>,
 }
-pub type EcoreAudio = Eo;
-pub type EcoreAudioIn = Eo;
-pub type EcoreAudioOut = Eo;
-pub type EcoreAudioInSndfile = Eo;
-pub type EcoreAudioOutSndfile = Eo;
-pub type EcoreAudioInTone = Eo;
-pub type EcoreAudioOutPulse = Eo;
+pub type Ecore_Audio = Eo;
+pub type Ecore_Audio_In = Eo;
+pub type Ecore_Audio_Out = Eo;
+pub type Ecore_Audio_In_SndFile = Eo;
+pub type Ecore_Audio_Out_Sndfile = Eo;
+pub type Ecore_Audio_In_Tone = Eo;
+pub type Ecore_Audio_Out_Pulse = Eo;
 
 #[link(name = "ecore-audio")]
 extern "C" {
@@ -78,7 +78,7 @@ extern "C" {
     pub fn ecore_audio_obj_format_get() -> EcoreAudioFormat;
     pub fn ecore_audio_obj_format_set(format: EcoreAudioFormat)
      -> EinaBool;
-    pub fn ecore_audio_obj_vio_set(vio: *mut EcoreAudioVio,
+    pub fn ecore_audio_obj_vio_set(vio: *mut Ecore_Audio_Vio,
                                    data: *mut c_void,
                                    free_func: eo_key_data_free_func);
     pub fn ecore_audio_obj_name_set(name: *const c_char);
@@ -103,16 +103,16 @@ extern "C" {
     pub fn ecore_audio_obj_in_looped_set(looped: EinaBool);
     pub fn ecore_audio_obj_in_looped_get() -> EinaBool;
     pub fn ecore_audio_obj_in_length_get() -> c_double;
-    pub fn ecore_audio_obj_in_output_get() -> *mut EcoreAudio;
+    pub fn ecore_audio_obj_in_output_get() -> *mut Ecore_Audio;
     pub fn ecore_audio_obj_in_remaining_get() -> c_double;
     pub fn ecore_audio_obj_in_read(buf: *mut c_void,
                                    len: size_t) -> ssize_t;
     pub fn ecore_audio_obj_in_read_internal(buf: *mut c_void,
                                             len: size_t) -> ssize_t;
     pub fn ecore_audio_out_class_get() -> *const EoClass;
-    pub fn ecore_audio_obj_out_input_attach(input: *mut EcoreAudioIn)
+    pub fn ecore_audio_obj_out_input_attach(input: *mut Ecore_Audio_In)
      -> EinaBool;
-    pub fn ecore_audio_obj_out_input_detach(input: *mut EcoreAudioIn)
+    pub fn ecore_audio_obj_out_input_detach(input: *mut Ecore_Audio_In)
      -> EinaBool;
     pub fn ecore_audio_obj_out_inputs_get() -> *mut EinaList;
     pub fn ecore_audio_in_sndfile_class_get() -> *const EoClass;

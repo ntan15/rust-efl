@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(non_camel_case_types)]
 extern crate libc;
 extern crate eina_sys;
 
@@ -102,10 +102,10 @@ pub enum EmileImageLoadError {
     EmileImageLoadErrorUnknownFormat = 6,
 }
 
-pub enum EmileImage { }
+pub enum Emile_Image { }
 
 #[repr(C)]
-pub struct EmileImageProperty {
+pub struct Emile_Image_Property {
     pub borders: Struct_Unnamed3,
     pub cspaces: *const EmileColorspace,
     pub cspace: EmileColorspace,
@@ -131,8 +131,8 @@ pub struct Struct_Unnamed3 {
 }
 
 #[repr(C)]
-pub struct EmileImageAnimated {
-    pub frames: *mut EinaList,
+pub struct Emile_Image_Animated {
+    pub frames: *mut Eina_List,
     pub loop_hint: EmileImageAnimatedLoopHint,
     pub frame_count: c_int,
     pub loop_count: c_int,
@@ -141,8 +141,8 @@ pub struct EmileImageAnimated {
 }
 
 #[repr(C)]
-pub struct EmileImageLoadOpts {
-    pub region: EinaRectangle,
+pub struct Emile_Image_Load_Opts {
+    pub region: Eina_Rectangle,
     pub scale_load: Struct_Unnamed4,
     pub dpi: c_double,
     pub w: c_uint,
@@ -169,53 +169,53 @@ extern "C" {
     pub fn emile_cipher_init() -> EinaBool;
     pub fn emile_cipher_module_get() -> EmileCipherBackend;
     pub fn emile_binbuf_cipher(algo: EmileCipherAlgorithm,
-                               _in: *const EinaBinbuf,
+                               _in: *const Eina_Binbuf,
                                key: *const c_char,
                                length: c_uint)
-     -> *mut EinaBinbuf;
+     -> *mut Eina_Binbuf;
     pub fn emile_binbuf_decipher(algo: EmileCipherAlgorithm,
-                                 _in: *const EinaBinbuf,
+                                 _in: *const Eina_Binbuf,
                                  key: *const c_char,
                                  length: c_uint)
-     -> *mut EinaBinbuf;
-    pub fn emile_compress(_in: *const EinaBinbuf, t: EmileCompressorType,
-                          level: EmileCompressorLevel) -> *mut EinaBinbuf;
-    pub fn emile_decompress(_in: *const EinaBinbuf, t: EmileCompressorType,
+     -> *mut Eina_Binbuf;
+    pub fn emile_compress(_in: *const Eina_Binbuf, t: EmileCompressorType,
+                          level: EmileCompressorLevel) -> *mut Eina_Binbuf;
+    pub fn emile_decompress(_in: *const Eina_Binbuf, t: EmileCompressorType,
                             dest_length: c_uint)
-     -> *mut EinaBinbuf;
-    pub fn emile_expand(_in: *const EinaBinbuf, out: *mut EinaBinbuf,
+     -> *mut Eina_Binbuf;
+    pub fn emile_expand(_in: *const Eina_Binbuf, out: *mut Eina_Binbuf,
                         t: EmileCompressorType) -> EinaBool;
-    pub fn emile_image_tgv_memory_open(source: *mut EinaBinbuf,
-                                       opts: *mut EmileImageLoadOpts,
-                                       animated: *mut EmileImageAnimated,
+    pub fn emile_image_tgv_memory_open(source: *mut Eina_Binbuf,
+                                       opts: *mut Emile_Image_Load_Opts,
+                                       animated: *mut Emile_Image_Animated,
                                        error: *mut EmileImageLoadError)
-     -> *mut EmileImage;
-    pub fn emile_image_tgv_file_open(source: *mut EinaFile,
-                                     opts: *mut EmileImageLoadOpts,
-                                     animated: *mut EmileImageAnimated,
+     -> *mut Emile_Image;
+    pub fn emile_image_tgv_file_open(source: *mut Eina_File,
+                                     opts: *mut Emile_Image_Load_Opts,
+                                     animated: *mut Emile_Image_Animated,
                                      error: *mut EmileImageLoadError)
-     -> *mut EmileImage;
-    pub fn emile_image_jpeg_memory_open(source: *mut EinaBinbuf,
-                                        opts: *mut EmileImageLoadOpts,
-                                        animated: *mut EmileImageAnimated,
+     -> *mut Emile_Image;
+    pub fn emile_image_jpeg_memory_open(source: *mut Eina_Binbuf,
+                                        opts: *mut Emile_Image_Load_Opts,
+                                        animated: *mut Emile_Image_Animated,
                                         error: *mut EmileImageLoadError)
-     -> *mut EmileImage;
-    pub fn emile_image_jpeg_file_open(source: *mut EinaFile,
-                                      opts: *mut EmileImageLoadOpts,
-                                      animated: *mut EmileImageAnimated,
+     -> *mut Emile_Image;
+    pub fn emile_image_jpeg_file_open(source: *mut Eina_File,
+                                      opts: *mut Emile_Image_Load_Opts,
+                                      animated: *mut Emile_Image_Animated,
                                       error: *mut EmileImageLoadError)
-     -> *mut EmileImage;
-    pub fn emile_image_head(image: *mut EmileImage,
-                            prop: *mut EmileImageProperty,
+     -> *mut Emile_Image;
+    pub fn emile_image_head(image: *mut Emile_Image,
+                            prop: *mut Emile_Image_Property,
                             property_size: c_uint,
                             error: *mut EmileImageLoadError) -> EinaBool;
-    pub fn emile_image_data(image: *mut EmileImage,
-                            prop: *mut EmileImageProperty,
+    pub fn emile_image_data(image: *mut Emile_Image,
+                            prop: *mut Emile_Image_Property,
                             property_size: c_uint,
                             pixels: *mut c_void,
                             error: *mut EmileImageLoadError) -> EinaBool;
-    pub fn emile_image_close(source: *mut EmileImage);
-    pub fn emile_load_error_str(source: *mut EmileImage,
+    pub fn emile_image_close(source: *mut Emile_Image);
+    pub fn emile_load_error_str(source: *mut Emile_Image,
                                 error: EmileImageLoadError)
      -> *const c_char;
 }

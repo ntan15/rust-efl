@@ -1,3 +1,4 @@
+#![allow(non_camel_case_types)]
 extern crate libc;
 extern crate efl_sys;
 extern crate eo_sys;
@@ -21,12 +22,12 @@ pub enum EvasModuleType {
     EvasModuleTypeObject = 3,
 }
 
-pub enum EvasModulePath { }
-pub enum EvasModuleEngine { }
-pub enum EvasModulePublic { }
+pub enum Evas_Module_Path { }
+pub enum Evas_Module_Engine { }
+pub enum Evas_Module_Public { }
 
 #[repr(C)]
-pub struct EvasModuleApi {
+pub struct Evas_Module_Api {
     pub version: c_int,
     pub name: *const c_char,
     pub author: *const c_char,
@@ -35,45 +36,45 @@ pub struct EvasModuleApi {
 
 #[repr(C)]
 pub struct EvasStructUnnamed1 {
-    pub open: Option<unsafe extern "C" fn(arg1: *mut EvasModule)
+    pub open: Option<unsafe extern "C" fn(arg1: *mut Evas_Module)
                                         -> c_int>,
-    pub close: Option<unsafe extern "C" fn(arg1: *mut EvasModule)>,
+    pub close: Option<unsafe extern "C" fn(arg1: *mut Evas_Module)>,
 }
 
 #[repr(C)]
-pub struct EvasModule {
-    pub definition: *const EvasModuleApi,
+pub struct Evas_Module {
+    pub definition: *const Evas_Module_Api,
     pub functions: *mut c_void,
     pub id_engine: c_int,
     pub _ref: c_int,
     pub last_used: c_int,
-    pub lock: EinaLock,
+    pub lock: Eina_Lock,
     pub _bindgen_bitfield_1_: c_uchar,
 }
 
-pub type EvasImageLoadOpts = EmileImageLoadOpts;
-pub type EvasImageAnimated = EmileImageAnimated;
-pub type EvasImageProperty = EmileImageProperty;
-pub type EvasLoadError = EmileImageLoadError;
-pub type EvasImageAnimatedLoopHint = EmileImageAnimatedLoopHint;
-pub type EvasImageScaleHint = EmileImageScaleHint;
-pub type EvasColorspace = EmileColorspace;
+pub type Evas_Image_Load_Opts = Emile_Image_Load_Opts;
+pub type Evas_Image_Animated = Emile_Image_Animated;
+pub type Evas_Image_Property = Emile_Image_Property;
+pub type Evas_Load_Error = EmileImageLoadError;
+pub type Evas_Image_Animated_Loop_hint = EmileImageAnimatedLoopHint;
+pub type Evas_Image_Scale_Hint = EmileImageScaleHint;
+pub type Evas_Colorspace = EmileColorspace;
 
 #[repr(C)]
-pub struct EvasImageLoadFunc {
-    pub file_open: Option<unsafe extern "C" fn(f: *mut EinaFile,
-                                               key: *mut EinaStringshare,
-                                               opts: *mut EvasImageLoadOpts,
-                                               animated: *mut EvasImageAnimated,
+pub struct Evas_Image_Load_Func {
+    pub file_open: Option<unsafe extern "C" fn(f: *mut Eina_File,
+                                               key: *mut Eina_Stringshare,
+                                               opts: *mut Evas_Image_Load_Opts,
+                                               animated: *mut Evas_Image_Animated,
                                                error: *mut c_int)
                                              -> *mut c_void>,
     pub file_close: Option<unsafe extern "C" fn(loader_data: *mut c_void)>,
     pub file_head: Option<unsafe extern "C" fn(loader_data: *mut c_void,
-                                               prop: *mut EvasImageProperty,
+                                               prop: *mut Evas_Image_Property,
                                                error: *mut c_int)
                                              -> EinaBool>,
     pub file_data: Option<unsafe extern "C" fn(loader_data: *mut c_void,
-                                               prop: *mut EvasImageProperty,
+                                               prop: *mut Evas_Image_Property,
                                                pixels: *mut c_void,
                                                error: *mut c_int)
                                              -> EinaBool>,
@@ -85,7 +86,7 @@ pub struct EvasImageLoadFunc {
     pub do_region: EinaBool,
 }
 
-pub type EvasModifierMask = c_ulonglong;
+pub type Evas_Modifier_Mask = c_ulonglong;
 pub type EvasCoord = c_int;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -176,7 +177,7 @@ pub enum EvasFontHintingFlags {
     EvasFontHintingAuto = 1,
     EvasFontHintingBytecode = 2,
 }
-pub enum EvasMap { }
+pub enum Evas_Map { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -197,55 +198,55 @@ pub enum EvasEventFlags {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasTouchPointState {
-    EVAS_TOUCH_POINT_DOWN = 0,
-    EVAS_TOUCH_POINT_UP = 1,
-    EVAS_TOUCH_POINT_MOVE = 2,
-    EVAS_TOUCH_POINT_STILL = 3,
-    EVAS_TOUCH_POINT_CANCEL = 4,
+    EvasTouchPointDown = 0,
+    EvasTouchPointUp = 1,
+    EvasTouchPointMove = 2,
+    EvasTouchPointStill = 3,
+    EvasTouchPointCancel = 4,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCallbackType {
-    EVAS_CALLBACK_MOUSE_IN = 0,
-    EVAS_CALLBACK_MOUSE_OUT = 1,
-    EVAS_CALLBACK_MOUSE_DOWN = 2,
-    EVAS_CALLBACK_MOUSE_UP = 3,
-    EVAS_CALLBACK_MOUSE_MOVE = 4,
-    EVAS_CALLBACK_MOUSE_WHEEL = 5,
-    EVAS_CALLBACK_MULTI_DOWN = 6,
-    EVAS_CALLBACK_MULTI_UP = 7,
-    EVAS_CALLBACK_MULTI_MOVE = 8,
-    EVAS_CALLBACK_FREE = 9,
-    EVAS_CALLBACK_KEY_DOWN = 10,
-    EVAS_CALLBACK_KEY_UP = 11,
-    EVAS_CALLBACK_FOCUS_IN = 12,
-    EVAS_CALLBACK_FOCUS_OUT = 13,
-    EVAS_CALLBACK_SHOW = 14,
-    EVAS_CALLBACK_HIDE = 15,
-    EVAS_CALLBACK_MOVE = 16,
-    EVAS_CALLBACK_RESIZE = 17,
-    EVAS_CALLBACK_RESTACK = 18,
-    EVAS_CALLBACK_DEL = 19,
-    EVAS_CALLBACK_HOLD = 20,
-    EVAS_CALLBACK_CHANGED_SIZE_HINTS = 21,
-    EVAS_CALLBACK_IMAGE_PRELOADED = 22,
-    EVAS_CALLBACK_CANVAS_FOCUS_IN = 23,
-    EVAS_CALLBACK_CANVAS_FOCUS_OUT = 24,
-    EVAS_CALLBACK_RENDER_FLUSH_PRE = 25,
-    EVAS_CALLBACK_RENDER_FLUSH_POST = 26,
-    EVAS_CALLBACK_CANVAS_OBJECT_FOCUS_IN = 27,
-    EVAS_CALLBACK_CANVAS_OBJECT_FOCUS_OUT = 28,
-    EVAS_CALLBACK_IMAGE_UNLOADED = 29,
-    EVAS_CALLBACK_RENDER_PRE = 30,
-    EVAS_CALLBACK_RENDER_POST = 31,
-    EVAS_CALLBACK_IMAGE_RESIZE = 32,
-    EVAS_CALLBACK_DEVICE_CHANGED = 33,
-    EVAS_CALLBACK_AXIS_UPDATE = 34,
-    EVAS_CALLBACK_CANVAS_VIEWPORT_RESIZE = 35,
-    EVAS_CALLBACK_LAST = 36,
+    EvasCallbackMouseIn = 0,
+    EvasCallbackMouseOut = 1,
+    EvasCallbackMouseDown = 2,
+    EvasCallbackMouseUp = 3,
+    EvasCallbackMouseMove = 4,
+    EvasCallbackMouseWheel = 5,
+    EvasCallbackMultiDown = 6,
+    EvasCallbackMultiUp = 7,
+    EvasCallbackMultiMove = 8,
+    EvasCallbackFree = 9,
+    EvasCallbackKeyDown = 10,
+    EvasCallbackKeyUp = 11,
+    EvasCallbackFocusIn = 12,
+    EvasCallbackFocusOut = 13,
+    EvasCallbackShow = 14,
+    EvasCallbackHide = 15,
+    EvasCallbackMove = 16,
+    EvasCallbackResize = 17,
+    EvasCallbackRestack = 18,
+    EvasCallbackDel = 19,
+    EvasCallbackHold = 20,
+    EvasCallbackChangedSizeHints = 21,
+    EvasCallbackImagePreloaded = 22,
+    EvasCallbackCanvasFocusIn = 23,
+    EvasCallbackCanvasFocusOut = 24,
+    EvasCallbackRenderFlushPre = 25,
+    EvasCallbackRenderFlushPost = 26,
+    EvasCallbackCanvasObjectFocusIn = 27,
+    EvasCallbackCanvasObjectFocusOut = 28,
+    EvasCallbackImageUnloaded = 29,
+    EvasCallbackRenderPre = 30,
+    EvasCallbackRenderPost = 31,
+    EvasCallbackImageResize = 32,
+    EvasCallbackDeviceChanged = 33,
+    EvasCallbackAxisUpdate = 34,
+    EvasCallbackCanvasViewportResize = 35,
+    EvasCallbackLast = 36,
 }
-pub enum EvasModifier { }
-pub enum EvasLock { }
+pub enum Evas_Modifier { }
+pub enum Evas_Lock { }
 pub type EvasReal = c_double;
 
 pub type EvasCanvas3DSurfaceFunc = 
@@ -258,293 +259,293 @@ pub type EvasCanvas3DSurfaceFunc =
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DObjectType {
-    EVAS_CANVAS3D_OBJECT_TYPE_INVALID = 0,
-    EVAS_CANVAS3D_OBJECT_TYPE_SCENE = 1,
-    EVAS_CANVAS3D_OBJECT_TYPE_NODE = 2,
-    EVAS_CANVAS3D_OBJECT_TYPE_CAMERA = 3,
-    EVAS_CANVAS3D_OBJECT_TYPE_LIGHT = 4,
-    EVAS_CANVAS3D_OBJECT_TYPE_MODEL = 5,
-    EVAS_CANVAS3D_OBJECT_TYPE_MESH = 6,
-    EVAS_CANVAS3D_OBJECT_TYPE_TEXTURE = 7,
-    EVAS_CANVAS3D_OBJECT_TYPE_MATERIAL = 8,
-    EVAS_CANVAS3D_OBJECT_TYPE_PRIMITIVE = 9,
+    EvasCanvas3DObjectTypeInvalid = 0,
+    EvasCanvas3DObjectTypeScene = 1,
+    EvasCanvas3DObjectTypeNode = 2,
+    EvasCanvas3DObjectTypeCamera = 3,
+    EvasCanvas3DObjectTypeLight = 4,
+    EvasCanvas3DObjectTypeModel = 5,
+    EvasCanvas3DObjectTypeMesh = 6,
+    EvasCanvas3DObjectTypeTexture = 7,
+    EvasCanvas3DObjectTypeMaterial = 8,
+    EvasCanvas3DObjectTypePrimitive = 9,
 }
 pub const EVAS_CANVAS3D_STATE_TEXTURE_DATA: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_TEXTURE_WRAP: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneCameraNode;
 pub const EVAS_CANVAS3D_STATE_TEXTURE_FILTER: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR;
+    EvasCanvas3DState::EvasCanvas3DStateSceneBackgroundColor;
 pub const EVAS_CANVAS3D_STATE_MATERIAL_ID: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_MATERIAL_COLOR: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneCameraNode;
 pub const EVAS_CANVAS3D_STATE_MATERIAL_TEXTURE: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR;
+    EvasCanvas3DState::EvasCanvas3DStateSceneBackgroundColor;
 pub const EVAS_CANVAS3D_STATE_MESH_VERTEX_COUNT: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_MESH_FRAME: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneCameraNode;
 pub const EVAS_CANVAS3D_STATE_MESH_MATERIAL: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR;
+    EvasCanvas3DState::EvasCanvas3DStateSceneBackgroundColor;
 pub const EVAS_CANVAS3D_STATE_MESH_TRANSFORM: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SIZE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneSize;
 pub const EVAS_CANVAS3D_STATE_MESH_VERTEX_DATA: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_ENABLED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsEnabled;
 pub const EVAS_CANVAS3D_STATE_MESH_INDEX_DATA: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_UPDATED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneUpdated;
 pub const EVAS_CANVAS3D_STATE_MESH_VERTEX_ASSEMBLY: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_DEPTH;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsDepth;
 pub const EVAS_CANVAS3D_STATE_CAMERA_PROJECTION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_LIGHT_AMBIENT: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_LIGHT_DIFFUSE: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneCameraNode;
 pub const EVAS_CANVAS3D_STATE_LIGHT_SPECULAR: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR;
+    EvasCanvas3DState::EvasCanvas3DStateSceneBackgroundColor;
 pub const EVAS_CANVAS3D_STATE_LIGHT_SPOT_DIR: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SIZE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneSize;
 pub const EVAS_CANVAS3D_STATE_LIGHT_SPOT_EXP: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_ENABLED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsEnabled;
 pub const EVAS_CANVAS3D_STATE_LIGHT_SPOT_CUTOFF: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_UPDATED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneUpdated;
 pub const EVAS_CANVAS3D_STATE_LIGHT_ATTENUATION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_DEPTH;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsDepth;
 pub const EVAS_CANVAS3D_STATE_LIGHT_PROJECTION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_SHADE_MODE;
+    EvasCanvas3DState::EvasCanvas3DStateMeshShadeMode;
 pub const EVAS_CANVAS3D_STATE_NODE_TRANSFORM_POSITION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneRootNode;
 pub const EVAS_CANVAS3D_STATE_NODE_TRANSFORM_ORIENTATION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneCameraNode;
 pub const EVAS_CANVAS3D_STATE_NODE_TRANSFORM_SCALE: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR;
+    EvasCanvas3DState::EvasCanvas3DStateSceneBackgroundColor;
 pub const EVAS_CANVAS3D_STATE_NODE_MESH_GEOMETRY: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SIZE;
+    EvasCanvas3DState::EvasCanvas3DStateSceneSize;
 pub const EVAS_CANVAS3D_STATE_NODE_MESH_MATERIAL: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_ENABLED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsEnabled;
 pub const EVAS_CANVAS3D_STATE_NODE_MESH_FRAME: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_UPDATED;
+    EvasCanvas3DState::EvasCanvas3DStateSceneUpdated;
 pub const EVAS_CANVAS3D_STATE_NODE_MESH_SHADE_MODE: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_SCENE_SHADOWS_DEPTH;
+    EvasCanvas3DState::EvasCanvas3DStateSceneShadowsDepth;
 pub const EVAS_CANVAS3D_STATE_NODE_MESH_MATERIAL_ID: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_SHADE_MODE;
+    EvasCanvas3DState::EvasCanvas3DStateMeshShadeMode;
 pub const EVAS_CANVAS3D_STATE_NODE_LIGHT: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_FOG;
+    EvasCanvas3DState::EvasCanvas3DStateMeshFog;
 pub const EVAS_CANVAS3D_STATE_NODE_CAMERA: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_BLENDING;
+    EvasCanvas3DState::EvasCanvas3DStateMeshBlending;
 pub const EVAS_CANVAS3D_STATE_NODE_PARENT_POSITION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_ALPHA_TEST;
+    EvasCanvas3DState::EvasCanvas3DStateMeshAlphaTest;
 pub const EVAS_CANVAS3D_STATE_NODE_PARENT_ORIENTATION: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_COLOR_PICK;
+    EvasCanvas3DState::EvasCanvas3DStateMeshColorPick;
 pub const EVAS_CANVAS3D_STATE_NODE_PARENT_SCALE: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_SHADOWS_EDGES_FILTERING;
+    EvasCanvas3DState::EvasCanvas3DStateMeshShadowsEdgesFiltering;
 pub const EVAS_CANVAS3D_STATE_NODE_MEMBER: EvasCanvas3DState =
-    EvasCanvas3DState::EVAS_CANVAS3D_STATE_MESH_SHADOWS_CONSTANT_BIAS;
+    EvasCanvas3DState::EvasCanvas3DStateMeshShadowsConstantBias;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DState {
-    EVAS_CANVAS3D_STATE_MAX = 16,
-    EVAS_CANVAS3D_STATE_ANY = 0,
-    EVAS_CANVAS3D_STATE_SCENE_ROOT_NODE = 1,
-    EVAS_CANVAS3D_STATE_SCENE_CAMERA_NODE = 2,
-    EVAS_CANVAS3D_STATE_SCENE_BACKGROUND_COLOR = 3,
-    EVAS_CANVAS3D_STATE_SCENE_SIZE = 4,
-    EVAS_CANVAS3D_STATE_SCENE_SHADOWS_ENABLED = 5,
-    EVAS_CANVAS3D_STATE_SCENE_UPDATED = 6,
-    EVAS_CANVAS3D_STATE_SCENE_SHADOWS_DEPTH = 7,
-    EVAS_CANVAS3D_STATE_MESH_SHADE_MODE = 8,
-    EVAS_CANVAS3D_STATE_MESH_FOG = 9,
-    EVAS_CANVAS3D_STATE_MESH_BLENDING = 10,
-    EVAS_CANVAS3D_STATE_MESH_ALPHA_TEST = 11,
-    EVAS_CANVAS3D_STATE_MESH_COLOR_PICK = 12,
-    EVAS_CANVAS3D_STATE_MESH_SHADOWS_EDGES_FILTERING = 13,
-    EVAS_CANVAS3D_STATE_MESH_SHADOWS_CONSTANT_BIAS = 14,
-    EVAS_CANVAS3D_STATE_NODE_PARENT_BILLBOARD = 15,
+    EvasCanvas3DStateMax = 16,
+    EvasCanvas3DStateAny = 0,
+    EvasCanvas3DStateSceneRootNode = 1,
+    EvasCanvas3DStateSceneCameraNode = 2,
+    EvasCanvas3DStateSceneBackgroundColor = 3,
+    EvasCanvas3DStateSceneSize = 4,
+    EvasCanvas3DStateSceneShadowsEnabled = 5,
+    EvasCanvas3DStateSceneUpdated = 6,
+    EvasCanvas3DStateSceneShadowsDepth = 7,
+    EvasCanvas3DStateMeshShadeMode = 8,
+    EvasCanvas3DStateMeshFog = 9,
+    EvasCanvas3DStateMeshBlending = 10,
+    EvasCanvas3DStateMeshAlphaTest = 11,
+    EvasCanvas3DStateMeshColorPick = 12,
+    EvasCanvas3DStateMeshShadowsEdgesFiltering = 13,
+    EvasCanvas3DStateMeshShadowsConstantBias = 14,
+    EvasCanvas3DStateNodeParentBillboard = 15,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DSpace {
-    EVAS_CANVAS3D_SPACE_LOCAL = 0,
-    EVAS_CANVAS3D_SPACE_PARENT = 1,
-    EVAS_CANVAS3D_SPACE_WORLD = 2,
+    EvasCanvas3DSpaceLocal = 0,
+    EvasCanvas3DSpaceParent = 1,
+    EvasCanvas3DSpaceWorld = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DNodeType {
-    EVAS_CANVAS3D_NODE_TYPE_NODE = 0,
-    EVAS_CANVAS3D_NODE_TYPE_CAMERA = 1,
-    EVAS_CANVAS3D_NODE_TYPE_LIGHT = 2,
-    EVAS_CANVAS3D_NODE_TYPE_MESH = 3,
+    EvasCanvas3DNodeTypeNode = 0,
+    EvasCanvas3DNodeTypeCamera = 1,
+    EvasCanvas3DNodeTypeLight = 2,
+    EvasCanvas3DNodeTypeMesh = 3,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
-pub enum EvasCanvas3DNodeOrientationType {
-    EVAS_CANVAS3D_NODE_ORIENTATION_TYPE_NONE = 0,
-    EVAS_CANVAS3D_NODE_ORIENTATION_TYPE_LOOK_AT = 1,
-    EVAS_CANVAS3D_NODE_ORIENTATION_TYPE_LOOK_TO = 2,
-    EVAS_CANVAS3D_NODE_ORIENTATION_TYPE_ANGLE_AXIS = 3,
-    EVAS_CANVAS3D_NODE_ORIENTATION_TYPE_QUATERNION = 4,
+pub enum Evas_Canvas3D_NodeOrientationType {
+    EvasCanvas3DNodeOrientationTypeNone = 0,
+    EvasCanvas3DNodeOrientationTypeLookAt = 1,
+    EvasCanvas3DNodeOrientationTypeLookTo = 2,
+    EvasCanvas3DNodeOrientationTypeAngleAxis = 3,
+    EvasCanvas3DNodeOrientationTypeQuaternion = 4,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DIndexFormat {
-    EVAS_CANVAS3D_INDEX_FORMAT_NONE = 0,
-    EVAS_CANVAS3D_INDEX_FORMAT_UNSIGNED_BYTE = 1,
-    EVAS_CANVAS3D_INDEX_FORMAT_UNSIGNED_SHORT = 2,
+    EvasCanvas3DIndexFormatNone = 0,
+    EvasCanvas3DIndexFormatUnsignedByte = 1,
+    EvasCanvas3DIndexFormatUnsignedShort = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DFrustumMode {
-    EVAS_CANVAS3D_FRUSTUM_MODE_BSPHERE = 0,
-    EVAS_CANVAS3D_FRUSTUM_MODE_AABB = 1,
-    EVAS_CANVAS3D_FRUSTUM_MODE_CENTRAL_POINT = 2,
+    EvasCanvas3DFrustumModeBsphere = 0,
+    EvasCanvas3DFrustumModeAabb = 1,
+    EvasCanvas3DFrustumModeCentralPoint = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DVertexAssembly {
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_POINTS = 0,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_LINES = 1,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_LINE_STRIP = 2,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_LINE_LOOP = 3,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_TRIANGLES = 4,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_TRIANGLE_STRIP = 5,
-    EVAS_CANVAS3D_VERTEX_ASSEMBLY_TRIANGLE_FAN = 6,
+    EvasCanvas3DVertexAssemblyPoints = 0,
+    EvasCanvas3DVertexAssemblyLines = 1,
+    EvasCanvas3DVertexAssemblyLineStrip = 2,
+    EvasCanvas3DVertexAssemblyLineLoop = 3,
+    EvasCanvas3DVertexAssemblyTriangles = 4,
+    EvasCanvas3DVertexAssemblyTriangleStrip = 5,
+    EvasCanvas3DVertexAssemblyTriangleFan = 6,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DComparison {
-    EVAS_CANVAS3D_COMPARISON_NEVER = 0,
-    EVAS_CANVAS3D_COMPARISON_LESS = 1,
-    EVAS_CANVAS3D_COMPARISON_EQUAL = 2,
-    EVAS_CANVAS3D_COMPARISON_LEQUAL = 3,
-    EVAS_CANVAS3D_COMPARISON_GREATER = 4,
-    EVAS_CANVAS3D_COMPARISON_NOTEQUAL = 5,
-    EVAS_CANVAS3D_COMPARISON_GEQUAL = 6,
-    EVAS_CANVAS3D_COMPARISON_ALWAYS = 7,
+    EvasCanvas3DComparisonNever = 0,
+    EvasCanvas3DComparisonLess = 1,
+    EvasCanvas3DComparisonEqual = 2,
+    EvasCanvas3DComparisonLequal = 3,
+    EvasCanvas3DComparisonGreater = 4,
+    EvasCanvas3DComparisonNotequal = 5,
+    EvasCanvas3DComparisonGequal = 6,
+    EvasCanvas3DComparisonAlways = 7,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DWrapMode {
-    EVAS_CANVAS3D_WRAP_MODE_CLAMP = 0,
-    EVAS_CANVAS3D_WRAP_MODE_REPEAT = 1,
-    EVAS_CANVAS3D_WRAP_MODE_REFLECT = 2,
+    EvasCanvas3DWrapModeClamp = 0,
+    EvasCanvas3DWrapModeRepeat = 1,
+    EvasCanvas3DWrapModeReflect = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DTextureFilter {
-    EVAS_CANVAS3D_TEXTURE_FILTER_NEAREST = 0,
-    EVAS_CANVAS3D_TEXTURE_FILTER_LINEAR = 1,
-    EVAS_CANVAS3D_TEXTURE_FILTER_NEAREST_MIPMAP_NEAREST = 2,
-    EVAS_CANVAS3D_TEXTURE_FILTER_LINEAR_MIPMAP_NEAREST = 3,
-    EVAS_CANVAS3D_TEXTURE_FILTER_NEAREST_MIPMAP_LINEAR = 4,
-    EVAS_CANVAS3D_TEXTURE_FILTER_LINEAR_MIPMAP_LINEAR = 5,
+    EvasCanvas3DTextureFilterNearest = 0,
+    EvasCanvas3DTextureFilterLinear = 1,
+    EvasCanvas3DTextureFilterNearestMipmapNearest = 2,
+    EvasCanvas3DTextureFilterLinearMipmapNearest = 3,
+    EvasCanvas3DTextureFilterNearestMipmapLinear = 4,
+    EvasCanvas3DTextureFilterLinearMipmapLinear = 5,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DMeshPrimitive {
-    EVAS_CANVAS3D_MESH_PRIMITIVE_NONE = 0,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_SQUARE = 1,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_CUBE = 2,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_CYLINDER = 3,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_CONE = 4,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_SPHERE = 5,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_TORUS = 6,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_SURFACE = 7,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_TERRAIN = 8,
-    EVAS_CANVAS3D_MESH_PRIMITIVE_COUNT = 9,
+    EvasCanvas3DMeshPrimitiveNone = 0,
+    EvasCanvas3DMeshPrimitiveSquare = 1,
+    EvasCanvas3DMeshPrimitiveCube = 2,
+    EvasCanvas3DMeshPrimitiveCylinder = 3,
+    EvasCanvas3DMeshPrimitiveCone = 4,
+    EvasCanvas3DMeshPrimitiveSphere = 5,
+    EvasCanvas3DMeshPrimitiveTorus = 6,
+    EvasCanvas3DMeshPrimitiveSurface = 7,
+    EvasCanvas3DMeshPrimitiveTerrain = 8,
+    EvasCanvas3DMeshPrimitiveCount = 9,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DPrimitiveMode {
-    EVAS_CANVAS3D_PRIMITIVE_MODE_DEFAULT = 0,
-    EVAS_CANVAS3D_PRIMITIVE_MODE_WITHOUT_BASE = 1,
-    EVAS_CANVAS3D_PRIMITIVE_MODE_ALTERNATIVE_UV = 2,
+    EvasCanvas3DPrimitiveModeDefault = 0,
+    EvasCanvas3DPrimitiveModeWithoutBase = 1,
+    EvasCanvas3DPrimitiveModeAlternativeUv = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DShadeMode {
-    EVAS_CANVAS3D_SHADE_MODE_VERTEX_COLOR = 0,
-    EVAS_CANVAS3D_SHADE_MODE_DIFFUSE = 1,
-    EVAS_CANVAS3D_SHADE_MODE_FLAT = 2,
-    EVAS_CANVAS3D_SHADE_MODE_PHONG = 3,
-    EVAS_CANVAS3D_SHADE_MODE_NORMAL_MAP = 4,
-    EVAS_CANVAS3D_SHADE_MODE_SHADOW_MAP_RENDER = 5,
-    EVAS_CANVAS3D_SHADE_MODE_COLOR_PICK = 6,
-    EVAS_CANVAS3D_SHADE_MODE_PARALLAX_OCCLUSION = 7,
+    EvasCanvas3DShadeModeVertexColor = 0,
+    EvasCanvas3DShadeModeDiffuse = 1,
+    EvasCanvas3DShadeModeFlat = 2,
+    EvasCanvas3DShadeModePhong = 3,
+    EvasCanvas3DShadeModeNormalMap = 4,
+    EvasCanvas3DShadeModeShadowMapRender = 5,
+    EvasCanvas3DShadeModeColorPick = 6,
+    EvasCanvas3DShadeModeParallaxOcclusion = 7,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DVertexAttrib {
-    EVAS_CANVAS3D_VERTEX_ATTRIB_POSITION = 0,
-    EVAS_CANVAS3D_VERTEX_ATTRIB_NORMAL = 1,
-    EVAS_CANVAS3D_VERTEX_ATTRIB_TANGENT = 2,
-    EVAS_CANVAS3D_VERTEX_ATTRIB_COLOR = 3,
-    EVAS_CANVAS3D_VERTEX_ATTRIB_TEXCOORD = 4,
+    EvasCanvas3DVertexAttribPosition = 0,
+    EvasCanvas3DVertexAttribNormal = 1,
+    EvasCanvas3DVertexAttribTangent = 2,
+    EvasCanvas3DVertexAttribColor = 3,
+    EvasCanvas3DVertexAttribTexcoord = 4,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DBlendFunc {
-    EVAS_CANVAS3D_BLEND_FUNC_ZERO = 0,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE = 1,
-    EVAS_CANVAS3D_BLEND_FUNC_SRC_COLOR = 2,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_SRC_COLOR = 3,
-    EVAS_CANVAS3D_BLEND_FUNC_DST_COLOR = 4,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_DST_COLOR = 5,
-    EVAS_CANVAS3D_BLEND_FUNC_SRC_ALPHA = 6,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_SRC_ALPHA = 7,
-    EVAS_CANVAS3D_BLEND_FUNC_DST_ALPHA = 8,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_DST_ALPHA = 9,
-    EVAS_CANVAS3D_BLEND_FUNC_CONSTANT_COLOR = 10,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_CONSTANT_COLOR = 11,
-    EVAS_CANVAS3D_BLEND_FUNC_CONSTANT_ALPHA = 12,
-    EVAS_CANVAS3D_BLEND_FUNC_ONE_MINUS_CONSTANT_ALPHA = 13,
-    EVAS_CANVAS3D_BLEND_FUNC_SRC_ALPHA_SATURATE = 14,
+    EvasCanvas3DBlendFuncZero = 0,
+    EvasCanvas3DBlendFuncOne = 1,
+    EvasCanvas3DBlendFuncSrcColor = 2,
+    EvasCanvas3DBlendFuncOneMinusSrcColor = 3,
+    EvasCanvas3DBlendFuncDstColor = 4,
+    EvasCanvas3DBlendFuncOneMinusDstColor = 5,
+    EvasCanvas3DBlendFuncSrcAlpha = 6,
+    EvasCanvas3DBlendFuncOneMinusSrcAlpha = 7,
+    EvasCanvas3DBlendFuncDstAlpha = 8,
+    EvasCanvas3DBlendFuncOneMinusDstAlpha = 9,
+    EvasCanvas3DBlendFuncConstantColor = 10,
+    EvasCanvas3DBlendFuncOneMinusConstantColor = 11,
+    EvasCanvas3DBlendFuncConstantAlpha = 12,
+    EvasCanvas3DBlendFuncOneMinusConstantAlpha = 13,
+    EvasCanvas3DBlendFuncSrcAlphaSaturate = 14,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasCanvas3DMaterialAttrib {
-    EVAS_CANVAS3D_MATERIAL_ATTRIB_AMBIENT = 0,
-    EVAS_CANVAS3D_MATERIAL_ATTRIB_DIFFUSE = 1,
-    EVAS_CANVAS3D_MATERIAL_ATTRIB_SPECULAR = 2,
-    EVAS_CANVAS3D_MATERIAL_ATTRIB_EMISSION = 3,
-    EVAS_CANVAS3D_MATERIAL_ATTRIB_NORMAL = 4,
+    EvasCanvas3DMaterialAttribAmbient = 0,
+    EvasCanvas3DMaterialAttribDiffuse = 1,
+    EvasCanvas3DMaterialAttribSpecular = 2,
+    EvasCanvas3DMaterialAttribEmission = 3,
+    EvasCanvas3DMaterialAttribNormal = 4,
 }
 
 #[repr(C)]
-pub struct EvasVersion {
+pub struct Evas_Version {
     pub major: c_int,
     pub minor: c_int,
     pub micro: c_int,
     pub revision: c_int,
 }
 
-pub type EvasCallbackPriority = EoCallbackPriority;
+pub type Evas_Callback_Priority = Eo_Callback_Priority;
 pub type Evas = Eo;
-pub enum EvasPublicData { }
-pub type EvasObject = Eo;
-pub type EflVg = Eo;
-pub type EvasPerformance = c_void;
-pub enum EvasSmart { }
+pub enum Evas_Public_Data { }
+pub type Evas_Object = Eo;
+pub type Efl_Vg = Eo;
+pub type Evas_Performance = c_void;
+pub enum Evas_Smart { }
 pub type EvasAngle = c_int;
 
 #[repr(C)]
-pub struct EvasCoordRectangle {
+pub struct Evas_Coord_Rectangle {
     pub x: EvasCoord,
     pub y: EvasCoord,
     pub w: EvasCoord,
@@ -552,19 +553,19 @@ pub struct EvasCoordRectangle {
 }
 
 #[repr(C)]
-pub struct EvasCoordPoint {
+pub struct Evas_Coord_Point {
     pub x: EvasCoord,
     pub y: EvasCoord,
 }
 
 #[repr(C)]
-pub struct EvasCoordSize {
+pub struct Evas_Coord_Size {
     pub w: EvasCoord,
     pub h: EvasCoord,
 }
 
 #[repr(C)]
-pub struct EvasCoordPrecisionSize {
+pub struct Evas_Coord_Precision_Size {
     pub w: EvasCoord,
     pub h: EvasCoord,
     pub wsub: c_double,
@@ -572,7 +573,7 @@ pub struct EvasCoordPrecisionSize {
 }
 
 #[repr(C)]
-pub struct EvasCoordPrecisionPoint {
+pub struct Evas_Coord_Precision_Point {
     pub x: EvasCoord,
     pub y: EvasCoord,
     pub xsub: c_double,
@@ -580,45 +581,45 @@ pub struct EvasCoordPrecisionPoint {
 }
 
 #[repr(C)]
-pub struct EvasPoint {
+pub struct Evas_Point {
     pub x: c_int,
     pub y: c_int,
 }
 
 #[repr(C)]
-pub struct EvasPosition {
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+pub struct Evas_Position {
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
 }
 
 #[repr(C)]
-pub struct EvasPrecisionPosition {
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPrecisionPoint,
+pub struct Evas_Precision_Position {
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Precision_Point,
 }
 
-pub enum EvasDevice { }
+pub enum Evas_Device { }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasAllocError {
-    EVAS_ALLOC_ERROR_NONE = 0,
-    EVAS_ALLOC_ERROR_FATAL = 1,
-    EVAS_ALLOC_ERROR_RECOVERED = 2,
+    EvasAllocErrorNone = 0,
+    EvasAllocErrorFatal = 1,
+    EvasAllocErrorRecovered = 2,
 }
 
-pub type EvasFillSpread = EflGfxFillSpread;
+pub type Evas_Fill_Spread = EflGfxFillSpread;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasPixelImportPixelFormat {
-    EVAS_PIXEL_FORMAT_NONE = 0,
-    EVAS_PIXEL_FORMAT_ARGB32 = 1,
-    EVAS_PIXEL_FORMAT_YUV420P_601 = 2,
+    EvasPixelFormatNone = 0,
+    EvasPixelFormatArgb32 = 1,
+    EvasPixelFormatYuv420P_601 = 2,
 }
 
 #[repr(C)]
-pub struct EvasPixelImportSource {
+pub struct Evas_Pixel_Import_Source {
     pub format: EvasPixelImportPixelFormat,
     pub w: c_int,
     pub h: c_int,
@@ -628,16 +629,16 @@ pub struct EvasPixelImportSource {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasNativeSurfaceType {
-    EVAS_NATIVE_SURFACE_NONE = 0,
-    EVAS_NATIVE_SURFACE_X11 = 1,
-    EVAS_NATIVE_SURFACE_OPENGL = 2,
-    EVAS_NATIVE_SURFACE_WL = 3,
-    EVAS_NATIVE_SURFACE_TBM = 4,
-    EVAS_NATIVE_SURFACE_EVASGL = 5,
+    EvasNativeSurfaceNone = 0,
+    EvasNativeSurfaceX11 = 1,
+    EvasNativeSurfaceOpengl = 2,
+    EvasNativeSurfaceWl = 3,
+    EvasNativeSurfaceTbm = 4,
+    EvasNativeSurfaceEvasgl = 5,
 }
 
 #[repr(C)]
-pub struct EvasNativeSurface {
+pub struct Evas_Native_Surface {
     pub version: c_int,
     pub _type: EvasNativeSurfaceType,
     pub data: EvasUnionUnnamed30,
@@ -740,330 +741,330 @@ impl ::std::default::Default for EvasStructUnnamed35 {
     fn default() -> Self { unsafe { ::std::mem::zeroed() } }
 }
 pub type EvasVideoCb = Option<unsafe extern "C" fn(data: *mut c_void,
-                                                   obj: *mut EvasObject,
+                                                   obj: *mut Evas_Object,
                                                    surface:
-                                                   *const EvasVideoSurface)>;
+                                                   *const Evas_Video_Surface)>;
 pub type EvasVideoCoordCb = Option<unsafe extern "C" fn(data: *mut c_void,
-                                               obj: *mut EvasObject,
-                                               surface: *const EvasVideoSurface,
+                                               obj: *mut Evas_Object,
+                                               surface: *const Evas_Video_Surface,
                                                a: EvasCoord, b: EvasCoord)>;
 #[repr(C)]
-pub struct EvasVideoSurface {
+pub struct Evas_Video_Surface {
     pub version: c_int,
     pub _move: EvasVideoCoordCb,
     pub resize: EvasVideoCoordCb,
     pub show: EvasVideoCb,
     pub hide: EvasVideoCb,
     pub update_pixels: EvasVideoCb,
-    pub parent: *mut EvasObject,
+    pub parent: *mut Evas_Object,
     pub data: *mut c_void,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
-pub enum EvasVideoSurfaceCaps {
-    EVAS_VIDEO_SURFACE_MOVE = 1,
-    EVAS_VIDEO_SURFACE_RESIZE = 2,
-    EVAS_VIDEO_SURFACE_CLIP = 4,
-    EVAS_VIDEO_SURFACE_BELOW = 8,
-    EVAS_VIDEO_SURFACE_STACKING_CHECK = 16,
-    EVAS_VIDEO_SURFACE_IGNORE_WINDOW = 32,
+pub enum EvasVideoSurfaceCapsg {
+    EvasVideoSurfaceMove = 1,
+    EvasVideoSurfaceResize = 2,
+    EvasVideoSurfaceClip = 4,
+    EvasVideoSurfaceBelow = 8,
+    EvasVideoSurfaceStackingCheck = 16,
+    EvasVideoSurfaceIgnoreWindow = 32,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasBorderFillMode {
-    EVAS_BORDER_FILL_NONE = 0,
-    EVAS_BORDER_FILL_DEFAULT = 1,
-    EVAS_BORDER_FILL_SOLID = 2,
+    EvasBorderFillNone = 0,
+    EvasBorderFillDefault = 1,
+    EvasBorderFillSolid = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasEngineRenderMode {
-    EVAS_RENDER_MODE_BLOCKING = 0,
-    EVAS_RENDER_MODE_NONBLOCKING = 1,
+    EvasRenderModeBlocking = 0,
+    EvasRenderModeNonblocking = 1,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasImageContentHint {
-    EVAS_IMAGE_CONTENT_HINT_NONE = 0,
-    EVAS_IMAGE_CONTENT_HINT_DYNAMIC = 1,
-    EVAS_IMAGE_CONTENT_HINT_STATIC = 2,
+    EvasImageContentHintNone = 0,
+    EvasImageContentHintDynamic = 1,
+    EvasImageContentHintStatic = 2,
 }
 
 pub const EVAS_IMAGE_ORIENT_0: EvasImageOrient =
-    EvasImageOrient::EVAS_IMAGE_ORIENT_NONE;
+    EvasImageOrient::EvasImageOrientNone;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasImageOrient {
-    EVAS_IMAGE_ORIENT_NONE = 0,
-    EVAS_IMAGE_ORIENT_90 = 1,
-    EVAS_IMAGE_ORIENT_180 = 2,
-    EVAS_IMAGE_ORIENT_270 = 3,
-    EVAS_IMAGE_FLIP_HORIZONTAL = 4,
-    EVAS_IMAGE_FLIP_VERTICAL = 5,
-    EVAS_IMAGE_FLIP_TRANSPOSE = 6,
-    EVAS_IMAGE_FLIP_TRANSVERSE = 7,
+    EvasImageOrientNone = 0,
+    EvasImageOrient_90 = 1,
+    EvasImageOrient_180 = 2,
+    EvasImageOrient_270 = 3,
+    EvasImageFlipHorizontal = 4,
+    EvasImageFlipVertical = 5,
+    EvasImageFlipTranspose = 6,
+    EvasImageFlipTransverse = 7,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasDeviceClass {
-    EVAS_DEVICE_CLASS_NONE = 0,
-    EVAS_DEVICE_CLASS_SEAT = 1,
-    EVAS_DEVICE_CLASS_KEYBOARD = 2,
-    EVAS_DEVICE_CLASS_MOUSE = 3,
-    EVAS_DEVICE_CLASS_TOUCH = 4,
-    EVAS_DEVICE_CLASS_PEN = 5,
-    EVAS_DEVICE_CLASS_POINTER = 6,
-    EVAS_DEVICE_CLASS_GAMEPAD = 7,
+    EvasDeviceClassNone = 0,
+    EvasDeviceClassSeat = 1,
+    EvasDeviceClassKeyboard = 2,
+    EvasDeviceClassMouse = 3,
+    EvasDeviceClassTouch = 4,
+    EvasDeviceClassPen = 5,
+    EvasDeviceClassPointer = 6,
+    EvasDeviceClassGamepad = 7,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasDeviceSubclass {
-    EVAS_DEVICE_SUBCLASS_NONE = 0,
-    EVAS_DEVICE_SUBCLASS_FINGER = 1,
-    EVAS_DEVICE_SUBCLASS_FINGERNAIL = 2,
-    EVAS_DEVICE_SUBCLASS_KNUCKLE = 3,
-    EVAS_DEVICE_SUBCLASS_PALM = 4,
-    EVAS_DEVICE_SUBCLASS_HAND_SIZE = 5,
-    EVAS_DEVICE_SUBCLASS_HAND_FLAT = 6,
-    EVAS_DEVICE_SUBCLASS_PEN_TIP = 7,
-    EVAS_DEVICE_SUBCLASS_TRACKPAD = 8,
-    EVAS_DEVICE_SUBCLASS_TRACKPOINT = 9,
-    EVAS_DEVICE_SUBCLASS_TRACKBALL = 10,
+    EvasDeviceSubclassNone = 0,
+    EvasDeviceSubclassFinger = 1,
+    EvasDeviceSubclassFingernail = 2,
+    EvasDeviceSubclassKnuckle = 3,
+    EvasDeviceSubclassPalm = 4,
+    EvasDeviceSubclassHandSize = 5,
+    EvasDeviceSubclassHandFlat = 6,
+    EvasDeviceSubclassPenTip = 7,
+    EvasDeviceSubclassTrackpad = 8,
+    EvasDeviceSubclassTrackpoint = 9,
+    EvasDeviceSubclassTrackball = 10,
 }
 
 #[repr(C)]
-pub struct EvasEngineInfo {
+pub struct Evas_Engine_Info {
     pub magic: c_int,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseDown {
+pub struct Evas_Event_Mouse_Down {
     pub button: c_int,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub flags: EvasButtonFlags,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
-    pub event_src: *mut EvasObject,
+    pub dev: *mut Evas_Device,
+    pub event_src: *mut Evas_Object,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseUp {
+pub struct Evas_Event_Mouse_Up {
     pub button: c_int,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub flags: EvasButtonFlags,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
-    pub event_src: *mut EvasObject,
+    pub dev: *mut Evas_Device,
+    pub event_src: *mut Evas_Object,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseIn {
+pub struct Evas_Event_Mouse_In {
     pub buttons: c_int,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
-    pub event_src: *mut EvasObject,
+    pub dev: *mut Evas_Device,
+    pub event_src: *mut Evas_Object,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseOut {
+pub struct Evas_Event_Mouse_Out {
     pub buttons: c_int,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
-    pub event_src: *mut EvasObject,
+    pub dev: *mut Evas_Device,
+    pub event_src: *mut Evas_Object,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseMove {
+pub struct Evas_Event_Mouse_Move {
     pub buttons: c_int,
-    pub cur: EvasPosition,
-    pub prev: EvasPosition,
+    pub cur: Evas_Position,
+    pub prev: Evas_Position,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
-    pub event_src: *mut EvasObject,
+    pub dev: *mut Evas_Device,
+    pub event_src: *mut Evas_Object,
 }
 
 #[repr(C)]
-pub struct EvasEventMouseWheel {
+pub struct Evas_Event_Mouse_Wheel {
     pub direction: c_int,
     pub z: c_int,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
 }
 
 #[repr(C)]
-pub struct EvasEventMultiDown {
+pub struct Evas_Event_Multi_Down {
     pub device: c_int,
     pub radius: c_double,
     pub radius_x: c_double,
     pub radius_y: c_double,
     pub pressure: c_double,
     pub angle: c_double,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPrecisionPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Precision_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub flags: EvasButtonFlags,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
 }
 
 #[repr(C)]
-pub struct EvasEventMultiUp {
+pub struct Evas_Event_Multi_Up {
     pub device: c_int,
     pub radius: c_double,
     pub radius_x: c_double,
     pub radius_y: c_double,
     pub pressure: c_double,
     pub angle: c_double,
-    pub output: EvasPoint,
-    pub canvas: EvasCoordPrecisionPoint,
+    pub output: Evas_Point,
+    pub canvas: Evas_Coord_Precision_Point,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub flags: EvasButtonFlags,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
 }
 
 #[repr(C)]
-pub struct EvasEventMultiMove {
+pub struct Evas_Event_Multi_Move {
     pub device: c_int,
     pub radius: c_double,
     pub radius_x: c_double,
     pub radius_y: c_double,
     pub pressure: c_double,
     pub angle: c_double,
-    pub cur: EvasPrecisionPosition,
+    pub cur: Evas_Precision_Position,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
 }
 
 #[repr(C)]
-pub struct EvasEventKeyDown {
+pub struct Evas_Event_Key_Down {
     pub keyname: *mut c_char,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub key: *const c_char,
     pub string: *const c_char,
     pub compose: *const c_char,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
     pub keycode: c_uint,
 }
 
 #[repr(C)]
-pub struct EvasEventKeyUp {
+pub struct Evas_Event_Key_Up {
     pub keyname: *mut c_char,
     pub data: *mut c_void,
-    pub modifiers: *mut EvasModifier,
-    pub locks: *mut EvasLock,
+    pub modifiers: *mut Evas_Modifier,
+    pub locks: *mut Evas_Lock,
     pub key: *const c_char,
     pub string: *const c_char,
     pub compose: *const c_char,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
     pub keycode: c_uint,
 }
 
 #[repr(C)]
-pub struct EvasEventRenderPost {
-    pub updated_area: *mut EinaList,
+pub struct Evas_Event_Render_Post {
+    pub updated_area: *mut Eina_List,
 }
 
 #[repr(C)]
-pub struct EvasEventHold {
+pub struct Evas_Event_Hold {
     pub hold: c_int,
     pub data: *mut c_void,
     pub timestamp: c_uint,
     pub event_flags: EvasEventFlags,
-    pub dev: *mut EvasDevice,
+    pub dev: *mut Evas_Device,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasAxisLabel {
-    EVAS_AXIS_LABEL_UNKNOWN = 0,
-    EVAS_AXIS_LABEL_X = 1,
-    EVAS_AXIS_LABEL_Y = 2,
-    EVAS_AXIS_LABEL_PRESSURE = 3,
-    EVAS_AXIS_LABEL_DISTANCE = 4,
-    EVAS_AXIS_LABEL_AZIMUTH = 5,
-    EVAS_AXIS_LABEL_TILT = 6,
-    EVAS_AXIS_LABEL_TWIST = 7,
-    EVAS_AXIS_LABEL_TOUCH_WIDTH_MAJOR = 8,
-    EVAS_AXIS_LABEL_TOUCH_WIDTH_MINOR = 9,
-    EVAS_AXIS_LABEL_TOOL_WIDTH_MAJOR = 10,
-    EVAS_AXIS_LABEL_TOOL_WIDTH_MINOR = 11,
+    EvasAxisLabelUnknown = 0,
+    EvasAxisLabelX = 1,
+    EvasAxisLabelY = 2,
+    EvasAxisLabelPressure = 3,
+    EvasAxisLabelDistance = 4,
+    EvasAxisLabelAzimuth = 5,
+    EvasAxisLabelTilt = 6,
+    EvasAxisLabelTwist = 7,
+    EvasAxisLabelTouchWidthMajor = 8,
+    EvasAxisLabelTouchWidthMinor = 9,
+    EvasAxisLabelToolWidthMajor = 10,
+    EvasAxisLabelToolWidthMinor = 11,
 }
 
 #[repr(C)]
-pub struct EvasAxis {
+pub struct Evas_Axis {
     pub label: EvasAxisLabel,
     pub value: c_double,
 }
 
 #[repr(C)]
-pub struct EvasEventAxisUpdate {
+pub struct Evas_Event_Axis_Update {
     pub data: *mut c_void,
     pub timestamp: c_uint,
     pub device: c_int,
     pub toolid: c_int,
     pub naxis: c_int,
-    pub axis: *mut EvasAxis,
-    pub dev: *mut EvasDevice,
+    pub axis: *mut Evas_Axis,
+    pub dev: *mut Evas_Device,
 }
 
 pub type EvasSmartCb = Option<unsafe extern "C" fn(data: *mut c_void,
-                                                   obj: *mut EvasObject,
+                                                   obj: *mut Evas_Object,
                                                    event_info: *mut c_void)>;
 pub type EvasEventCb = Option<unsafe extern "C" fn(data: *mut c_void,
                                                    e: *mut Evas,
@@ -1073,7 +1074,7 @@ pub type EvasObjectEventPostCb = Option<unsafe extern "C" fn(data: *mut c_void,
                                                              -> EinaBool>;
 pub type EvasObjectEventCb = Option<unsafe extern "C" fn(data: *mut c_void,
                                                          e: *mut Evas,
-                                                         obj: *mut EvasObject,
+                                                         obj: *mut Evas_Object,
                                                          event_info:
                                                          *mut c_void)>;
 pub type EvasAsyncEventsPutCb =
@@ -1082,64 +1083,64 @@ pub type EvasAsyncEventsPutCb =
                                 event_info: *mut c_void)>;
 pub type EvasObjectInterceptShowCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject)>;
+                                obj: *mut Evas_Object)>;
 pub type EvasObjectInterceptHideCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject)>;
+                                obj: *mut Evas_Object)>;
 pub type EvasObjectInterceptMoveCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
+                                obj: *mut Evas_Object,
                                 x: EvasCoord, y: EvasCoord)>;
 pub type EvasObjectInterceptResizeCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
+                                obj: *mut Evas_Object,
                                 w: EvasCoord, h: EvasCoord)>;
 pub type EvasObjectInterceptRaiseCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject)>;
+                                obj: *mut Evas_Object)>;
 pub type EvasObjectInterceptLowerCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject)>;
+                                obj: *mut Evas_Object)>;
 pub type EvasObjectInterceptStackAboveCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
-                                above: *mut EvasObject)>;
+                                obj: *mut Evas_Object,
+                                above: *mut Evas_Object)>;
 pub type EvasObjectInterceptStackBelowCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
-                                above: *mut EvasObject)>;
+                                obj: *mut Evas_Object,
+                                above: *mut Evas_Object)>;
 pub type EvasObjectInterceptLayerSetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
+                                obj: *mut Evas_Object,
                                 l: c_int)>;
 pub type EvasObjectInterceptFocusSetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
+                                obj: *mut Evas_Object,
                                 focus: EinaBool)>;
 pub type EvasObjectInterceptColorSetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
+                                obj: *mut Evas_Object,
                                 r: c_int,
                                 g: c_int,
                                 b: c_int,
                                 a: c_int)>;
 pub type EvasObjectInterceptClipSetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject,
-                                clip: *mut EvasObject)>;
+                                obj: *mut Evas_Object,
+                                clip: *mut Evas_Object)>;
 pub type EvasObjectInterceptClipUnsetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                obj: *mut EvasObject)>;
-pub type EvasObjectImagePixelsGetCb =
+                                obj: *mut Evas_Object)>;
+pub type Evas_ObjectImagePixelsGetCb =
     Option<unsafe extern "C" fn(data: *mut c_void,
-                                o: *mut EvasObject)>;
-pub enum EvasTextblockStyle { }
-pub enum EvasTextblockCursor { }
-pub enum EvasTextblockNodeFormat { }
-pub type EvasObjectTextblockNodeFormat = EvasTextblockNodeFormat;
+                                o: *mut Evas_Object)>;
+pub enum Evas_Textblock_Style { }
+pub enum Evas_Textblock_Cursor { }
+pub enum Evas_Textblock_Node_Format { }
+pub type Evas_Object_Textblock_Node_Format = Evas_Textblock_Node_Format;
 
 #[repr(C)]
-pub struct EvasTextblockRectangle {
+pub struct Evas_Textblock_Rectangle {
     pub x: EvasCoord,
     pub y: EvasCoord,
     pub w: EvasCoord,
@@ -1149,153 +1150,152 @@ pub struct EvasTextblockRectangle {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasTextblockTextType {
-    EVAS_TEXTBLOCK_TEXT_RAW = 0,
-    EVAS_TEXTBLOCK_TEXT_PLAIN = 1,
-    EVAS_TEXTBLOCK_TEXT_MARKUP = 2,
+    EvasTextblockTextRaw = 0,
+    EvasTextblockTextPlain = 1,
+    EvasTextblockTextMarkup = 2,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasTextblockCursorType {
-    EVAS_TEXTBLOCK_CURSOR_UNDER = 0,
-    EVAS_TEXTBLOCK_CURSOR_BEFORE = 1,
+    EvasTextblockCursorUnder = 0,
+    EvasTextblockCursorBefore = 1,
 }
 
 #[repr(C)]
-pub struct EvasTextgridCell {
-    pub codepoint: EinaUnicode,
+pub struct Evas_Textgrid_Cell {
+    pub codepoint: Eina_Unicode,
     pub fg: c_uchar,
     pub bg: c_uchar,
     pub _bindgen_bitfield_1_: c_ushort,
 }
 
 #[repr(C)]
-pub struct EvasSmartClass {
+pub struct Evas_Smart_Class {
     pub name: *const c_char,
     pub version: c_int,
-    pub add: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub del: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub _move: Option<unsafe extern "C" fn(o: *mut EvasObject,
+    pub add: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub del: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub _move: Option<unsafe extern "C" fn(o: *mut Evas_Object,
                                            x: EvasCoord,
                                            y: EvasCoord)>,
-    pub resize: Option<unsafe extern "C" fn(o: *mut EvasObject,
+    pub resize: Option<unsafe extern "C" fn(o: *mut Evas_Object,
                                             w: EvasCoord,
                                             h: EvasCoord)>,
-    pub show: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub hide: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub color_set: Option<unsafe extern "C" fn(o: *mut EvasObject,
+    pub show: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub hide: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub color_set: Option<unsafe extern "C" fn(o: *mut Evas_Object,
                                                r: c_int,
                                                g: c_int,
                                                b: c_int,
                                                a: c_int)>,
-    pub clip_set: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                              clip: *mut EvasObject)>,
-    pub clip_unset: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub calculate: Option<unsafe extern "C" fn(o: *mut EvasObject)>,
-    pub member_add: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                child: *mut EvasObject)>,
-    pub member_del: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                child: *mut EvasObject)>,
-    pub parent: *const EvasSmartClass,
-    pub callbacks: *const EvasSmartCbDescription,
-    pub interfaces: *mut *const EvasSmartInterface,
+    pub clip_set: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                              clip: *mut Evas_Object)>,
+    pub clip_unset: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub calculate: Option<unsafe extern "C" fn(o: *mut Evas_Object)>,
+    pub member_add: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                child: *mut Evas_Object)>,
+    pub member_del: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                child: *mut Evas_Object)>,
+    pub parent: *const Evas_Smart_Class,
+    pub callbacks: *const Evas_Smart_Cb_Description,
+    pub interfaces: *mut *const Evas_Smart_Interface,
     pub data: *const c_void,
 }
 
 #[repr(C)]
-pub struct EvasSmartInterface {
+pub struct Evas_Smart_Interface {
     pub name: *const c_char,
     pub private_size: c_uint,
-    pub add: Option<unsafe extern "C" fn(obj: *mut EvasObject) -> EinaBool>,
-    pub del: Option<unsafe extern "C" fn(obj: *mut EvasObject)>,
+    pub add: Option<unsafe extern "C" fn(obj: *mut Evas_Object) -> EinaBool>,
+    pub del: Option<unsafe extern "C" fn(obj: *mut Evas_Object)>,
 }
 
 #[repr(C)]
-pub struct EvasSmartCbDescription {
+pub struct Evas_Smart_Cb_Description {
     pub name: *const c_char,
     pub _type: *const c_char,
 }
 
 #[repr(C)]
-pub struct EvasObjectSmartClippedData {
-    pub clipper: *mut EvasObject,
+pub struct Evas_Object_Smart_Clipped_Data {
+    pub clipper: *mut Evas_Object,
     pub evas: *mut Evas,
 }
 
-pub type EvasObjectBoxLayout =
-    Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                _priv: *mut EvasObjectBoxData,
+pub type EvasObjectBoxLayout = Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                _priv: *mut Evas_Object_Box_Data,
                                 user_data: *mut c_void)>;
-pub enum EvasObjectBoxApi {}
+pub enum Evas_Object_Box_Api {}
 /* va_list not supported yet
 #[repr(C)]
-pub struct EvasObjectBoxApi {
-    pub base: EvasSmartClass,
+pub struct Evas_Object_Box_Api {
+    pub base: Evas_Smart_Class,
     pub version: c_int,
-    pub append: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                            _priv: *mut EvasObjectBoxData,
-                                            child: *mut EvasObject)
-                                            -> *mut EvasObjectBoxOption>,
-    pub prepend: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                             _priv: *mut EvasObjectBoxData,
-                                             child: *mut EvasObject)
-                                           -> *mut EvasObjectBoxOption>,
-    pub insert_before: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                  _priv: *mut EvasObjectBoxData,
-                                                   child: *mut EvasObject,
-                                                   reference: *const EvasObject)
-                                                 -> *mut EvasObjectBoxOption>,
-    pub insert_after: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                  _priv: *mut EvasObjectBoxData,
-                                                  child: *mut EvasObject,
-                                                  reference: *const EvasObject)
-                                                  -> *mut EvasObjectBoxOption>,
-    pub insert_at: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                               _priv: *mut EvasObjectBoxData,
-                                               child: *mut EvasObject,
+    pub append: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                            _priv: *mut Evas_Object_Box_Data,
+                                            child: *mut Evas_Object)
+                                            -> *mut Evas_Object_Box_Option>,
+    pub prepend: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                             _priv: *mut Evas_Object_Box_Data,
+                                             child: *mut Evas_Object)
+                                           -> *mut Evas_Object_Box_Option>,
+    pub insert_before: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                  _priv: *mut Evas_Object_Box_Data,
+                                                   child: *mut Evas_Object,
+                                                   reference: *const Evas_Object)
+                                                 -> *mut Evas_Object_Box_Option>,
+    pub insert_after: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                  _priv: *mut Evas_Object_Box_Data,
+                                                  child: *mut Evas_Object,
+                                                  reference: *const Evas_Object)
+                                                  -> *mut Evas_Object_Box_Option>,
+    pub insert_at: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                               _priv: *mut Evas_Object_Box_Data,
+                                               child: *mut Evas_Object,
                                                pos: c_uint)
-                                             -> *mut EvasObjectBoxOption>,
-    pub remove: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                            _priv: *mut EvasObjectBoxData,
-                                            child: *mut EvasObject)
-                                          -> *mut EvasObject>,
-    pub remove_at: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                               _priv: *mut EvasObjectBoxData,
+                                             -> *mut Evas_Object_Box_Option>,
+    pub remove: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                            _priv: *mut Evas_Object_Box_Data,
+                                            child: *mut Evas_Object)
+                                          -> *mut Evas_Object>,
+    pub remove_at: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                               _priv: *mut Evas_Object_Box_Data,
                                                pos: c_uint)
-                                             -> *mut EvasObject>,
-    pub property_set: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                  opt: *mut EvasObjectBoxOption,
+                                             -> *mut Evas_Object>,
+    pub property_set: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                  opt: *mut Evas_Object_Box_Option,
                                                   property: c_int,
                                                   args: va_list)
                                                 -> EinaBool>,
-    pub property_get: Option<unsafe extern "C" fn(o: *const EvasObject,
-                                                  opt: *mut EvasObjectBoxOption,
+    pub property_get: Option<unsafe extern "C" fn(o: *const Evas_Object,
+                                                  opt: *mut Evas_Object_Box_Option,
                                                   property: c_int,
                                                   args: va_list)
                                                 -> EinaBool>,
-    pub property_name_get: Option<unsafe extern "C" fn(o: *const EvasObject,
+    pub property_name_get: Option<unsafe extern "C" fn(o: *const Evas_Object,
                                                        property: c_int)
                                                      -> *const c_char>,
-    pub property_id_get: Option<unsafe extern "C" fn(o: *const EvasObject,
+    pub property_id_get: Option<unsafe extern "C" fn(o: *const Evas_Object,
                                                      name: *const c_char)
                                                    -> c_int>,
-    pub option_new: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                _priv: *mut EvasObjectBoxData,
-                                                child: *mut EvasObject)
-                                              -> *mut EvasObjectBoxOption>,
-    pub option_free: Option<unsafe extern "C" fn(o: *mut EvasObject,
-                                                 _priv: *mut EvasObjectBoxData,
-                                                 opt: *mut EvasObjectBoxOption)>,
+    pub option_new: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                _priv: *mut Evas_Object_Box_Data,
+                                                child: *mut Evas_Object)
+                                              -> *mut Evas_Object_Box_Option>,
+    pub option_free: Option<unsafe extern "C" fn(o: *mut Evas_Object,
+                                                 _priv: *mut Evas_Object_Box_Data,
+                                                 opt: *mut Evas_Object_Box_Option)>,
 }
 */
 
 #[repr(C)]
-pub struct EvasObjectBoxData {
-    pub base: EvasObjectSmartClippedData,
-    pub api: *const EvasObjectBoxApi,
+pub struct Evas_Object_Box_Data {
+    pub base: Evas_Object_Smart_Clipped_Data,
+    pub api: *const Evas_Object_Box_Api,
     pub align: EvasStructUnnamed36,
     pub pad: EvasStructUnnamed37,
-    pub children: *mut EinaList,
+    pub children: *mut Eina_List,
     pub layout: EvasStructUnnamed38,
     pub _bindgen_bitfield_1_: EinaBool,
     pub _bindgen_bitfield_2_: EinaBool,
@@ -1322,15 +1322,15 @@ pub struct EvasStructUnnamed38 {
 }
 
 #[repr(C)]
-pub struct EvasObjectBoxOption {
-    pub obj: *mut EvasObject,
+pub struct Evas_Object_Box_Option {
+    pub obj: *mut Evas_Object,
     pub _bindgen_bitfield_1_: EinaBool,
     pub _bindgen_bitfield_2_: EinaBool,
     pub alloc_size: EvasCoord,
 }
 
 #[repr(C)]
-pub struct EvasCserveStats {
+pub struct Evas_Cserve_Stats {
     pub saved_memory: c_int,
     pub wasted_memory: c_int,
     pub saved_memory_peak: c_int,
@@ -1340,10 +1340,10 @@ pub struct EvasCserveStats {
 }
 
 #[repr(C)]
-pub struct EvasCserveImageCache {
+pub struct Evas_Cserve_Image_Cache {
     pub active: EvasStructUnnamed39,
     pub cached: EvasStructUnnamed39,
-    pub images: *mut EinaList,
+    pub images: *mut Eina_List,
 }
 
 #[repr(C)]
@@ -1353,7 +1353,7 @@ pub struct EvasStructUnnamed39 {
 }
 
 #[repr(C)]
-pub struct EvasCserveImage {
+pub struct Evas_Cserve_Image {
     pub file: *const c_char,
     pub key: *const c_char,
     pub w: c_int,
@@ -1374,184 +1374,184 @@ pub struct EvasCserveImage {
 }
 
 #[repr(C)]
-pub struct EvasCserveConfig {
+pub struct Evas_Cserve_Config {
     pub cache_max_usage: c_int,
     pub cache_item_timeout: c_int,
     pub cache_item_timeout_check: c_int,
 }
 
-pub type EvasOut = Eo;
-pub type EvasCanvas = Eo;
-pub type EvasCommonInterface = Eo;
-pub type EvasRectangle = Eo;
-pub type EvasImage = Eo;
-pub type EvasText = Eo;
-pub type EvasTextblock = Eo;
-pub type EvasTextgrid = Eo;
+pub type Evas_Out = Eo;
+pub type Evas_Canvas = Eo;
+pub type Evas_Common_Interface = Eo;
+pub type Evas_Rectangle = Eo;
+pub type Evas_Image = Eo;
+pub type Evas_Text = Eo;
+pub type Evas_Textblock = Eo;
+pub type Evas_Textgrid = Eo;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasTextgridPalette {
-    EVAS_TEXTGRID_PALETTE_NONE = 0,
-    EVAS_TEXTGRID_PALETTE_STANDARD = 1,
-    EVAS_TEXTGRID_PALETTE_EXTENDED = 2,
-    EVAS_TEXTGRID_PALETTE_LAST = 3,
+    EvasTextgridPaletteNone = 0,
+    EvasTextgridPaletteStandard = 1,
+    EvasTextgridPaletteExtended = 2,
+    EvasTextgridPaletteLast = 3,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasTextgridFontStyle {
-    EVAS_TEXTGRID_FONT_STYLE_NORMAL = 1,
-    EVAS_TEXTGRID_FONT_STYLE_BOLD = 2,
-    EVAS_TEXTGRID_FONT_STYLE_ITALIC = 4,
+    EvasTextgridFontStyleNormal = 1,
+    EvasTextgridFontStyleBold = 2,
+    EvasTextgridFontStyleItalic = 4,
 }
-pub type EvasLine = Eo;
-pub type EvasPolygon = Eo;
-pub type EvasObjectSmart = Eo;
-pub type EvasSmartClipped = Eo;
-pub type EvasBox = Eo;
-pub type EvasTable = Eo;
+pub type Evas_Line = Eo;
+pub type Evas_Polygon = Eo;
+pub type Evas_Object_Smart = Eo;
+pub type Evas_Smart_Clipped = Eo;
+pub type Evas_Box = Eo;
+pub type Evas_Table = Eo;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EvasObjectTableHomogeneousMode {
-    EVAS_OBJECT_TABLE_HOMOGENEOUS_NONE = 0,
-    EVAS_OBJECT_TABLE_HOMOGENEOUS_TABLE = 1,
-    EVAS_OBJECT_TABLE_HOMOGENEOUS_ITEM = 2,
+    EvasObjectTableHomogeneousNone = 0,
+    EvasObjectTableHomogeneousTable = 1,
+    EvasObjectTableHomogeneousItem = 2,
 }
-pub type EvasGrid = Eo;
-pub type EvasSignalInterface = Eo;
-pub type EvasDraggableInterface = Eo;
-pub type EvasClickableInterface = Eo;
-pub type EvasScrollableInterface = Eo;
-pub type EvasSelectableInterface = Eo;
-pub type EvasZoomableInterface = Eo;
-pub type EvasCanvas3DObject = Eo;
-pub type EvasCanvas3DTexture = Eo;
-pub type EvasCanvas3DMaterial = Eo;
-pub type EvasCanvas3DLight = Eo;
-pub type EvasCanvas3DPrimitive = Eo;
-pub type EvasCanvas3DMesh = Eo;
-pub type EvasCanvas3DNode = Eo;
-pub type EvasCanvas3DCamera = Eo;
-pub type EvasCanvas3DScene = Eo;
-pub type EvasVg = Eo;
-pub type EflVgBase = Eo;
-pub type EflVgContainer = Eo;
-pub type EflVgShape = Eo;
-pub type EflVgGradient = Eo;
-pub type EflVgGradientLinear = Eo;
-pub type EflVgGradientRadial = Eo;
+pub type Evas_Grid = Eo;
+pub type Evas_Signal_Interface = Eo;
+pub type Evas_Draggable_Interface = Eo;
+pub type Evas_Clickable_Interface = Eo;
+pub type Evas_Scrollable_Interface = Eo;
+pub type Evas_Selectable_Interface = Eo;
+pub type Evas_Zoomable_Interface = Eo;
+pub type Evas_Canvas3D_Object = Eo;
+pub type Evas_Canvas3D_Texture = Eo;
+pub type Evas_Canvas3D_Material = Eo;
+pub type Evas_Canvas3D_Light = Eo;
+pub type Evas_Canvas3D_Primitive = Eo;
+pub type Evas_Canvas3D_Mesh = Eo;
+pub type Evas_Canvas3D_Node = Eo;
+pub type Evas_Canvas3D_Camera = Eo;
+pub type Evas_Canvas3D_Scene = Eo;
+pub type Evas_Vg = Eo;
+pub type Efl_Vg_Base = Eo;
+pub type Efl_Vg_Container = Eo;
+pub type Efl_Vg_Shape = Eo;
+pub type Efl_Vg_Gradient = Eo;
+pub type Efl_Vg_Gradient_Linear = Eo;
+pub type Efl_Vg_Gradient_Radial = Eo;
 
 #[link(name = "evas")]
 extern "C" {
-    pub static mut evas_version: *mut EvasVersion;
-    pub static _EVAS_CANVAS_EVENT_FOCUS_IN: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_FOCUS_OUT: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_RENDER_FLUSH_PRE: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_RENDER_FLUSH_POST: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_OBJECT_FOCUS_IN: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_OBJECT_FOCUS_OUT: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_RENDER_PRE: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_RENDER_POST: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_DEVICE_CHANGED: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_AXIS_UPDATE: EoEventDescription;
-    pub static _EVAS_CANVAS_EVENT_VIEWPORT_RESIZE: EoEventDescription;
-    pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG: EoEventDescription;
+    pub static mut evas_version: *mut Evas_Version;
+    pub static _EVAS_CANVAS_EVENT_FOCUS_IN: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_FOCUS_OUT: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_RENDER_FLUSH_PRE: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_RENDER_FLUSH_POST: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_OBJECT_FOCUS_IN: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_OBJECT_FOCUS_OUT: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_RENDER_PRE: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_RENDER_POST: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_DEVICE_CHANGED: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_AXIS_UPDATE: Eo_Event_Description;
+    pub static _EVAS_CANVAS_EVENT_VIEWPORT_RESIZE: Eo_Event_Description;
+    pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG: Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_START:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_STOP:
-               EoEventDescription;
-    pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_END: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_END: Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_START_UP:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_START_DOWN:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_START_RIGHT:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_DRAGGABLE_INTERFACE_EVENT_DRAG_START_LEFT:
-               EoEventDescription;
-    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_CLICKED: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_CLICKED: Eo_Event_Description;
     pub static _EVAS_CLICKABLE_INTERFACE_EVENT_CLICKED_DOUBLE:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_CLICKABLE_INTERFACE_EVENT_CLICKED_TRIPLE:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_CLICKABLE_INTERFACE_EVENT_CLICKED_RIGHT:
-               EoEventDescription;
-    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_PRESSED: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_PRESSED: Eo_Event_Description;
     pub static _EVAS_CLICKABLE_INTERFACE_EVENT_UNPRESSED:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_CLICKABLE_INTERFACE_EVENT_LONGPRESSED:
-               EoEventDescription;
-    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_REPEATED: EoEventDescription;
-    pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_CLICKABLE_INTERFACE_EVENT_REPEATED: Eo_Event_Description;
+    pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL: Eo_Event_Description;
     pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL_ANIM_START:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL_ANIM_STOP:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL_DRAG_START:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SCROLLABLE_INTERFACE_EVENT_SCROLL_DRAG_STOP:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTED:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_UNSELECTED:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_PASTE:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_COPY:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_CUT:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_START:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_CHANGED:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_SELECTABLE_INTERFACE_EVENT_SELECTION_CLEARED:
-               EoEventDescription;
+               Eo_Event_Description;
     pub static _EVAS_ZOOMABLE_INTERFACE_EVENT_ZOOM_START:
-               EoEventDescription;
-    pub static _EVAS_ZOOMABLE_INTERFACE_EVENT_ZOOM_STOP: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_ZOOMABLE_INTERFACE_EVENT_ZOOM_STOP: Eo_Event_Description;
     pub static _EVAS_ZOOMABLE_INTERFACE_EVENT_ZOOM_CHANGE:
-               EoEventDescription;
-    pub static _EVAS_BOX_EVENT_CHILD_ADDED: EoEventDescription;
-    pub static _EVAS_BOX_EVENT_CHILD_REMOVED: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_IN: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_OUT: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_DOWN: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_UP: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_MOVE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOUSE_WHEEL: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MULTI_DOWN: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MULTI_UP: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MULTI_MOVE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_FREE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_KEY_DOWN: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_KEY_UP: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_FOCUS_IN: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_FOCUS_OUT: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_SHOW: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_HIDE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_MOVE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_RESIZE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_RESTACK: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_DEL: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_HOLD: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_CHANGED_SIZE_HINTS: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_IMAGE_PRELOADED: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_IMAGE_RESIZE: EoEventDescription;
-    pub static _EVAS_OBJECT_EVENT_IMAGE_UNLOADED: EoEventDescription;
-    pub static _EVAS_CANVAS3D_OBJECT_EVENT_CLICKED: EoEventDescription;
-    pub static _EVAS_CANVAS3D_OBJECT_EVENT_COLLISION: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EVAS_BOX_EVENT_CHILD_ADDED: Eo_Event_Description;
+    pub static _EVAS_BOX_EVENT_CHILD_REMOVED: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_IN: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_OUT: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_DOWN: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_UP: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_MOVE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOUSE_WHEEL: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MULTI_DOWN: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MULTI_UP: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MULTI_MOVE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_FREE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_KEY_DOWN: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_KEY_UP: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_FOCUS_IN: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_FOCUS_OUT: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_SHOW: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_HIDE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_MOVE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_RESIZE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_RESTACK: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_DEL: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_HOLD: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_CHANGED_SIZE_HINTS: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_IMAGE_PRELOADED: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_IMAGE_RESIZE: Eo_Event_Description;
+    pub static _EVAS_OBJECT_EVENT_IMAGE_UNLOADED: Eo_Event_Description;
+    pub static _EVAS_CANVAS3D_OBJECT_EVENT_CLICKED: Eo_Event_Description;
+    pub static _EVAS_CANVAS3D_OBJECT_EVENT_COLLISION: Eo_Event_Description;
 }
 #[link(name = "evas")]
 extern "C" {
 //----------------------------------------------------------------------------------------------
 // Evas Common
 //----------------------------------------------------------------------------------------------
-    pub fn evas_module_register(module: *const EvasModuleApi,
+    pub fn evas_module_register(module: *const Evas_Module_Api,
                                 _type: EvasModuleType) -> EinaBool;
-    pub fn evas_module_unregister(module: *const EvasModuleApi,
+    pub fn evas_module_unregister(module: *const Evas_Module_Api,
                                   _type: EvasModuleType) -> EinaBool;
     pub fn evas_cserve_path_get() -> *const c_char;
     pub fn evas_init() -> c_int;
@@ -1565,70 +1565,70 @@ extern "C" {
                                  func: EvasAsyncEventsPutCb) -> EinaBool;
     pub fn evas_render_method_lookup(name: *const c_char)
      -> c_int;
-    pub fn evas_render_method_list() -> *mut EinaList;
-    pub fn evas_render_method_list_free(list: *mut EinaList);
-    pub fn evas_render_updates_free(updates: *mut EinaList);
-    pub fn evas_device_add(e: *mut Evas) -> *mut EvasDevice;
-    pub fn evas_device_del(dev: *mut EvasDevice);
-    pub fn evas_device_push(e: *mut Evas, dev: *mut EvasDevice);
+    pub fn evas_render_method_list() -> *mut Eina_List;
+    pub fn evas_render_method_list_free(list: *mut Eina_List);
+    pub fn evas_render_updates_free(updates: *mut Eina_List);
+    pub fn evas_device_add(e: *mut Evas) -> *mut Evas_Device;
+    pub fn evas_device_del(dev: *mut Evas_Device);
+    pub fn evas_device_push(e: *mut Evas, dev: *mut Evas_Device);
     pub fn evas_device_pop(e: *mut Evas);
-    pub fn evas_device_list(e: *mut Evas, dev: *const EvasDevice)
-     -> *const EinaList;
-    pub fn evas_device_name_set(dev: *mut EvasDevice,
+    pub fn evas_device_list(e: *mut Evas, dev: *const Evas_Device)
+     -> *const Eina_List;
+    pub fn evas_device_name_set(dev: *mut Evas_Device,
                                 name: *const c_char);
-    pub fn evas_device_name_get(dev: *const EvasDevice)
+    pub fn evas_device_name_get(dev: *const Evas_Device)
      -> *const c_char;
-    pub fn evas_device_description_set(dev: *mut EvasDevice,
+    pub fn evas_device_description_set(dev: *mut Evas_Device,
                                        desc: *const c_char);
-    pub fn evas_device_description_get(dev: *const EvasDevice)
+    pub fn evas_device_description_get(dev: *const Evas_Device)
      -> *const c_char;
-    pub fn evas_device_parent_set(dev: *mut EvasDevice,
-                                  parent: *mut EvasDevice);
-    pub fn evas_device_parent_get(dev: *const EvasDevice)
-     -> *const EvasDevice;
-    pub fn evas_device_class_set(dev: *mut EvasDevice,
+    pub fn evas_device_parent_set(dev: *mut Evas_Device,
+                                  parent: *mut Evas_Device);
+    pub fn evas_device_parent_get(dev: *const Evas_Device)
+     -> *const Evas_Device;
+    pub fn evas_device_class_set(dev: *mut Evas_Device,
                                  clas: EvasDeviceClass);
-    pub fn evas_device_class_get(dev: *const EvasDevice)
+    pub fn evas_device_class_get(dev: *const Evas_Device)
      -> EvasDeviceClass;
-    pub fn evas_device_subclass_set(dev: *mut EvasDevice,
+    pub fn evas_device_subclass_set(dev: *mut Evas_Device,
                                     clas: EvasDeviceSubclass);
-    pub fn evas_device_subclass_get(dev: *const EvasDevice)
+    pub fn evas_device_subclass_get(dev: *const Evas_Device)
      -> EvasDeviceSubclass;
-    pub fn evas_device_emulation_source_set(dev: *mut EvasDevice,
-                                            src: *mut EvasDevice);
-    pub fn evas_device_emulation_source_get(dev: *const EvasDevice)
-     -> *const EvasDevice;
-    pub fn evas_map_util_points_populate_from_object_full(m: *mut EvasMap,
+    pub fn evas_device_emulation_source_set(dev: *mut Evas_Device,
+                                            src: *mut Evas_Device);
+    pub fn evas_device_emulation_source_get(dev: *const Evas_Device)
+     -> *const Evas_Device;
+    pub fn evas_map_util_points_populate_from_object_full(m: *mut Evas_Map,
                                                           obj:
-                                                              *const EvasObject,
+                                                              *const Evas_Object,
                                                           z: EvasCoord);
-    pub fn evas_map_util_points_populate_from_object(m: *mut EvasMap,
-                                                     obj: *const EvasObject);
-    pub fn evas_map_util_points_populate_from_geometry(m: *mut EvasMap,
+    pub fn evas_map_util_points_populate_from_object(m: *mut Evas_Map,
+                                                     obj: *const Evas_Object);
+    pub fn evas_map_util_points_populate_from_geometry(m: *mut Evas_Map,
                                                        x: EvasCoord,
                                                        y: EvasCoord,
                                                        w: EvasCoord,
                                                        h: EvasCoord,
                                                        z: EvasCoord);
-    pub fn evas_map_util_points_color_set(m: *mut EvasMap,
+    pub fn evas_map_util_points_color_set(m: *mut Evas_Map,
                                           r: c_int,
                                           g: c_int,
                                           b: c_int,
                                           a: c_int);
-    pub fn evas_map_util_rotate(m: *mut EvasMap,
+    pub fn evas_map_util_rotate(m: *mut Evas_Map,
                                 degrees: c_double,
                                 cx: EvasCoord, cy: EvasCoord);
-    pub fn evas_map_util_zoom(m: *mut EvasMap,
+    pub fn evas_map_util_zoom(m: *mut Evas_Map,
                               zoomx: c_double,
                               zoomy: c_double, cx: EvasCoord,
                               cy: EvasCoord);
-    pub fn evas_map_util_3d_rotate(m: *mut EvasMap,
+    pub fn evas_map_util_3d_rotate(m: *mut Evas_Map,
                                    dx: c_double,
                                    dy: c_double,
                                    dz: c_double,
                                    cx: EvasCoord, cy: EvasCoord,
                                    cz: EvasCoord);
-    pub fn evas_map_util_quat_rotate(m: *mut EvasMap,
+    pub fn evas_map_util_quat_rotate(m: *mut Evas_Map,
                                      qx: c_double,
                                      qy: c_double,
                                      qz: c_double,
@@ -1636,7 +1636,7 @@ extern "C" {
                                      cx: c_double,
                                      cy: c_double,
                                      cz: c_double);
-    pub fn evas_map_util_3d_lighting(m: *mut EvasMap, lx: EvasCoord,
+    pub fn evas_map_util_3d_lighting(m: *mut Evas_Map, lx: EvasCoord,
                                      ly: EvasCoord, lz: EvasCoord,
                                      lr: c_int,
                                      lg: c_int,
@@ -1644,44 +1644,44 @@ extern "C" {
                                      ar: c_int,
                                      ag: c_int,
                                      ab: c_int);
-    pub fn evas_map_util_3d_perspective(m: *mut EvasMap, px: EvasCoord,
+    pub fn evas_map_util_3d_perspective(m: *mut Evas_Map, px: EvasCoord,
                                         py: EvasCoord, z0: EvasCoord,
                                         foc: EvasCoord);
-    pub fn evas_map_util_clockwise_get(m: *mut EvasMap) -> EinaBool;
-    pub fn evas_map_new(count: c_int) -> *mut EvasMap;
-    pub fn evas_map_smooth_set(m: *mut EvasMap, enabled: EinaBool);
-    pub fn evas_map_smooth_get(m: *const EvasMap) -> EinaBool;
-    pub fn evas_map_alpha_set(m: *mut EvasMap, enabled: EinaBool);
-    pub fn evas_map_alpha_get(m: *const EvasMap) -> EinaBool;
-    pub fn evas_map_util_object_move_sync_set(m: *mut EvasMap,
+    pub fn evas_map_util_clockwise_get(m: *mut Evas_Map) -> EinaBool;
+    pub fn evas_map_new(count: c_int) -> *mut Evas_Map;
+    pub fn evas_map_smooth_set(m: *mut Evas_Map, enabled: EinaBool);
+    pub fn evas_map_smooth_get(m: *const Evas_Map) -> EinaBool;
+    pub fn evas_map_alpha_set(m: *mut Evas_Map, enabled: EinaBool);
+    pub fn evas_map_alpha_get(m: *const Evas_Map) -> EinaBool;
+    pub fn evas_map_util_object_move_sync_set(m: *mut Evas_Map,
                                               enabled: EinaBool);
-    pub fn evas_map_util_object_move_sync_get(m: *const EvasMap)
+    pub fn evas_map_util_object_move_sync_get(m: *const Evas_Map)
      -> EinaBool;
-    pub fn evas_map_dup(m: *const EvasMap) -> *mut EvasMap;
-    pub fn evas_map_free(m: *mut EvasMap);
-    pub fn evas_map_count_get(m: *const EvasMap) -> c_int;
-    pub fn evas_map_point_coord_set(m: *mut EvasMap,
+    pub fn evas_map_dup(m: *const Evas_Map) -> *mut Evas_Map;
+    pub fn evas_map_free(m: *mut Evas_Map);
+    pub fn evas_map_count_get(m: *const Evas_Map) -> c_int;
+    pub fn evas_map_point_coord_set(m: *mut Evas_Map,
                                     idx: c_int, x: EvasCoord,
                                     y: EvasCoord, z: EvasCoord);
-    pub fn evas_map_point_coord_get(m: *const EvasMap,
+    pub fn evas_map_point_coord_get(m: *const Evas_Map,
                                     idx: c_int,
                                     x: *mut EvasCoord, y: *mut EvasCoord,
                                     z: *mut EvasCoord);
-    pub fn evas_map_point_image_uv_set(m: *mut EvasMap,
+    pub fn evas_map_point_image_uv_set(m: *mut Evas_Map,
                                        idx: c_int,
                                        u: c_double,
                                        v: c_double);
-    pub fn evas_map_point_image_uv_get(m: *const EvasMap,
+    pub fn evas_map_point_image_uv_get(m: *const Evas_Map,
                                        idx: c_int,
                                        u: *mut c_double,
                                        v: *mut c_double);
-    pub fn evas_map_point_color_set(m: *mut EvasMap,
+    pub fn evas_map_point_color_set(m: *mut Evas_Map,
                                     idx: c_int,
                                     r: c_int,
                                     g: c_int,
                                     b: c_int,
                                     a: c_int);
-    pub fn evas_map_point_color_get(m: *const EvasMap,
+    pub fn evas_map_point_color_get(m: *const Evas_Map,
                                     idx: c_int,
                                     r: *mut c_int,
                                     g: *mut c_int,
@@ -1706,134 +1706,134 @@ extern "C" {
                                                   escape_end:
                                                       *const c_char)
      -> *const c_char;
-    pub fn evas_textblock_style_new() -> *mut EvasTextblockStyle;
-    pub fn evas_textblock_style_free(ts: *mut EvasTextblockStyle);
-    pub fn evas_textblock_style_set(ts: *mut EvasTextblockStyle,
+    pub fn evas_textblock_style_new() -> *mut Evas_Textblock_Style;
+    pub fn evas_textblock_style_free(ts: *mut Evas_Textblock_Style);
+    pub fn evas_textblock_style_set(ts: *mut Evas_Textblock_Style,
                                     text: *const c_char);
-    pub fn evas_textblock_style_get(ts: *const EvasTextblockStyle)
+    pub fn evas_textblock_style_get(ts: *const Evas_Textblock_Style)
      -> *const c_char;
     pub fn evas_object_textblock_text_markup_prepend(cur:
-                                                         *mut EvasTextblockCursor,
+                                                         *mut Evas_Textblock_Cursor,
                                                      text:
                                                          *const c_char);
-    pub fn evas_textblock_cursor_free(cur: *mut EvasTextblockCursor);
+    pub fn evas_textblock_cursor_free(cur: *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_paragraph_first(cur:
-                                                     *mut EvasTextblockCursor);
+                                                     *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_paragraph_last(cur:
-                                                    *mut EvasTextblockCursor);
+                                                    *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_paragraph_next(cur:
-                                                    *mut EvasTextblockCursor)
+                                                    *mut Evas_Textblock_Cursor)
      -> EinaBool;
     pub fn evas_textblock_cursor_paragraph_prev(cur:
-                                                    *mut EvasTextblockCursor)
+                                                    *mut Evas_Textblock_Cursor)
      -> EinaBool;
     pub fn evas_textblock_node_format_next_get(n:
-                                                   *const EvasObjectTextblockNodeFormat)
-     -> *const EvasObjectTextblockNodeFormat;
+                                                   *const Evas_Object_Textblock_Node_Format)
+     -> *const Evas_Object_Textblock_Node_Format;
     pub fn evas_textblock_node_format_prev_get(n:
-                                                   *const EvasObjectTextblockNodeFormat)
-     -> *const EvasObjectTextblockNodeFormat;
+                                                   *const Evas_Object_Textblock_Node_Format)
+     -> *const Evas_Object_Textblock_Node_Format;
     pub fn evas_textblock_cursor_set_at_format(cur:
-                                                   *mut EvasTextblockCursor,
+                                                   *mut Evas_Textblock_Cursor,
                                                n:
-                                                   *const EvasObjectTextblockNodeFormat);
-    pub fn evas_textblock_cursor_format_get(cur: *const EvasTextblockCursor)
-     -> *const EvasObjectTextblockNodeFormat;
+                                                   *const Evas_Object_Textblock_Node_Format);
+    pub fn evas_textblock_cursor_format_get(cur: *const Evas_Textblock_Cursor)
+     -> *const Evas_Object_Textblock_Node_Format;
     pub fn evas_textblock_node_format_text_get(fnode:
-                                                   *const EvasObjectTextblockNodeFormat)
+                                                   *const Evas_Object_Textblock_Node_Format)
      -> *const c_char;
     pub fn evas_textblock_cursor_at_format_set(cur:
-                                                   *mut EvasTextblockCursor,
+                                                   *mut Evas_Textblock_Cursor,
                                                fmt:
-                                                   *const EvasObjectTextblockNodeFormat);
+                                                   *const Evas_Object_Textblock_Node_Format);
     pub fn evas_textblock_cursor_format_is_visible_get(cur:
-                                                           *const EvasTextblockCursor)
+                                                           *const Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_format_next(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_format_next(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_format_prev(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_format_prev(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_is_format(cur: *const EvasTextblockCursor)
+    pub fn evas_textblock_cursor_is_format(cur: *const Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_char_next(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_char_next(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_char_prev(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_char_prev(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_word_start(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_word_start(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_textblock_cursor_word_end(cur: *mut EvasTextblockCursor)
+    pub fn evas_textblock_cursor_word_end(cur: *mut Evas_Textblock_Cursor)
      -> EinaBool;
     pub fn evas_textblock_cursor_paragraph_char_first(cur:
-                                                          *mut EvasTextblockCursor);
+                                                          *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_paragraph_char_last(cur:
-                                                         *mut EvasTextblockCursor);
+                                                         *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_line_char_first(cur:
-                                                     *mut EvasTextblockCursor);
+                                                     *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_line_char_last(cur:
-                                                    *mut EvasTextblockCursor);
-    pub fn evas_textblock_cursor_pos_get(cur: *const EvasTextblockCursor)
+                                                    *mut Evas_Textblock_Cursor);
+    pub fn evas_textblock_cursor_pos_get(cur: *const Evas_Textblock_Cursor)
      -> c_int;
-    pub fn evas_textblock_cursor_pos_set(cur: *mut EvasTextblockCursor,
+    pub fn evas_textblock_cursor_pos_set(cur: *mut Evas_Textblock_Cursor,
                                          pos: c_int);
-    pub fn evas_textblock_cursor_line_set(cur: *mut EvasTextblockCursor,
+    pub fn evas_textblock_cursor_line_set(cur: *mut Evas_Textblock_Cursor,
                                           line: c_int)
      -> EinaBool;
-    pub fn evas_textblock_cursor_compare(cur1: *const EvasTextblockCursor,
-                                         cur2: *const EvasTextblockCursor)
+    pub fn evas_textblock_cursor_compare(cur1: *const Evas_Textblock_Cursor,
+                                         cur2: *const Evas_Textblock_Cursor)
      -> c_int;
-    pub fn evas_textblock_cursor_copy(cur: *const EvasTextblockCursor,
-                                      cur_dest: *mut EvasTextblockCursor);
-    pub fn evas_textblock_cursor_text_append(cur: *mut EvasTextblockCursor,
+    pub fn evas_textblock_cursor_copy(cur: *const Evas_Textblock_Cursor,
+                                      cur_dest: *mut Evas_Textblock_Cursor);
+    pub fn evas_textblock_cursor_text_append(cur: *mut Evas_Textblock_Cursor,
                                              text:
                                                  *const c_char)
      -> c_int;
-    pub fn evas_textblock_cursor_text_prepend(cur: *mut EvasTextblockCursor,
+    pub fn evas_textblock_cursor_text_prepend(cur: *mut Evas_Textblock_Cursor,
                                               text:
                                                   *const c_char)
      -> c_int;
     pub fn evas_textblock_cursor_format_append(cur:
-                                                   *mut EvasTextblockCursor,
+                                                   *mut Evas_Textblock_Cursor,
                                                format:
                                                    *const c_char)
      -> EinaBool;
     pub fn evas_textblock_cursor_format_prepend(cur:
-                                                    *mut EvasTextblockCursor,
+                                                    *mut Evas_Textblock_Cursor,
                                                 format:
                                                     *const c_char)
      -> EinaBool;
-    pub fn evas_textblock_cursor_char_delete(cur: *mut EvasTextblockCursor);
+    pub fn evas_textblock_cursor_char_delete(cur: *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_range_delete(cur1:
-                                                  *mut EvasTextblockCursor,
+                                                  *mut Evas_Textblock_Cursor,
                                               cur2:
-                                                  *mut EvasTextblockCursor);
+                                                  *mut Evas_Textblock_Cursor);
     pub fn evas_textblock_cursor_paragraph_text_get(cur:
-                                                        *const EvasTextblockCursor)
+                                                        *const Evas_Textblock_Cursor)
      -> *const c_char;
     pub fn evas_textblock_cursor_paragraph_text_length_get(cur:
-                                                               *const EvasTextblockCursor)
+                                                               *const Evas_Textblock_Cursor)
      -> c_int;
     pub fn evas_textblock_cursor_visible_range_get(start:
-                                                       *mut EvasTextblockCursor,
+                                                       *mut Evas_Textblock_Cursor,
                                                    end:
-                                                       *mut EvasTextblockCursor)
+                                                       *mut Evas_Textblock_Cursor)
      -> EinaBool;
     pub fn evas_textblock_cursor_range_formats_get(cur1:
-                                                       *const EvasTextblockCursor,
+                                                       *const Evas_Textblock_Cursor,
                                                    cur2:
-                                                       *const EvasTextblockCursor)
-     -> *mut EinaList;
+                                                       *const Evas_Textblock_Cursor)
+     -> *mut Eina_List;
     pub fn evas_textblock_cursor_range_text_get(cur1:
-                                                    *const EvasTextblockCursor,
+                                                    *const Evas_Textblock_Cursor,
                                                 cur2:
-                                                    *const EvasTextblockCursor,
+                                                    *const Evas_Textblock_Cursor,
                                                 format:
                                                     EvasTextblockTextType)
      -> *mut c_char;
     pub fn evas_textblock_cursor_content_get(cur:
-                                                 *const EvasTextblockCursor)
+                                                 *const Evas_Textblock_Cursor)
      -> *mut c_char;
     pub fn evas_textblock_cursor_geometry_bidi_get(cur:
-                                                       *const EvasTextblockCursor,
+                                                       *const Evas_Textblock_Cursor,
                                                    cx: *mut EvasCoord,
                                                    cy: *mut EvasCoord,
                                                    cw: *mut EvasCoord,
@@ -1846,7 +1846,7 @@ extern "C" {
                                                        EvasTextblockCursorType)
      -> EinaBool;
     pub fn evas_textblock_cursor_geometry_get(cur:
-                                                  *const EvasTextblockCursor,
+                                                  *const Evas_Textblock_Cursor,
                                               cx: *mut EvasCoord,
                                               cy: *mut EvasCoord,
                                               cw: *mut EvasCoord,
@@ -1856,93 +1856,93 @@ extern "C" {
                                                   EvasTextblockCursorType)
      -> c_int;
     pub fn evas_textblock_cursor_char_geometry_get(cur:
-                                                       *const EvasTextblockCursor,
+                                                       *const Evas_Textblock_Cursor,
                                                    cx: *mut EvasCoord,
                                                    cy: *mut EvasCoord,
                                                    cw: *mut EvasCoord,
                                                    ch: *mut EvasCoord)
      -> c_int;
     pub fn evas_textblock_cursor_pen_geometry_get(cur:
-                                                      *const EvasTextblockCursor,
+                                                      *const Evas_Textblock_Cursor,
                                                   cpen_x: *mut EvasCoord,
                                                   cy: *mut EvasCoord,
                                                   cadv: *mut EvasCoord,
                                                   ch: *mut EvasCoord)
      -> c_int;
     pub fn evas_textblock_cursor_line_geometry_get(cur:
-                                                       *const EvasTextblockCursor,
+                                                       *const Evas_Textblock_Cursor,
                                                    cx: *mut EvasCoord,
                                                    cy: *mut EvasCoord,
                                                    cw: *mut EvasCoord,
                                                    ch: *mut EvasCoord)
      -> c_int;
     pub fn evas_textblock_cursor_char_coord_set(cur:
-                                                    *mut EvasTextblockCursor,
+                                                    *mut Evas_Textblock_Cursor,
                                                 x: EvasCoord, y: EvasCoord)
      -> EinaBool;
     pub fn evas_textblock_cursor_line_coord_set(cur:
-                                                    *mut EvasTextblockCursor,
+                                                    *mut Evas_Textblock_Cursor,
                                                 y: EvasCoord)
      -> c_int;
     pub fn evas_textblock_cursor_range_geometry_get(cur1:
-                                                        *const EvasTextblockCursor,
+                                                        *const Evas_Textblock_Cursor,
                                                     cur2:
-                                                        *const EvasTextblockCursor)
-     -> *mut EinaList;
+                                                        *const Evas_Textblock_Cursor)
+     -> *mut Eina_List;
     pub fn evas_textblock_cursor_range_simple_geometry_get(cur1:
-                                                               *const EvasTextblockCursor,
+                                                               *const Evas_Textblock_Cursor,
                                                            cur2:
-                                                               *const EvasTextblockCursor)
-     -> *mut EinaIterator;
+                                                               *const Evas_Textblock_Cursor)
+     -> *mut Eina_Iterator;
     pub fn evas_textblock_cursor_format_item_geometry_get(cur:
-                                                              *const EvasTextblockCursor,
+                                                              *const Evas_Textblock_Cursor,
                                                           cx: *mut EvasCoord,
                                                           cy: *mut EvasCoord,
                                                           cw: *mut EvasCoord,
                                                           ch: *mut EvasCoord)
      -> EinaBool;
-    pub fn evas_textblock_cursor_eol_get(cur: *const EvasTextblockCursor)
+    pub fn evas_textblock_cursor_eol_get(cur: *const Evas_Textblock_Cursor)
      -> EinaBool;
-    pub fn evas_smart_free(s: *mut EvasSmart);
-    pub fn evas_smart_class_new(sc: *const EvasSmartClass)
-     -> *mut EvasSmart;
-    pub fn evas_smart_class_get(s: *const EvasSmart)
-     -> *const EvasSmartClass;
-    pub fn evas_smart_data_get(s: *const EvasSmart)
+    pub fn evas_smart_free(s: *mut Evas_Smart);
+    pub fn evas_smart_class_new(sc: *const Evas_Smart_Class)
+     -> *mut Evas_Smart;
+    pub fn evas_smart_class_get(s: *const Evas_Smart)
+     -> *const Evas_Smart_Class;
+    pub fn evas_smart_data_get(s: *const Evas_Smart)
      -> *mut c_void;
-    pub fn evas_smart_callbacks_descriptions_get(s: *const EvasSmart,
+    pub fn evas_smart_callbacks_descriptions_get(s: *const Evas_Smart,
                                                  count:
                                                      *mut c_uint)
-     -> *mut *const EvasSmartCbDescription;
-    pub fn evas_smart_callback_description_find(s: *const EvasSmart,
+     -> *mut *const Evas_Smart_Cb_Description;
+    pub fn evas_smart_callback_description_find(s: *const Evas_Smart,
                                                 name:
                                                     *const c_char)
-     -> *const EvasSmartCbDescription;
-    pub fn evas_smart_class_inherit_full(sc: *mut EvasSmartClass,
-                                         parent_sc: *const EvasSmartClass,
+     -> *const Evas_Smart_Cb_Description;
+    pub fn evas_smart_class_inherit_full(sc: *mut Evas_Smart_Class,
+                                         parent_sc: *const Evas_Smart_Class,
                                          parent_sc_size:
                                              c_uint)
      -> EinaBool;
-    pub fn evas_smart_usage_get(s: *const EvasSmart)
+    pub fn evas_smart_usage_get(s: *const Evas_Smart)
      -> c_int;
     pub fn evas_smart_legacy_type_register(_type:
                                                *const c_char,
-                                           klass: *const EoClass);
-    pub fn evas_object_smart_clipped_smart_set(sc: *mut EvasSmartClass);
-    pub fn evas_object_smart_clipped_class_get() -> *const EvasSmartClass;
-    pub fn evas_object_box_smart_set(api: *mut EvasObjectBoxApi);
-    pub fn evas_object_box_smart_class_get() -> *const EvasObjectBoxApi;
+                                           klass: *const Eo_Class);
+    pub fn evas_object_smart_clipped_smart_set(sc: *mut Evas_Smart_Class);
+    pub fn evas_object_smart_clipped_class_get() -> *const Evas_Smart_Class;
+    pub fn evas_object_box_smart_set(api: *mut Evas_Object_Box_Api);
+    pub fn evas_object_box_smart_class_get() -> *const Evas_Object_Box_Api;
     pub fn evas_cserve_want_get() -> EinaBool;
     pub fn evas_cserve_connected_get() -> EinaBool;
-    pub fn evas_cserve_stats_get(stats: *mut EvasCserveStats) -> EinaBool;
+    pub fn evas_cserve_stats_get(stats: *mut Evas_Cserve_Stats) -> EinaBool;
     pub fn evas_cserve_image_cache_contents_clean(cache:
-                                                      *mut EvasCserveImageCache);
-    pub fn evas_cserve_config_get(config: *mut EvasCserveConfig)
+                                                      *mut Evas_Cserve_Image_Cache);
+    pub fn evas_cserve_config_get(config: *mut Evas_Cserve_Config)
      -> EinaBool;
-    pub fn evas_cserve_config_set(config: *const EvasCserveConfig)
+    pub fn evas_cserve_config_set(config: *const Evas_Cserve_Config)
      -> EinaBool;
     pub fn evas_cserve_disconnect();
-    pub fn evas_load_error_str(error: EvasLoadError)
+    pub fn evas_load_error_str(error: Evas_Load_Error)
      -> *const c_char;
     pub fn evas_color_hsv_to_rgb(h: c_float,
                                  s: c_float,
@@ -1978,139 +1978,139 @@ extern "C" {
      -> c_int;
     pub fn evas_string_char_len_get(str: *const c_char)
      -> c_int;
-    pub fn evas_key_modifier_is_set(m: *const EvasModifier,
+    pub fn evas_key_modifier_is_set(m: *const Evas_Modifier,
                                     keyname: *const c_char)
      -> EinaBool;
-    pub fn evas_key_lock_is_set(l: *const EvasLock,
+    pub fn evas_key_lock_is_set(l: *const Evas_Lock,
                                 keyname: *const c_char)
      -> EinaBool;
     pub fn evas_font_path_global_clear();
     pub fn evas_font_path_global_append(path: *const c_char);
     pub fn evas_font_path_global_prepend(path: *const c_char);
-    pub fn evas_font_path_global_list() -> *const EinaList;
+    pub fn evas_font_path_global_list() -> *const Eina_List;
     pub fn evas_font_reinit();
 //------------------------------------------------------------------------------------------------
 // Evas Legacy
 //------------------------------------------------------------------------------------------------
     pub fn evas_new() -> *mut Evas;
     pub fn evas_free(e: *mut Evas);
-    pub fn evas_output_framespace_set(obj: *mut EvasCanvas, x: EvasCoord,
+    pub fn evas_output_framespace_set(obj: *mut Evas_Canvas, x: EvasCoord,
                                       y: EvasCoord, w: EvasCoord,
                                       h: EvasCoord);
-    pub fn evas_output_framespace_get(obj: *const EvasCanvas,
+    pub fn evas_output_framespace_get(obj: *const Evas_Canvas,
                                       x: *mut EvasCoord, y: *mut EvasCoord,
                                       w: *mut EvasCoord, h: *mut EvasCoord);
-    pub fn evas_output_viewport_set(obj: *mut EvasCanvas, x: EvasCoord,
+    pub fn evas_output_viewport_set(obj: *mut Evas_Canvas, x: EvasCoord,
                                     y: EvasCoord, w: EvasCoord,
                                     h: EvasCoord);
-    pub fn evas_output_viewport_get(obj: *const EvasCanvas,
+    pub fn evas_output_viewport_get(obj: *const Evas_Canvas,
                                     x: *mut EvasCoord, y: *mut EvasCoord,
                                     w: *mut EvasCoord, h: *mut EvasCoord);
-    pub fn evas_image_cache_set(obj: *mut EvasCanvas,
+    pub fn evas_image_cache_set(obj: *mut Evas_Canvas,
                                 size: c_int);
-    pub fn evas_image_cache_get(obj: *const EvasCanvas)
+    pub fn evas_image_cache_get(obj: *const Evas_Canvas)
      -> c_int;
-    pub fn evas_event_default_flags_set(obj: *mut EvasCanvas,
+    pub fn evas_event_default_flags_set(obj: *mut Evas_Canvas,
                                         flags: EvasEventFlags);
-    pub fn evas_event_default_flags_get(obj: *const EvasCanvas)
+    pub fn evas_event_default_flags_get(obj: *const Evas_Canvas)
      -> EvasEventFlags;
-    pub fn evas_output_method_set(obj: *mut EvasCanvas,
+    pub fn evas_output_method_set(obj: *mut Evas_Canvas,
                                   render_method: c_int);
-    pub fn evas_output_method_get(obj: *const EvasCanvas)
+    pub fn evas_output_method_get(obj: *const Evas_Canvas)
      -> c_int;
-    pub fn evas_font_cache_set(obj: *mut EvasCanvas,
+    pub fn evas_font_cache_set(obj: *mut Evas_Canvas,
                                size: c_int);
-    pub fn evas_font_cache_get(obj: *const EvasCanvas)
+    pub fn evas_font_cache_get(obj: *const Evas_Canvas)
      -> c_int;
-    pub fn evas_output_size_set(obj: *mut EvasCanvas,
+    pub fn evas_output_size_set(obj: *mut Evas_Canvas,
                                 w: c_int,
                                 h: c_int);
-    pub fn evas_output_size_get(obj: *const EvasCanvas,
+    pub fn evas_output_size_get(obj: *const Evas_Canvas,
                                 w: *mut c_int,
                                 h: *mut c_int);
-    pub fn evas_data_attach_set(obj: *mut EvasCanvas,
+    pub fn evas_data_attach_set(obj: *mut Evas_Canvas,
                                 data: *mut c_void);
-    pub fn evas_data_attach_get(obj: *const EvasCanvas)
+    pub fn evas_data_attach_get(obj: *const Evas_Canvas)
      -> *mut c_void;
-    pub fn evas_font_hinting_set(obj: *mut EvasCanvas,
+    pub fn evas_font_hinting_set(obj: *mut Evas_Canvas,
                                  hinting: EvasFontHintingFlags);
-    pub fn evas_font_hinting_get(obj: *const EvasCanvas)
+    pub fn evas_font_hinting_get(obj: *const Evas_Canvas)
      -> EvasFontHintingFlags;
-    pub fn evas_engine_info_set(obj: *mut EvasCanvas,
-                                info: *mut EvasEngineInfo) -> EinaBool;
-    pub fn evas_engine_info_get(obj: *const EvasCanvas)
-     -> *mut EvasEngineInfo;
-    pub fn evas_focus_get(obj: *const EvasCanvas) -> *mut EvasObject;
-    pub fn evas_object_top_get(obj: *const EvasCanvas) -> *mut EvasObject;
-    pub fn evas_key_lock_get(obj: *const EvasCanvas) -> *const EvasLock;
-    pub fn evas_pointer_canvas_xy_get(obj: *const EvasCanvas,
+    pub fn evas_engine_info_set(obj: *mut Evas_Canvas,
+                                info: *mut Evas_Engine_Info) -> EinaBool;
+    pub fn evas_engine_info_get(obj: *const Evas_Canvas)
+     -> *mut Evas_Engine_Info;
+    pub fn evas_focus_get(obj: *const Evas_Canvas) -> *mut Evas_Object;
+    pub fn evas_object_top_get(obj: *const Evas_Canvas) -> *mut Evas_Object;
+    pub fn evas_key_lock_get(obj: *const Evas_Canvas) -> *const Evas_Lock;
+    pub fn evas_pointer_canvas_xy_get(obj: *const Evas_Canvas,
                                       x: *mut EvasCoord, y: *mut EvasCoord);
-    pub fn evas_event_down_count_get(obj: *const EvasCanvas)
+    pub fn evas_event_down_count_get(obj: *const Evas_Canvas)
      -> c_int;
     pub fn evas_smart_objects_calculate_count_get(e: *const Evas)
      -> c_int;
-    pub fn evas_focus_state_get(obj: *const EvasCanvas) -> EinaBool;
-    pub fn evas_changed_get(obj: *const EvasCanvas) -> EinaBool;
-    pub fn evas_pointer_output_xy_get(obj: *const EvasCanvas,
+    pub fn evas_focus_state_get(obj: *const Evas_Canvas) -> EinaBool;
+    pub fn evas_changed_get(obj: *const Evas_Canvas) -> EinaBool;
+    pub fn evas_pointer_output_xy_get(obj: *const Evas_Canvas,
                                       x: *mut c_int,
                                       y: *mut c_int);
-    pub fn evas_pointer_inside_get(obj: *const EvasCanvas) -> EinaBool;
-    pub fn evas_image_max_size_get(obj: *const EvasCanvas,
+    pub fn evas_pointer_inside_get(obj: *const Evas_Canvas) -> EinaBool;
+    pub fn evas_image_max_size_get(obj: *const Evas_Canvas,
                                    maxw: *mut c_int,
                                    maxh: *mut c_int)
      -> EinaBool;
-    pub fn evas_object_bottom_get(obj: *const EvasCanvas)
-     -> *mut EvasObject;
-    pub fn evas_key_modifier_get(obj: *const EvasCanvas)
-     -> *const EvasModifier;
-    pub fn evas_pointer_button_down_mask_get(obj: *const EvasCanvas)
+    pub fn evas_object_bottom_get(obj: *const Evas_Canvas)
+     -> *mut Evas_Object;
+    pub fn evas_key_modifier_get(obj: *const Evas_Canvas)
+     -> *const Evas_Modifier;
+    pub fn evas_pointer_button_down_mask_get(obj: *const Evas_Canvas)
      -> c_int;
-    pub fn evas_tree_objects_at_xy_get(obj: *mut EvasCanvas,
-                                       stop: *mut EvasObject,
+    pub fn evas_tree_objects_at_xy_get(obj: *mut Evas_Canvas,
+                                       stop: *mut Evas_Object,
                                        x: c_int,
                                        y: c_int)
-     -> *mut EinaList;
-    pub fn evas_event_feed_mouse_wheel(obj: *mut EvasCanvas,
+     -> *mut Eina_List;
+    pub fn evas_event_feed_mouse_wheel(obj: *mut Evas_Canvas,
                                        direction: c_int,
                                        z: c_int,
                                        timestamp: c_uint,
                                        data: *const c_void);
-    pub fn evas_key_lock_on(obj: *mut EvasCanvas,
+    pub fn evas_key_lock_on(obj: *mut Evas_Canvas,
                             keyname: *const c_char);
-    pub fn evas_event_feed_key_down(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_key_down(obj: *mut Evas_Canvas,
                                     keyname: *const c_char,
                                     key: *const c_char,
                                     string: *const c_char,
                                     compose: *const c_char,
                                     timestamp: c_uint,
                                     data: *const c_void);
-    pub fn evas_key_modifier_mask_get(obj: *const EvasCanvas,
+    pub fn evas_key_modifier_mask_get(obj: *const Evas_Canvas,
                                       keyname: *const c_char)
-     -> EvasModifierMask;
-    pub fn evas_key_modifier_add(obj: *mut EvasCanvas,
+     -> Evas_Modifier_Mask;
+    pub fn evas_key_modifier_add(obj: *mut Evas_Canvas,
                                  keyname: *const c_char);
-    pub fn evas_key_modifier_off(obj: *mut EvasCanvas,
+    pub fn evas_key_modifier_off(obj: *mut Evas_Canvas,
                                  keyname: *const c_char);
-    pub fn evas_event_feed_hold(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_hold(obj: *mut Evas_Canvas,
                                 hold: c_int,
                                 timestamp: c_uint,
                                 data: *const c_void);
-    pub fn evas_event_feed_mouse_move(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_mouse_move(obj: *mut Evas_Canvas,
                                       x: c_int,
                                       y: c_int,
                                       timestamp: c_uint,
                                       data: *const c_void);
-    pub fn evas_event_feed_key_up(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_key_up(obj: *mut Evas_Canvas,
                                   keyname: *const c_char,
                                   key: *const c_char,
                                   string: *const c_char,
                                   compose: *const c_char,
                                   timestamp: c_uint,
                                   data: *const c_void);
-    pub fn evas_event_feed_mouse_out(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_mouse_out(obj: *mut Evas_Canvas,
                                      timestamp: c_uint,
                                      data: *const c_void);
-    pub fn evas_event_input_multi_move(obj: *mut EvasCanvas,
+    pub fn evas_event_input_multi_move(obj: *mut Evas_Canvas,
                                        d: c_int,
                                        x: c_int,
                                        y: c_int,
@@ -2123,12 +2123,12 @@ extern "C" {
                                        fy: c_double,
                                        timestamp: c_uint,
                                        data: *const c_void);
-    pub fn evas_objects_at_xy_get(obj: *const EvasCanvas, x: EvasCoord,
+    pub fn evas_objects_at_xy_get(obj: *const Evas_Canvas, x: EvasCoord,
                                   y: EvasCoord,
                                   include_pass_events_objects: EinaBool,
                                   include_hidden_objects: EinaBool)
-     -> *mut EinaList;
-    pub fn evas_event_input_multi_up(obj: *mut EvasCanvas,
+     -> *mut Eina_List;
+    pub fn evas_event_input_multi_up(obj: *mut Evas_Canvas,
                                      d: c_int,
                                      x: c_int,
                                      y: c_int,
@@ -2142,7 +2142,7 @@ extern "C" {
                                      flags: EvasButtonFlags,
                                      timestamp: c_uint,
                                      data: *const c_void);
-    pub fn evas_event_feed_multi_down(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_multi_down(obj: *mut Evas_Canvas,
                                       d: c_int,
                                       x: c_int,
                                       y: c_int,
@@ -2156,19 +2156,19 @@ extern "C" {
                                       flags: EvasButtonFlags,
                                       timestamp: c_uint,
                                       data: *const c_void);
-    pub fn evas_render_async(obj: *mut EvasCanvas) -> EinaBool;
-    pub fn evas_render2(obj: *mut EvasCanvas) -> EinaBool;
-    pub fn evas_render2_updates(obj: *mut EvasCanvas) -> *mut EinaList;
-    pub fn evas_focus_out(obj: *mut EvasCanvas);
-    pub fn evas_event_input_mouse_move(obj: *mut EvasCanvas,
+    pub fn evas_render_async(obj: *mut Evas_Canvas) -> EinaBool;
+    pub fn evas_render2(obj: *mut Evas_Canvas) -> EinaBool;
+    pub fn evas_render2_updates(obj: *mut Evas_Canvas) -> *mut Eina_List;
+    pub fn evas_focus_out(obj: *mut Evas_Canvas);
+    pub fn evas_event_input_mouse_move(obj: *mut Evas_Canvas,
                                        x: c_int,
                                        y: c_int,
                                        timestamp: c_uint,
                                        data: *const c_void);
-    pub fn evas_norender(obj: *mut EvasCanvas);
-    pub fn evas_touch_point_list_count(obj: *mut EvasCanvas)
+    pub fn evas_norender(obj: *mut Evas_Canvas);
+    pub fn evas_touch_point_list_count(obj: *mut Evas_Canvas)
      -> c_uint;
-    pub fn evas_event_input_multi_down(obj: *mut EvasCanvas,
+    pub fn evas_event_input_multi_down(obj: *mut Evas_Canvas,
                                        d: c_int,
                                        x: c_int,
                                        y: c_int,
@@ -2182,71 +2182,71 @@ extern "C" {
                                        flags: EvasButtonFlags,
                                        timestamp: c_uint,
                                        data: *const c_void);
-    pub fn evas_nochange_pop(obj: *mut EvasCanvas);
-    pub fn evas_key_lock_off(obj: *mut EvasCanvas,
+    pub fn evas_nochange_pop(obj: *mut Evas_Canvas);
+    pub fn evas_key_lock_off(obj: *mut Evas_Canvas,
                              keyname: *const c_char);
-    pub fn evas_nochange_push(obj: *mut EvasCanvas);
-    pub fn evas_font_cache_flush(obj: *mut EvasCanvas);
-    pub fn evas_font_hinting_can_hint(obj: *const EvasCanvas,
+    pub fn evas_nochange_push(obj: *mut Evas_Canvas);
+    pub fn evas_font_cache_flush(obj: *mut Evas_Canvas);
+    pub fn evas_font_hinting_can_hint(obj: *const Evas_Canvas,
                                       hinting: EvasFontHintingFlags)
      -> EinaBool;
-    pub fn evas_object_top_at_xy_get(obj: *const EvasCanvas, x: EvasCoord,
+    pub fn evas_object_top_at_xy_get(obj: *const Evas_Canvas, x: EvasCoord,
                                      y: EvasCoord,
                                      include_pass_events_objects: EinaBool,
                                      include_hidden_objects: EinaBool)
-     -> *mut EvasObject;
-    pub fn evas_key_modifier_on(obj: *mut EvasCanvas,
+     -> *mut Evas_Object;
+    pub fn evas_key_modifier_on(obj: *mut Evas_Canvas,
                                 keyname: *const c_char);
-    pub fn evas_event_feed_mouse_up(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_mouse_up(obj: *mut Evas_Canvas,
                                     b: c_int,
                                     flags: EvasButtonFlags,
                                     timestamp: c_uint,
                                     data: *const c_void);
-    pub fn evas_event_feed_mouse_down(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_mouse_down(obj: *mut Evas_Canvas,
                                       b: c_int,
                                       flags: EvasButtonFlags,
                                       timestamp: c_uint,
                                       data: *const c_void);
-    pub fn evas_event_refeed_event(obj: *mut EvasCanvas,
+    pub fn evas_event_refeed_event(obj: *mut Evas_Canvas,
                                    event_copy: *mut c_void,
                                    event_type: EvasCallbackType);
-    pub fn evas_font_available_list(obj: *const EvasCanvas)
-     -> *mut EinaList;
-    pub fn evas_objects_in_rectangle_get(obj: *const EvasCanvas,
+    pub fn evas_font_available_list(obj: *const Evas_Canvas)
+     -> *mut Eina_List;
+    pub fn evas_objects_in_rectangle_get(obj: *const Evas_Canvas,
                                          x: EvasCoord, y: EvasCoord,
                                          w: EvasCoord, h: EvasCoord,
                                          include_pass_events_objects:
                                              EinaBool,
                                          include_hidden_objects: EinaBool)
-     -> *mut EinaList;
-    pub fn evas_object_name_find(obj: *const EvasCanvas,
+     -> *mut Eina_List;
+    pub fn evas_object_name_find(obj: *const Evas_Canvas,
                                  name: *const c_char)
-     -> *mut EvasObject;
-    pub fn evas_font_path_append(obj: *mut EvasCanvas,
+     -> *mut Evas_Object;
+    pub fn evas_font_path_append(obj: *mut Evas_Canvas,
                                  path: *const c_char);
-    pub fn evas_touch_point_list_nth_id_get(obj: *mut EvasCanvas,
+    pub fn evas_touch_point_list_nth_id_get(obj: *mut Evas_Canvas,
                                             n: c_uint)
      -> c_int;
-    pub fn evas_font_path_clear(obj: *mut EvasCanvas);
-    pub fn evas_smart_objects_calculate(obj: *mut EvasCanvas);
-    pub fn evas_touch_point_list_nth_xy_get(obj: *mut EvasCanvas,
+    pub fn evas_font_path_clear(obj: *mut Evas_Canvas);
+    pub fn evas_smart_objects_calculate(obj: *mut Evas_Canvas);
+    pub fn evas_touch_point_list_nth_xy_get(obj: *mut Evas_Canvas,
                                             n: c_uint,
                                             x: *mut EvasCoord,
                                             y: *mut EvasCoord);
-    pub fn evas_key_lock_del(obj: *mut EvasCanvas,
+    pub fn evas_key_lock_del(obj: *mut Evas_Canvas,
                              keyname: *const c_char);
-    pub fn evas_damage_rectangle_add(obj: *mut EvasCanvas,
+    pub fn evas_damage_rectangle_add(obj: *mut Evas_Canvas,
                                      x: c_int,
                                      y: c_int,
                                      w: c_int,
                                      h: c_int);
-    pub fn evas_sync(obj: *mut EvasCanvas);
-    pub fn evas_font_path_list(obj: *const EvasCanvas) -> *const EinaList;
-    pub fn evas_image_cache_reload(obj: *mut EvasCanvas);
-    pub fn evas_coord_world_x_to_screen(obj: *const EvasCanvas,
+    pub fn evas_sync(obj: *mut Evas_Canvas);
+    pub fn evas_font_path_list(obj: *const Evas_Canvas) -> *const Eina_List;
+    pub fn evas_image_cache_reload(obj: *mut Evas_Canvas);
+    pub fn evas_coord_world_x_to_screen(obj: *const Evas_Canvas,
                                         x: EvasCoord)
      -> c_int;
-    pub fn evas_event_feed_multi_move(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_multi_move(obj: *mut Evas_Canvas,
                                       d: c_int,
                                       x: c_int,
                                       y: c_int,
@@ -2259,35 +2259,35 @@ extern "C" {
                                       fy: c_double,
                                       timestamp: c_uint,
                                       data: *const c_void);
-    pub fn evas_render_updates(obj: *mut EvasCanvas) -> *mut EinaList;
-    pub fn evas_image_cache_flush(obj: *mut EvasCanvas);
-    pub fn evas_coord_screen_y_to_world(obj: *const EvasCanvas,
+    pub fn evas_render_updates(obj: *mut Evas_Canvas) -> *mut Eina_List;
+    pub fn evas_image_cache_flush(obj: *mut Evas_Canvas);
+    pub fn evas_coord_screen_y_to_world(obj: *const Evas_Canvas,
                                         y: c_int)
      -> EvasCoord;
-    pub fn evas_key_modifier_del(obj: *mut EvasCanvas,
+    pub fn evas_key_modifier_del(obj: *mut Evas_Canvas,
                                  keyname: *const c_char);
-    pub fn evas_touch_point_list_nth_state_get(obj: *mut EvasCanvas,
+    pub fn evas_touch_point_list_nth_state_get(obj: *mut Evas_Canvas,
                                                n: c_uint)
      -> EvasTouchPointState;
-    pub fn evas_focus_in(obj: *mut EvasCanvas);
-    pub fn evas_obscured_rectangle_add(obj: *mut EvasCanvas,
+    pub fn evas_focus_in(obj: *mut Evas_Canvas);
+    pub fn evas_obscured_rectangle_add(obj: *mut Evas_Canvas,
                                        x: c_int,
                                        y: c_int,
                                        w: c_int,
                                        h: c_int);
-    pub fn evas_render_dump(obj: *mut EvasCanvas);
-    pub fn evas_event_feed_mouse_in(obj: *mut EvasCanvas,
+    pub fn evas_render_dump(obj: *mut Evas_Canvas);
+    pub fn evas_event_feed_mouse_in(obj: *mut Evas_Canvas,
                                     timestamp: c_uint,
                                     data: *const c_void);
-    pub fn evas_object_top_in_rectangle_get(obj: *const EvasCanvas,
+    pub fn evas_object_top_in_rectangle_get(obj: *const Evas_Canvas,
                                             x: EvasCoord, y: EvasCoord,
                                             w: EvasCoord, h: EvasCoord,
                                             include_pass_events_objects:
                                                 EinaBool,
                                             include_hidden_objects: EinaBool)
-     -> *mut EvasObject;
-    pub fn evas_render(obj: *mut EvasCanvas);
-    pub fn evas_event_feed_multi_up(obj: *mut EvasCanvas,
+     -> *mut Evas_Object;
+    pub fn evas_render(obj: *mut Evas_Canvas);
+    pub fn evas_event_feed_multi_up(obj: *mut Evas_Canvas,
                                     d: c_int,
                                     x: c_int,
                                     y: c_int,
@@ -2301,22 +2301,22 @@ extern "C" {
                                     flags: EvasButtonFlags,
                                     timestamp: c_uint,
                                     data: *const c_void);
-    pub fn evas_font_path_prepend(obj: *mut EvasCanvas,
+    pub fn evas_font_path_prepend(obj: *mut Evas_Canvas,
                                   path: *const c_char);
-    pub fn evas_obscured_clear(obj: *mut EvasCanvas);
-    pub fn evas_event_feed_mouse_cancel(obj: *mut EvasCanvas,
+    pub fn evas_obscured_clear(obj: *mut Evas_Canvas);
+    pub fn evas_event_feed_mouse_cancel(obj: *mut Evas_Canvas,
                                         timestamp: c_uint,
                                         data: *const c_void);
-    pub fn evas_coord_screen_x_to_world(obj: *const EvasCanvas,
+    pub fn evas_coord_screen_x_to_world(obj: *const Evas_Canvas,
                                         x: c_int)
      -> EvasCoord;
-    pub fn evas_key_lock_add(obj: *mut EvasCanvas,
+    pub fn evas_key_lock_add(obj: *mut Evas_Canvas,
                              keyname: *const c_char);
-    pub fn evas_render_idle_flush(obj: *mut EvasCanvas);
-    pub fn evas_coord_world_y_to_screen(obj: *const EvasCanvas,
+    pub fn evas_render_idle_flush(obj: *mut Evas_Canvas);
+    pub fn evas_coord_world_y_to_screen(obj: *const Evas_Canvas,
                                         y: EvasCoord)
      -> c_int;
-    pub fn evas_event_feed_key_down_with_keycode(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_key_down_with_keycode(obj: *mut Evas_Canvas,
                                                  keyname:
                                                      *const c_char,
                                                  key:
@@ -2331,7 +2331,7 @@ extern "C" {
                                                      *const c_void,
                                                  keycode:
                                                      c_uint);
-    pub fn evas_event_feed_key_up_with_keycode(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_key_up_with_keycode(obj: *mut Evas_Canvas,
                                                keyname:
                                                    *const c_char,
                                                key:
@@ -2346,19 +2346,19 @@ extern "C" {
                                                    *const c_void,
                                                keycode:
                                                    c_uint);
-    pub fn evas_event_feed_axis_update(obj: *mut EvasCanvas,
+    pub fn evas_event_feed_axis_update(obj: *mut Evas_Canvas,
                                        timestamp: c_uint,
                                        device: c_int,
                                        toolid: c_int,
                                        naxes: c_int,
-                                       axis: *const EvasAxis,
+                                       axis: *const Evas_Axis,
                                        data: *const c_void);
     pub fn evas_event_callback_add(e: *mut Evas, _type: EvasCallbackType,
                                    func: EvasEventCb,
                                    data: *const c_void);
     pub fn evas_event_callback_priority_add(e: *mut Evas,
                                             _type: EvasCallbackType,
-                                            priority: EvasCallbackPriority,
+                                            priority: Evas_Callback_Priority,
                                             func: EvasEventCb,
                                             data:
                                                 *const c_void);
@@ -2385,357 +2385,357 @@ extern "C" {
     pub fn evas_event_freeze_get(e: *const Evas) -> c_int;
     pub fn evas_event_thaw_eval(e: *mut Evas);
     pub fn evas_font_available_list_free(e: *mut Evas,
-                                         available: *mut EinaList);
-    pub fn evas_object_ref(obj: *mut EvasObject);
-    pub fn evas_object_unref(obj: *mut EvasObject);
-    pub fn evas_object_ref_get(obj: *const EvasObject)
+                                         available: *mut Eina_List);
+    pub fn evas_object_ref(obj: *mut Evas_Object);
+    pub fn evas_object_unref(obj: *mut Evas_Object);
+    pub fn evas_object_ref_get(obj: *const Evas_Object)
      -> c_int;
-    pub fn evas_object_del(obj: *mut EvasObject);
-    pub fn evas_object_geometry_get(obj: *const EvasObject,
+    pub fn evas_object_del(obj: *mut Evas_Object);
+    pub fn evas_object_geometry_get(obj: *const Evas_Object,
                                     x: *mut EvasCoord, y: *mut EvasCoord,
                                     w: *mut EvasCoord, h: *mut EvasCoord);
-    pub fn evas_object_geometry_set(obj: *mut EvasObject, x: EvasCoord,
+    pub fn evas_object_geometry_set(obj: *mut Evas_Object, x: EvasCoord,
                                     y: EvasCoord, w: EvasCoord,
                                     h: EvasCoord);
-    pub fn evas_object_show(obj: *mut EvasObject);
-    pub fn evas_object_hide(obj: *mut EvasObject);
-    pub fn evas_object_color_set(obj: *mut EvasObject,
+    pub fn evas_object_show(obj: *mut Evas_Object);
+    pub fn evas_object_hide(obj: *mut Evas_Object);
+    pub fn evas_object_color_set(obj: *mut Evas_Object,
                                  r: c_int,
                                  g: c_int,
                                  b: c_int,
                                  a: c_int);
-    pub fn evas_object_color_get(obj: *const EvasObject,
+    pub fn evas_object_color_get(obj: *const Evas_Object,
                                  r: *mut c_int,
                                  g: *mut c_int,
                                  b: *mut c_int,
                                  a: *mut c_int);
-    pub fn evas_object_move(obj: *mut EvasObject, x: EvasCoord,
+    pub fn evas_object_move(obj: *mut Evas_Object, x: EvasCoord,
                             y: EvasCoord);
-    pub fn evas_object_resize(obj: *mut EvasObject, w: EvasCoord,
+    pub fn evas_object_resize(obj: *mut Evas_Object, w: EvasCoord,
                               h: EvasCoord);
-    pub fn evas_object_visible_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_layer_set(obj: *mut EvasObject,
+    pub fn evas_object_visible_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_layer_set(obj: *mut Evas_Object,
                                  l: c_short);
-    pub fn evas_object_layer_get(obj: *const EvasObject)
+    pub fn evas_object_layer_get(obj: *const Evas_Object)
      -> c_short;
-    pub fn evas_object_below_get(obj: *const EvasObject) -> *mut EvasObject;
-    pub fn evas_object_above_get(obj: *const EvasObject) -> *mut EvasObject;
-    pub fn evas_object_stack_below(obj: *mut EvasObject,
-                                   below: *mut EvasObject);
-    pub fn evas_object_raise(obj: *mut EvasObject);
-    pub fn evas_object_stack_above(obj: *mut EvasObject,
-                                   above: *mut EvasObject);
-    pub fn evas_object_lower(obj: *mut EvasObject);
-    pub fn evas_object_evas_get(obj: *const EvasCommonInterface)
-     -> *mut EvasCommonInterface;
-    pub fn evas_object_size_hint_max_set(obj: *mut EvasObject, w: EvasCoord,
+    pub fn evas_object_below_get(obj: *const Evas_Object) -> *mut Evas_Object;
+    pub fn evas_object_above_get(obj: *const Evas_Object) -> *mut Evas_Object;
+    pub fn evas_object_stack_below(obj: *mut Evas_Object,
+                                   below: *mut Evas_Object);
+    pub fn evas_object_raise(obj: *mut Evas_Object);
+    pub fn evas_object_stack_above(obj: *mut Evas_Object,
+                                   above: *mut Evas_Object);
+    pub fn evas_object_lower(obj: *mut Evas_Object);
+    pub fn evas_object_evas_get(obj: *const Evas_Common_Interface)
+     -> *mut Evas_Common_Interface;
+    pub fn evas_object_size_hint_max_set(obj: *mut Evas_Object, w: EvasCoord,
                                          h: EvasCoord);
-    pub fn evas_object_size_hint_max_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_max_get(obj: *const Evas_Object,
                                          w: *mut EvasCoord,
                                          h: *mut EvasCoord);
-    pub fn evas_object_size_hint_request_set(obj: *mut EvasObject,
+    pub fn evas_object_size_hint_request_set(obj: *mut Evas_Object,
                                              w: EvasCoord, h: EvasCoord);
-    pub fn evas_object_size_hint_request_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_request_get(obj: *const Evas_Object,
                                              w: *mut EvasCoord,
                                              h: *mut EvasCoord);
-    pub fn evas_object_type_get(obj: *const EvasObject)
+    pub fn evas_object_type_get(obj: *const Evas_Object)
      -> *const c_char;
-    pub fn evas_object_size_hint_min_set(obj: *mut EvasObject, w: EvasCoord,
+    pub fn evas_object_size_hint_min_set(obj: *mut Evas_Object, w: EvasCoord,
                                          h: EvasCoord);
-    pub fn evas_object_size_hint_min_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_min_get(obj: *const Evas_Object,
                                          w: *mut EvasCoord,
                                          h: *mut EvasCoord);
-    pub fn evas_object_pointer_mode_set(obj: *mut EvasObject,
+    pub fn evas_object_pointer_mode_set(obj: *mut Evas_Object,
                                         pointer_mode:
                                             EvasObjectPointerMode);
-    pub fn evas_object_pointer_mode_get(obj: *const EvasObject)
+    pub fn evas_object_pointer_mode_get(obj: *const Evas_Object)
      -> EvasObjectPointerMode;
-    pub fn evas_object_render_op_set(obj: *mut EvasObject,
+    pub fn evas_object_render_op_set(obj: *mut Evas_Object,
                                      render_op: EvasRenderOp);
-    pub fn evas_object_render_op_get(obj: *const EvasObject)
+    pub fn evas_object_render_op_get(obj: *const Evas_Object)
      -> EvasRenderOp;
-    pub fn evas_object_freeze_events_set(obj: *mut EvasObject,
+    pub fn evas_object_freeze_events_set(obj: *mut Evas_Object,
                                          freeze: EinaBool);
-    pub fn evas_object_freeze_events_get(obj: *const EvasObject)
+    pub fn evas_object_freeze_events_get(obj: *const Evas_Object)
      -> EinaBool;
-    pub fn evas_object_map_set(obj: *mut EvasObject, map: *const EvasMap);
-    pub fn evas_object_map_get(obj: *const EvasObject) -> *const EvasMap;
-    pub fn evas_object_size_hint_aspect_set(obj: *mut EvasObject,
+    pub fn evas_object_map_set(obj: *mut Evas_Object, map: *const Evas_Map);
+    pub fn evas_object_map_get(obj: *const Evas_Object) -> *const Evas_Map;
+    pub fn evas_object_size_hint_aspect_set(obj: *mut Evas_Object,
                                             aspect: EvasAspectControl,
                                             w: EvasCoord, h: EvasCoord);
-    pub fn evas_object_size_hint_aspect_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_aspect_get(obj: *const Evas_Object,
                                             aspect: *mut EvasAspectControl,
                                             w: *mut EvasCoord,
                                             h: *mut EvasCoord);
-    pub fn evas_object_clip_set(obj: *mut EvasObject,
-                                clip: *mut EvasObject);
-    pub fn evas_object_clip_get(obj: *const EvasObject) -> *mut EvasObject;
-    pub fn evas_object_size_hint_padding_set(obj: *mut EvasObject,
+    pub fn evas_object_clip_set(obj: *mut Evas_Object,
+                                clip: *mut Evas_Object);
+    pub fn evas_object_clip_get(obj: *const Evas_Object) -> *mut Evas_Object;
+    pub fn evas_object_size_hint_padding_set(obj: *mut Evas_Object,
                                              l: EvasCoord, r: EvasCoord,
                                              t: EvasCoord, b: EvasCoord);
-    pub fn evas_object_size_hint_padding_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_padding_get(obj: *const Evas_Object,
                                              l: *mut EvasCoord,
                                              r: *mut EvasCoord,
                                              t: *mut EvasCoord,
                                              b: *mut EvasCoord);
-    pub fn evas_object_repeat_events_set(obj: *mut EvasObject,
+    pub fn evas_object_repeat_events_set(obj: *mut Evas_Object,
                                          repeat: EinaBool);
-    pub fn evas_object_repeat_events_get(obj: *const EvasObject)
+    pub fn evas_object_repeat_events_get(obj: *const Evas_Object)
      -> EinaBool;
-    pub fn evas_object_size_hint_weight_set(obj: *mut EvasObject,
+    pub fn evas_object_size_hint_weight_set(obj: *mut Evas_Object,
                                             x: c_double,
                                             y: c_double);
-    pub fn evas_object_size_hint_weight_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_weight_get(obj: *const Evas_Object,
                                             x: *mut c_double,
                                             y: *mut c_double);
-    pub fn evas_object_name_set(obj: *mut EvasObject,
+    pub fn evas_object_name_set(obj: *mut Evas_Object,
                                 name: *const c_char);
-    pub fn evas_object_name_get(obj: *const EvasObject)
+    pub fn evas_object_name_get(obj: *const Evas_Object)
      -> *const c_char;
-    pub fn evas_object_scale_set(obj: *mut EvasObject,
+    pub fn evas_object_scale_set(obj: *mut Evas_Object,
                                  scale: c_double);
-    pub fn evas_object_scale_get(obj: *const EvasObject)
+    pub fn evas_object_scale_get(obj: *const Evas_Object)
      -> c_double;
-    pub fn evas_object_static_clip_set(obj: *mut EvasObject,
+    pub fn evas_object_static_clip_set(obj: *mut Evas_Object,
                                        is_static_clip: EinaBool);
-    pub fn evas_object_static_clip_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_focus_set(obj: *mut EvasObject, focus: EinaBool);
-    pub fn evas_object_focus_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_is_frame_object_set(obj: *mut EvasObject,
+    pub fn evas_object_static_clip_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_focus_set(obj: *mut Evas_Object, focus: EinaBool);
+    pub fn evas_object_focus_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_is_frame_object_set(obj: *mut Evas_Object,
                                            is_frame: EinaBool);
-    pub fn evas_object_is_frame_object_get(obj: *const EvasObject)
+    pub fn evas_object_is_frame_object_get(obj: *const Evas_Object)
      -> EinaBool;
-    pub fn evas_object_map_enable_set(obj: *mut EvasObject,
+    pub fn evas_object_map_enable_set(obj: *mut Evas_Object,
                                       enabled: EinaBool);
-    pub fn evas_object_map_enable_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_precise_is_inside_set(obj: *mut EvasObject,
+    pub fn evas_object_map_enable_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_precise_is_inside_set(obj: *mut Evas_Object,
                                              precise: EinaBool);
-    pub fn evas_object_precise_is_inside_get(obj: *const EvasObject)
+    pub fn evas_object_precise_is_inside_get(obj: *const Evas_Object)
      -> EinaBool;
-    pub fn evas_object_size_hint_align_set(obj: *mut EvasObject,
+    pub fn evas_object_size_hint_align_set(obj: *mut Evas_Object,
                                            x: c_double,
                                            y: c_double);
-    pub fn evas_object_size_hint_align_get(obj: *const EvasObject,
+    pub fn evas_object_size_hint_align_get(obj: *const Evas_Object,
                                            x: *mut c_double,
                                            y: *mut c_double);
-    pub fn evas_object_propagate_events_set(obj: *mut EvasObject,
+    pub fn evas_object_propagate_events_set(obj: *mut Evas_Object,
                                             propagate: EinaBool);
-    pub fn evas_object_propagate_events_get(obj: *const EvasObject)
+    pub fn evas_object_propagate_events_get(obj: *const Evas_Object)
      -> EinaBool;
-    pub fn evas_object_pass_events_set(obj: *mut EvasObject,
+    pub fn evas_object_pass_events_set(obj: *mut Evas_Object,
                                        pass: EinaBool);
-    pub fn evas_object_pass_events_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_anti_alias_set(obj: *mut EvasObject,
+    pub fn evas_object_pass_events_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_anti_alias_set(obj: *mut Evas_Object,
                                       anti_alias: EinaBool);
-    pub fn evas_object_anti_alias_get(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_smart_data_get(obj: *const EvasObject)
+    pub fn evas_object_anti_alias_get(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_smart_data_get(obj: *const Evas_Object)
      -> *mut c_void;
-    pub fn evas_object_smart_clipped_clipper_get(obj: *const EvasObject)
-     -> *mut EvasObject;
-    pub fn evas_object_clipees_get(obj: *const EvasObject)
-     -> *const EinaList;
-    pub fn evas_object_smart_parent_get(obj: *const EvasObject)
-     -> *mut EvasObject;
-    pub fn evas_object_size_hint_display_mode_set(obj: *mut EvasObject,
+    pub fn evas_object_smart_clipped_clipper_get(obj: *const Evas_Object)
+     -> *mut Evas_Object;
+    pub fn evas_object_clipees_get(obj: *const Evas_Object)
+     -> *const Eina_List;
+    pub fn evas_object_smart_parent_get(obj: *const Evas_Object)
+     -> *mut Evas_Object;
+    pub fn evas_object_size_hint_display_mode_set(obj: *mut Evas_Object,
                                                   dispmode:
                                                       EvasDisplayMode);
-    pub fn evas_object_size_hint_display_mode_get(obj: *const EvasObject)
+    pub fn evas_object_size_hint_display_mode_get(obj: *const Evas_Object)
      -> EvasDisplayMode;
-    pub fn evas_object_clipees_has(obj: *const EvasObject) -> EinaBool;
-    pub fn evas_object_key_grab(obj: *mut EvasObject,
+    pub fn evas_object_clipees_has(obj: *const Evas_Object) -> EinaBool;
+    pub fn evas_object_key_grab(obj: *mut Evas_Object,
                                 keyname: *const c_char,
-                                modifiers: EvasModifierMask,
-                                not_modifiers: EvasModifierMask,
+                                modifiers: Evas_Modifier_Mask,
+                                not_modifiers: Evas_Modifier_Mask,
                                 exclusive: EinaBool) -> EinaBool;
-    pub fn evas_object_smart_type_check(obj: *const EvasObject,
+    pub fn evas_object_smart_type_check(obj: *const Evas_Object,
                                         _type: *const c_char)
      -> EinaBool;
-    pub fn evas_object_name_child_find(obj: *const EvasObject,
+    pub fn evas_object_name_child_find(obj: *const Evas_Object,
                                        name: *const c_char,
                                        recurse: c_int)
-     -> *mut EvasObject;
-    pub fn evas_object_key_ungrab(obj: *mut EvasObject,
+     -> *mut Evas_Object;
+    pub fn evas_object_key_ungrab(obj: *mut Evas_Object,
                                   keyname: *const c_char,
-                                  modifiers: EvasModifierMask,
-                                  not_modifiers: EvasModifierMask);
-    pub fn evas_object_clip_unset(obj: *mut EvasObject);
-    pub fn evas_object_smart_move_children_relative(obj: *mut EvasObject,
+                                  modifiers: Evas_Modifier_Mask,
+                                  not_modifiers: Evas_Modifier_Mask);
+    pub fn evas_object_clip_unset(obj: *mut Evas_Object);
+    pub fn evas_object_smart_move_children_relative(obj: *mut Evas_Object,
                                                     dx: EvasCoord,
                                                     dy: EvasCoord);
-    pub fn evas_object_smart_type_check_ptr(obj: *const EvasObject,
+    pub fn evas_object_smart_type_check_ptr(obj: *const Evas_Object,
                                             _type:
                                                 *const c_char)
      -> EinaBool;
-    pub fn evas_object_event_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_event_callback_add(obj: *mut Evas_Object,
                                           _type: EvasCallbackType,
                                           func: EvasObjectEventCb,
                                           data:
                                               *const c_void);
-    pub fn evas_object_event_callback_priority_add(obj: *mut EvasObject,
+    pub fn evas_object_event_callback_priority_add(obj: *mut Evas_Object,
                                                    _type: EvasCallbackType,
                                                    priority:
-                                                       EvasCallbackPriority,
+                                                       Evas_Callback_Priority,
                                                    func: EvasObjectEventCb,
                                                    data:
                                                        *const c_void);
-    pub fn evas_object_event_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_event_callback_del(obj: *mut Evas_Object,
                                           _type: EvasCallbackType,
                                           func: EvasObjectEventCb)
      -> *mut c_void;
-    pub fn evas_object_event_callback_del_full(obj: *mut EvasObject,
+    pub fn evas_object_event_callback_del_full(obj: *mut Evas_Object,
                                                _type: EvasCallbackType,
                                                func: EvasObjectEventCb,
                                                data:
                                                    *const c_void)
      -> *mut c_void;
-    pub fn evas_object_data_set(obj: *mut EvasObject,
+    pub fn evas_object_data_set(obj: *mut Evas_Object,
                                 key: *const c_char,
                                 data: *const c_void);
-    pub fn evas_object_data_get(obj: *const EvasObject,
+    pub fn evas_object_data_get(obj: *const Evas_Object,
                                 key: *const c_char)
      -> *mut c_void;
-    pub fn evas_object_data_del(obj: *mut EvasObject,
+    pub fn evas_object_data_del(obj: *mut Evas_Object,
                                 key: *const c_char)
      -> *mut c_void;
-    pub fn evas_object_top_at_pointer_get(e: *const Evas) -> *mut EvasObject;
-    pub fn evas_object_intercept_show_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_top_at_pointer_get(e: *const Evas) -> *mut Evas_Object;
+    pub fn evas_object_intercept_show_callback_add(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptShowCb,
                                                    data:
                                                        *const c_void);
-    pub fn evas_object_intercept_show_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_show_callback_del(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptShowCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_hide_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_hide_callback_add(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptHideCb,
                                                    data:
                                                        *const c_void);
-    pub fn evas_object_intercept_hide_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_hide_callback_del(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptHideCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_move_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_move_callback_add(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptMoveCb,
                                                    data:
                                                        *const c_void);
-    pub fn evas_object_intercept_move_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_move_callback_del(obj: *mut Evas_Object,
                                                    func:
                                                        EvasObjectInterceptMoveCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_resize_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_resize_callback_add(obj: *mut Evas_Object,
                                                      func:
                                                          EvasObjectInterceptResizeCb,
                                                      data:
                                                          *const c_void);
-    pub fn evas_object_intercept_resize_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_resize_callback_del(obj: *mut Evas_Object,
                                                      func:
                                                          EvasObjectInterceptResizeCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_raise_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_raise_callback_add(obj: *mut Evas_Object,
                                                     func:
                                                         EvasObjectInterceptRaiseCb,
                                                     data:
                                                         *const c_void);
-    pub fn evas_object_intercept_raise_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_raise_callback_del(obj: *mut Evas_Object,
                                                     func:
                                                         EvasObjectInterceptRaiseCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_lower_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_lower_callback_add(obj: *mut Evas_Object,
                                                     func:
                                                         EvasObjectInterceptLowerCb,
                                                     data:
                                                         *const c_void);
-    pub fn evas_object_intercept_lower_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_lower_callback_del(obj: *mut Evas_Object,
                                                     func:
                                                         EvasObjectInterceptLowerCb)
      -> *mut c_void;
     pub fn evas_object_intercept_stack_above_callback_add(obj:
-                                                              *mut EvasObject,
+                                                              *mut Evas_Object,
                                                           func:
                                                               EvasObjectInterceptStackAboveCb,
                                                           data:
                                                               *const c_void);
     pub fn evas_object_intercept_stack_above_callback_del(obj:
-                                                              *mut EvasObject,
+                                                              *mut Evas_Object,
                                                           func:
                                                               EvasObjectInterceptStackAboveCb)
      -> *mut c_void;
     pub fn evas_object_intercept_stack_below_callback_add(obj:
-                                                              *mut EvasObject,
+                                                              *mut Evas_Object,
                                                           func:
                                                               EvasObjectInterceptStackBelowCb,
                                                           data:
                                                               *const c_void);
     pub fn evas_object_intercept_stack_below_callback_del(obj:
-                                                              *mut EvasObject,
+                                                              *mut Evas_Object,
                                                           func:
                                                               EvasObjectInterceptStackBelowCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_layer_set_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_layer_set_callback_add(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptLayerSetCb,
                                                         data:
                                                             *const c_void);
-    pub fn evas_object_intercept_layer_set_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_layer_set_callback_del(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptLayerSetCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_color_set_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_color_set_callback_add(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptColorSetCb,
                                                         data:
                                                             *const c_void);
-    pub fn evas_object_intercept_color_set_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_color_set_callback_del(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptColorSetCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_clip_set_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_clip_set_callback_add(obj: *mut Evas_Object,
                                                        func:
                                                            EvasObjectInterceptClipSetCb,
                                                        data:
                                                            *const c_void);
-    pub fn evas_object_intercept_clip_set_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_clip_set_callback_del(obj: *mut Evas_Object,
                                                        func:
                                                            EvasObjectInterceptClipSetCb)
      -> *mut c_void;
     pub fn evas_object_intercept_clip_unset_callback_add(obj:
-                                                             *mut EvasObject,
+                                                             *mut Evas_Object,
                                                          func:
                                                              EvasObjectInterceptClipUnsetCb,
                                                          data:
                                                              *const c_void);
     pub fn evas_object_intercept_clip_unset_callback_del(obj:
-                                                             *mut EvasObject,
+                                                             *mut Evas_Object,
                                                          func:
                                                              EvasObjectInterceptClipUnsetCb)
      -> *mut c_void;
-    pub fn evas_object_intercept_focus_set_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_intercept_focus_set_callback_add(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptFocusSetCb,
                                                         data:
                                                             *const c_void);
-    pub fn evas_object_intercept_focus_set_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_intercept_focus_set_callback_del(obj: *mut Evas_Object,
                                                         func:
                                                             EvasObjectInterceptFocusSetCb)
      -> *mut c_void;
-    pub fn evas_object_rectangle_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_image_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_image_filled_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_image_memfile_set(obj: *mut EvasObject,
+    pub fn evas_object_rectangle_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_image_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_image_filled_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_image_memfile_set(obj: *mut Evas_Object,
                                          data: *mut c_void,
                                          size: c_int,
                                          format: *mut c_char,
                                          key: *mut c_char);
-    pub fn evas_object_image_native_surface_set(obj: *mut EvasObject,
+    pub fn evas_object_image_native_surface_set(obj: *mut Evas_Object,
                                                 surf:
-                                                    *mut EvasNativeSurface);
-    pub fn evas_object_image_preload(obj: *mut EvasObject,
+                                                    *mut Evas_Native_Surface);
+    pub fn evas_object_image_preload(obj: *mut Evas_Object,
                                      cancel: EinaBool);
-    pub fn evas_object_image_source_unset(obj: *mut EvasObject) -> EinaBool;
-    pub fn evas_object_image_alpha_mask_set(obj: *mut EvasObject,
+    pub fn evas_object_image_source_unset(obj: *mut Evas_Object) -> EinaBool;
+    pub fn evas_object_image_alpha_mask_set(obj: *mut Evas_Object,
                                             ismask: EinaBool);
     pub fn evas_object_image_file_set(obj: *mut Eo,
                                       file: *const c_char,
@@ -2745,10 +2745,10 @@ extern "C" {
                                           *mut *const c_char,
                                       key:
                                           *mut *const c_char);
-    pub fn evas_object_image_mmap_set(obj: *mut Eo, f: *const EinaFile,
+    pub fn evas_object_image_mmap_set(obj: *mut Eo, f: *const Eina_File,
                                       key: *const c_char);
     pub fn evas_object_image_mmap_get(obj: *const Eo,
-                                      f: *mut *const EinaFile,
+                                      f: *mut *const Eina_File,
                                       key:
                                           *mut *const c_char);
     pub fn evas_object_image_save(obj: *const Eo,
@@ -2766,255 +2766,255 @@ extern "C" {
     pub fn evas_object_image_smooth_scale_set(obj: *mut Eo,
                                               smooth_scale: EinaBool);
     pub fn evas_object_image_smooth_scale_get(obj: *const Eo) -> EinaBool;
-    pub fn evas_object_image_fill_spread_set(obj: *mut EvasObject,
-                                             spread: EvasFillSpread);
-    pub fn evas_object_image_fill_spread_get(obj: *const EvasObject)
-     -> EvasFillSpread;
-    pub fn evas_object_image_fill_set(obj: *mut EvasObject, x: EvasCoord,
+    pub fn evas_object_image_fill_spread_set(obj: *mut Evas_Object,
+                                             spread: Evas_Fill_Spread);
+    pub fn evas_object_image_fill_spread_get(obj: *const Evas_Object)
+     -> Evas_Fill_Spread;
+    pub fn evas_object_image_fill_set(obj: *mut Evas_Object, x: EvasCoord,
                                       y: EvasCoord, w: EvasCoord,
                                       h: EvasCoord);
-    pub fn evas_object_image_fill_get(obj: *const EvasObject,
+    pub fn evas_object_image_fill_get(obj: *const Evas_Object,
                                       x: *mut EvasCoord, y: *mut EvasCoord,
                                       w: *mut EvasCoord, h: *mut EvasCoord);
-    pub fn evas_object_image_size_set(obj: *mut EvasObject,
+    pub fn evas_object_image_size_set(obj: *mut Evas_Object,
                                       w: c_int,
                                       h: c_int);
-    pub fn evas_object_image_size_get(obj: *const EvasObject,
+    pub fn evas_object_image_size_get(obj: *const Evas_Object,
                                       w: *mut c_int,
                                       h: *mut c_int);
-    pub fn evas_object_image_data_convert(obj: *mut EvasObject,
-                                          to_cspace: EvasColorspace)
+    pub fn evas_object_image_data_convert(obj: *mut Evas_Object,
+                                          to_cspace: Evas_Colorspace)
      -> *mut c_void;
-    pub fn evas_object_image_pixels_import(obj: *mut EvasObject,
+    pub fn evas_object_image_pixels_import(obj: *mut Evas_Object,
                                            pixels:
-                                               *mut EvasPixelImportSource)
+                                               *mut Evas_Pixel_Import_Source)
      -> EinaBool;
-    pub fn evas_object_image_reload(obj: *mut EvasObject);
-    pub fn evas_object_image_load_dpi_set(obj: *mut EvasImage,
+    pub fn evas_object_image_reload(obj: *mut Evas_Object);
+    pub fn evas_object_image_load_dpi_set(obj: *mut Evas_Image,
                                           dpi: c_double);
-    pub fn evas_object_image_load_dpi_get(obj: *const EvasImage)
+    pub fn evas_object_image_load_dpi_get(obj: *const Evas_Image)
      -> c_double;
-    pub fn evas_object_image_source_clip_set(obj: *mut EvasImage,
+    pub fn evas_object_image_source_clip_set(obj: *mut Evas_Image,
                                              source_clip: EinaBool);
-    pub fn evas_object_image_source_clip_get(obj: *const EvasImage)
+    pub fn evas_object_image_source_clip_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_source_set(obj: *mut EvasImage,
-                                        src: *mut EvasObject) -> EinaBool;
-    pub fn evas_object_image_source_get(obj: *const EvasImage)
-     -> *mut EvasObject;
-    pub fn evas_object_image_filled_set(obj: *mut EvasImage,
+    pub fn evas_object_image_source_set(obj: *mut Evas_Image,
+                                        src: *mut Evas_Object) -> EinaBool;
+    pub fn evas_object_image_source_get(obj: *const Evas_Image)
+     -> *mut Evas_Object;
+    pub fn evas_object_image_filled_set(obj: *mut Evas_Image,
                                         filled: EinaBool);
-    pub fn evas_object_image_filled_get(obj: *const EvasImage) -> EinaBool;
-    pub fn evas_object_image_content_hint_set(obj: *mut EvasImage,
+    pub fn evas_object_image_filled_get(obj: *const Evas_Image) -> EinaBool;
+    pub fn evas_object_image_content_hint_set(obj: *mut Evas_Image,
                                               hint: EvasImageContentHint);
-    pub fn evas_object_image_content_hint_get(obj: *const EvasImage)
+    pub fn evas_object_image_content_hint_get(obj: *const Evas_Image)
      -> EvasImageContentHint;
-    pub fn evas_object_image_load_region_set(obj: *mut EvasImage,
+    pub fn evas_object_image_load_region_set(obj: *mut Evas_Image,
                                              x: c_int,
                                              y: c_int,
                                              w: c_int,
                                              h: c_int);
-    pub fn evas_object_image_load_region_get(obj: *const EvasImage,
+    pub fn evas_object_image_load_region_get(obj: *const Evas_Image,
                                              x: *mut c_int,
                                              y: *mut c_int,
                                              w: *mut c_int,
                                              h: *mut c_int);
-    pub fn evas_object_image_alpha_set(obj: *mut EvasImage,
+    pub fn evas_object_image_alpha_set(obj: *mut Evas_Image,
                                        alpha: EinaBool);
-    pub fn evas_object_image_alpha_get(obj: *const EvasImage) -> EinaBool;
-    pub fn evas_object_image_border_set(obj: *mut EvasImage,
+    pub fn evas_object_image_alpha_get(obj: *const Evas_Image) -> EinaBool;
+    pub fn evas_object_image_border_set(obj: *mut Evas_Image,
                                         l: c_int,
                                         r: c_int,
                                         t: c_int,
                                         b: c_int);
-    pub fn evas_object_image_border_get(obj: *const EvasImage,
+    pub fn evas_object_image_border_get(obj: *const Evas_Image,
                                         l: *mut c_int,
                                         r: *mut c_int,
                                         t: *mut c_int,
                                         b: *mut c_int);
-    pub fn evas_object_image_border_scale_set(obj: *mut EvasImage,
+    pub fn evas_object_image_border_scale_set(obj: *mut Evas_Image,
                                               scale:
                                                   c_double);
-    pub fn evas_object_image_border_scale_get(obj: *const EvasImage)
+    pub fn evas_object_image_border_scale_get(obj: *const Evas_Image)
      -> c_double;
-    pub fn evas_object_image_pixels_dirty_set(obj: *mut EvasImage,
+    pub fn evas_object_image_pixels_dirty_set(obj: *mut Evas_Image,
                                               dirty: EinaBool);
-    pub fn evas_object_image_pixels_dirty_get(obj: *const EvasImage)
+    pub fn evas_object_image_pixels_dirty_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_video_surface_set(obj: *mut EvasImage,
-                                               surf: *mut EvasVideoSurface);
-    pub fn evas_object_image_video_surface_get(obj: *const EvasImage)
-     -> *const EvasVideoSurface;
-    pub fn evas_object_image_video_surface_caps_set(obj: *mut EvasImage,
+    pub fn evas_object_image_video_surface_set(obj: *mut Evas_Image,
+                                               surf: *mut Evas_Video_Surface);
+    pub fn evas_object_image_video_surface_get(obj: *const Evas_Image)
+     -> *const Evas_Video_Surface;
+    pub fn evas_object_image_video_surface_caps_set(obj: *mut Evas_Image,
                                                     caps:
                                                         c_uint);
-    pub fn evas_object_image_video_surface_caps_get(obj: *const EvasImage)
+    pub fn evas_object_image_video_surface_caps_get(obj: *const Evas_Image)
      -> c_uint;
-    pub fn evas_object_image_load_orientation_set(obj: *mut EvasImage,
+    pub fn evas_object_image_load_orientation_set(obj: *mut Evas_Image,
                                                   enable: EinaBool);
-    pub fn evas_object_image_load_orientation_get(obj: *const EvasImage)
+    pub fn evas_object_image_load_orientation_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_border_center_fill_set(obj: *mut EvasImage,
+    pub fn evas_object_image_border_center_fill_set(obj: *mut Evas_Image,
                                                     fill:
                                                         EvasBorderFillMode);
-    pub fn evas_object_image_border_center_fill_get(obj: *const EvasImage)
+    pub fn evas_object_image_border_center_fill_get(obj: *const Evas_Image)
      -> EvasBorderFillMode;
-    pub fn evas_object_image_source_visible_set(obj: *mut EvasImage,
+    pub fn evas_object_image_source_visible_set(obj: *mut Evas_Image,
                                                 visible: EinaBool);
-    pub fn evas_object_image_source_visible_get(obj: *const EvasImage)
+    pub fn evas_object_image_source_visible_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_native_surface_get(obj: *const EvasImage)
-     -> *mut EvasNativeSurface;
-    pub fn evas_object_image_load_scale_down_set(obj: *mut EvasImage,
+    pub fn evas_object_image_native_surface_get(obj: *const Evas_Image)
+     -> *mut Evas_Native_Surface;
+    pub fn evas_object_image_load_scale_down_set(obj: *mut Evas_Image,
                                                  scale_down:
                                                      c_int);
-    pub fn evas_object_image_load_scale_down_get(obj: *const EvasImage)
+    pub fn evas_object_image_load_scale_down_get(obj: *const Evas_Image)
      -> c_int;
-    pub fn evas_object_image_scale_hint_set(obj: *mut EvasImage,
-                                            hint: EvasImageScaleHint);
-    pub fn evas_object_image_scale_hint_get(obj: *const EvasImage)
-     -> EvasImageScaleHint;
-    pub fn evas_object_image_source_events_set(obj: *mut EvasImage,
+    pub fn evas_object_image_scale_hint_set(obj: *mut Evas_Image,
+                                            hint: Evas_Image_Scale_Hint);
+    pub fn evas_object_image_scale_hint_get(obj: *const Evas_Image)
+     -> Evas_Image_Scale_Hint;
+    pub fn evas_object_image_source_events_set(obj: *mut Evas_Image,
                                                source: EinaBool);
-    pub fn evas_object_image_source_events_get(obj: *const EvasImage)
+    pub fn evas_object_image_source_events_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_colorspace_set(obj: *mut EvasImage,
-                                            cspace: EvasColorspace);
-    pub fn evas_object_image_colorspace_get(obj: *const EvasImage)
-     -> EvasColorspace;
-    pub fn evas_object_image_pixels_get_callback_set(obj: *mut EvasImage,
+    pub fn evas_object_image_colorspace_set(obj: *mut Evas_Image,
+                                            cspace: Evas_Colorspace);
+    pub fn evas_object_image_colorspace_get(obj: *const Evas_Image)
+     -> Evas_Colorspace;
+    pub fn evas_object_image_pixels_get_callback_set(obj: *mut Evas_Image,
                                                      func:
-                                                         EvasObjectImagePixelsGetCb,
+                                                         Evas_ObjectImagePixelsGetCb,
                                                      data:
                                                          *mut c_void);
-    pub fn evas_object_image_data_copy_set(obj: *mut EvasImage,
+    pub fn evas_object_image_data_copy_set(obj: *mut Evas_Image,
                                            data: *mut c_void);
-    pub fn evas_object_image_animated_frame_set(obj: *mut EvasImage,
+    pub fn evas_object_image_animated_frame_set(obj: *mut Evas_Image,
                                                 frame_index:
                                                     c_int);
-    pub fn evas_object_image_region_support_get(obj: *const EvasImage)
+    pub fn evas_object_image_region_support_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_load_error_get(obj: *const EvasImage)
-     -> EvasLoadError;
-    pub fn evas_object_image_animated_frame_count_get(obj: *const EvasImage)
+    pub fn evas_object_image_load_error_get(obj: *const Evas_Image)
+     -> Evas_Load_Error;
+    pub fn evas_object_image_animated_frame_count_get(obj: *const Evas_Image)
      -> c_int;
-    pub fn evas_object_image_stride_get(obj: *const EvasImage)
+    pub fn evas_object_image_stride_get(obj: *const Evas_Image)
      -> c_int;
-    pub fn evas_object_image_animated_loop_type_get(obj: *const EvasImage)
-     -> EvasImageAnimatedLoopHint;
-    pub fn evas_object_image_animated_loop_count_get(obj: *const EvasImage)
+    pub fn evas_object_image_animated_loop_type_get(obj: *const Evas_Image)
+     -> Evas_Image_Animated_Loop_hint;
+    pub fn evas_object_image_animated_loop_count_get(obj: *const Evas_Image)
      -> c_int;
-    pub fn evas_object_image_orient_set(obj: *mut EvasImage,
+    pub fn evas_object_image_orient_set(obj: *mut Evas_Image,
                                         orient: EvasImageOrient);
-    pub fn evas_object_image_orient_get(obj: *const EvasImage)
+    pub fn evas_object_image_orient_get(obj: *const Evas_Image)
      -> EvasImageOrient;
-    pub fn evas_object_image_snapshot_set(obj: *mut EvasImage, s: EinaBool);
-    pub fn evas_object_image_snapshot_get(obj: *const EvasImage)
+    pub fn evas_object_image_snapshot_set(obj: *mut Evas_Image, s: EinaBool);
+    pub fn evas_object_image_snapshot_get(obj: *const Evas_Image)
      -> EinaBool;
-    pub fn evas_object_image_data_update_add(obj: *mut EvasImage,
+    pub fn evas_object_image_data_update_add(obj: *mut Evas_Image,
                                              x: c_int,
                                              y: c_int,
                                              w: c_int,
                                              h: c_int);
     pub fn evas_object_image_animated_frame_duration_get(obj:
-                                                             *const EvasImage,
+                                                             *const Evas_Image,
                                                          start_frame:
                                                              c_int,
                                                          frame_num:
                                                              c_int)
      -> c_double;
-    pub fn evas_object_image_data_set(obj: *mut EvasImage,
+    pub fn evas_object_image_data_set(obj: *mut Evas_Image,
                                       data: *mut c_void);
-    pub fn evas_object_image_data_get(obj: *const EvasImage,
+    pub fn evas_object_image_data_get(obj: *const Evas_Image,
                                       for_writing: EinaBool)
      -> *mut c_void;
-    pub fn evas_object_text_add(e: *mut Evas) -> *mut EvasObject;
+    pub fn evas_object_text_add(e: *mut Evas) -> *mut Evas_Object;
     pub fn evas_object_text_text_set(obj: *mut Eo,
                                      text: *const c_char);
     pub fn evas_object_text_text_get(obj: *const Eo)
      -> *const c_char;
-    pub fn evas_object_text_shadow_color_set(obj: *mut EvasText,
+    pub fn evas_object_text_shadow_color_set(obj: *mut Evas_Text,
                                              r: c_int,
                                              g: c_int,
                                              b: c_int,
                                              a: c_int);
-    pub fn evas_object_text_shadow_color_get(obj: *const EvasText,
+    pub fn evas_object_text_shadow_color_get(obj: *const Evas_Text,
                                              r: *mut c_int,
                                              g: *mut c_int,
                                              b: *mut c_int,
                                              a: *mut c_int);
-    pub fn evas_object_text_ellipsis_set(obj: *mut EvasText,
+    pub fn evas_object_text_ellipsis_set(obj: *mut Evas_Text,
                                          ellipsis: c_double);
-    pub fn evas_object_text_ellipsis_get(obj: *const EvasText)
+    pub fn evas_object_text_ellipsis_get(obj: *const Evas_Text)
      -> c_double;
-    pub fn evas_object_text_bidi_delimiters_set(obj: *mut EvasText,
+    pub fn evas_object_text_bidi_delimiters_set(obj: *mut Evas_Text,
                                                 delim:
                                                     *const c_char);
-    pub fn evas_object_text_bidi_delimiters_get(obj: *const EvasText)
+    pub fn evas_object_text_bidi_delimiters_get(obj: *const Evas_Text)
      -> *const c_char;
-    pub fn evas_object_text_outline_color_set(obj: *mut EvasText,
+    pub fn evas_object_text_outline_color_set(obj: *mut Evas_Text,
                                               r: c_int,
                                               g: c_int,
                                               b: c_int,
                                               a: c_int);
-    pub fn evas_object_text_outline_color_get(obj: *const EvasText,
+    pub fn evas_object_text_outline_color_get(obj: *const Evas_Text,
                                               r: *mut c_int,
                                               g: *mut c_int,
                                               b: *mut c_int,
                                               a: *mut c_int);
-    pub fn evas_object_text_glow2_color_set(obj: *mut EvasText,
+    pub fn evas_object_text_glow2_color_set(obj: *mut Evas_Text,
                                             r: c_int,
                                             g: c_int,
                                             b: c_int,
                                             a: c_int);
-    pub fn evas_object_text_glow2_color_get(obj: *const EvasText,
+    pub fn evas_object_text_glow2_color_get(obj: *const Evas_Text,
                                             r: *mut c_int,
                                             g: *mut c_int,
                                             b: *mut c_int,
                                             a: *mut c_int);
-    pub fn evas_object_text_style_set(obj: *mut EvasText,
+    pub fn evas_object_text_style_set(obj: *mut Evas_Text,
                                       style: EvasTextStyleType);
-    pub fn evas_object_text_style_get(obj: *const EvasText)
+    pub fn evas_object_text_style_get(obj: *const Evas_Text)
      -> EvasTextStyleType;
-    pub fn evas_object_text_glow_color_set(obj: *mut EvasText,
+    pub fn evas_object_text_glow_color_set(obj: *mut Evas_Text,
                                            r: c_int,
                                            g: c_int,
                                            b: c_int,
                                            a: c_int);
-    pub fn evas_object_text_glow_color_get(obj: *const EvasText,
+    pub fn evas_object_text_glow_color_get(obj: *const Evas_Text,
                                            r: *mut c_int,
                                            g: *mut c_int,
                                            b: *mut c_int,
                                            a: *mut c_int);
-    pub fn evas_object_text_max_descent_get(obj: *const EvasText)
+    pub fn evas_object_text_max_descent_get(obj: *const Evas_Text)
      -> EvasCoord;
-    pub fn evas_object_text_style_pad_get(obj: *const EvasText,
+    pub fn evas_object_text_style_pad_get(obj: *const Evas_Text,
                                           l: *mut c_int,
                                           r: *mut c_int,
                                           t: *mut c_int,
                                           b: *mut c_int);
-    pub fn evas_object_text_direction_get(obj: *const EvasText)
+    pub fn evas_object_text_direction_get(obj: *const Evas_Text)
      -> EvasBidiDirection;
-    pub fn evas_object_text_ascent_get(obj: *const EvasText) -> EvasCoord;
-    pub fn evas_object_text_horiz_advance_get(obj: *const EvasText)
+    pub fn evas_object_text_ascent_get(obj: *const Evas_Text) -> EvasCoord;
+    pub fn evas_object_text_horiz_advance_get(obj: *const Evas_Text)
      -> EvasCoord;
-    pub fn evas_object_text_inset_get(obj: *const EvasText) -> EvasCoord;
-    pub fn evas_object_text_max_ascent_get(obj: *const EvasText)
+    pub fn evas_object_text_inset_get(obj: *const Evas_Text) -> EvasCoord;
+    pub fn evas_object_text_max_ascent_get(obj: *const Evas_Text)
      -> EvasCoord;
-    pub fn evas_object_text_vert_advance_get(obj: *const EvasText)
+    pub fn evas_object_text_vert_advance_get(obj: *const Evas_Text)
      -> EvasCoord;
-    pub fn evas_object_text_descent_get(obj: *const EvasText) -> EvasCoord;
-    pub fn evas_object_text_last_up_to_pos(obj: *const EvasText,
+    pub fn evas_object_text_descent_get(obj: *const Evas_Text) -> EvasCoord;
+    pub fn evas_object_text_last_up_to_pos(obj: *const Evas_Text,
                                            x: EvasCoord, y: EvasCoord)
      -> c_int;
-    pub fn evas_object_text_char_coords_get(obj: *const EvasText,
+    pub fn evas_object_text_char_coords_get(obj: *const Evas_Text,
                                             x: EvasCoord, y: EvasCoord,
                                             cx: *mut EvasCoord,
                                             cy: *mut EvasCoord,
                                             cw: *mut EvasCoord,
                                             ch: *mut EvasCoord)
      -> c_int;
-    pub fn evas_object_text_char_pos_get(obj: *const EvasText,
+    pub fn evas_object_text_char_pos_get(obj: *const Evas_Text,
                                          pos: c_int,
                                          cx: *mut EvasCoord,
                                          cy: *mut EvasCoord,
@@ -3031,63 +3031,63 @@ extern "C" {
     pub fn evas_object_text_font_get(obj: *const Eo,
                                      font: *mut *const c_char,
                                      size: *mut EvasFontSize);
-    pub fn evas_object_textblock_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_textblock_text_markup_to_utf8(obj: *const EvasObject,
+    pub fn evas_object_textblock_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_textblock_text_markup_to_utf8(obj: *const Evas_Object,
                                               text:
                                                   *const c_char)
      -> *mut c_char;
-    pub fn evas_textblock_text_utf8_to_markup(obj: *const EvasObject,
+    pub fn evas_textblock_text_utf8_to_markup(obj: *const Evas_Object,
                                               text:
                                                   *const c_char)
      -> *mut c_char;
-    pub fn evas_object_textblock_clear(obj: *mut EvasObject);
-    pub fn evas_object_textblock_text_markup_set(obj: *mut EvasTextblock,
+    pub fn evas_object_textblock_clear(obj: *mut Evas_Object);
+    pub fn evas_object_textblock_text_markup_set(obj: *mut Evas_Textblock,
                                                  text:
                                                      *const c_char);
-    pub fn evas_object_textblock_text_markup_get(obj: *const EvasTextblock)
+    pub fn evas_object_textblock_text_markup_get(obj: *const Evas_Textblock)
      -> *const c_char;
-    pub fn evas_object_textblock_valign_set(obj: *mut EvasTextblock,
+    pub fn evas_object_textblock_valign_set(obj: *mut Evas_Textblock,
                                             align: c_double);
-    pub fn evas_object_textblock_valign_get(obj: *const EvasTextblock)
+    pub fn evas_object_textblock_valign_get(obj: *const Evas_Textblock)
      -> c_double;
-    pub fn evas_object_textblock_bidi_delimiters_set(obj: *mut EvasTextblock,
+    pub fn evas_object_textblock_bidi_delimiters_set(obj: *mut Evas_Textblock,
                                                      delim:
                                                          *const c_char);
     pub fn evas_object_textblock_bidi_delimiters_get(obj:
-                                                         *const EvasTextblock)
+                                                         *const Evas_Textblock)
      -> *const c_char;
-    pub fn evas_object_textblock_replace_char_set(obj: *mut EvasTextblock,
+    pub fn evas_object_textblock_replace_char_set(obj: *mut Evas_Textblock,
                                                   ch:
                                                       *const c_char);
-    pub fn evas_object_textblock_legacy_newline_set(obj: *mut EvasTextblock,
+    pub fn evas_object_textblock_legacy_newline_set(obj: *mut Evas_Textblock,
                                                     mode: EinaBool);
     pub fn evas_object_textblock_legacy_newline_get(obj:
-                                                        *const EvasTextblock)
+                                                        *const Evas_Textblock)
      -> EinaBool;
-    pub fn evas_object_textblock_style_set(obj: *mut EvasTextblock,
-                                           ts: *const EvasTextblockStyle);
-    pub fn evas_object_textblock_style_get(obj: *const EvasTextblock)
-     -> *const EvasTextblockStyle;
-    pub fn evas_textblock_node_format_first_get(obj: *const EvasTextblock)
-     -> *const EvasTextblockNodeFormat;
+    pub fn evas_object_textblock_style_set(obj: *mut Evas_Textblock,
+                                           ts: *const Evas_Textblock_Style);
+    pub fn evas_object_textblock_style_get(obj: *const Evas_Textblock)
+     -> *const Evas_Textblock_Style;
+    pub fn evas_textblock_node_format_first_get(obj: *const Evas_Textblock)
+     -> *const Evas_Textblock_Node_Format;
     pub fn evas_object_textblock_size_formatted_get(obj:
-                                                        *const EvasTextblock,
+                                                        *const Evas_Textblock,
                                                     w: *mut EvasCoord,
                                                     h: *mut EvasCoord);
-    pub fn evas_textblock_node_format_last_get(obj: *const EvasTextblock)
-     -> *const EvasTextblockNodeFormat;
-    pub fn evas_object_textblock_cursor_get(obj: *const EvasTextblock)
-     -> *mut EvasTextblockCursor;
-    pub fn evas_object_textblock_size_native_get(obj: *const EvasTextblock,
+    pub fn evas_textblock_node_format_last_get(obj: *const Evas_Textblock)
+     -> *const Evas_Textblock_Node_Format;
+    pub fn evas_object_textblock_cursor_get(obj: *const Evas_Textblock)
+     -> *mut Evas_Textblock_Cursor;
+    pub fn evas_object_textblock_size_native_get(obj: *const Evas_Textblock,
                                                  w: *mut EvasCoord,
                                                  h: *mut EvasCoord);
-    pub fn evas_object_textblock_style_insets_get(obj: *const EvasTextblock,
+    pub fn evas_object_textblock_style_insets_get(obj: *const Evas_Textblock,
                                                   l: *mut EvasCoord,
                                                   r: *mut EvasCoord,
                                                   t: *mut EvasCoord,
                                                   b: *mut EvasCoord);
     pub fn evas_object_textblock_line_number_geometry_get(obj:
-                                                              *const EvasTextblock,
+                                                              *const Evas_Textblock,
                                                           line:
                                                               c_int,
                                                           cx: *mut EvasCoord,
@@ -3095,68 +3095,68 @@ extern "C" {
                                                           cw: *mut EvasCoord,
                                                           ch: *mut EvasCoord)
      -> EinaBool;
-    pub fn evas_object_textblock_replace_char_get(obj: *mut EvasTextblock)
+    pub fn evas_object_textblock_replace_char_get(obj: *mut Evas_Textblock)
      -> *const c_char;
-    pub fn evas_object_textblock_style_user_pop(obj: *mut EvasTextblock);
-    pub fn evas_object_textblock_cursor_new(obj: *const EvasTextblock)
-     -> *mut EvasTextblockCursor;
-    pub fn evas_textblock_node_format_list_get(obj: *const EvasTextblock,
+    pub fn evas_object_textblock_style_user_pop(obj: *mut Evas_Textblock);
+    pub fn evas_object_textblock_cursor_new(obj: *const Evas_Textblock)
+     -> *mut Evas_Textblock_Cursor;
+    pub fn evas_textblock_node_format_list_get(obj: *const Evas_Textblock,
                                                anchor:
                                                    *const c_char)
-     -> *const EinaList;
-    pub fn evas_object_textblock_style_user_peek(obj: *const EvasTextblock)
-     -> *const EvasTextblockStyle;
-    pub fn evas_textblock_node_format_remove_pair(obj: *mut EvasTextblock,
+     -> *const Eina_List;
+    pub fn evas_object_textblock_style_user_peek(obj: *const Evas_Textblock)
+     -> *const Evas_Textblock_Style;
+    pub fn evas_textblock_node_format_remove_pair(obj: *mut Evas_Textblock,
                                                   n:
-                                                      *mut EvasTextblockNodeFormat);
-    pub fn evas_object_textblock_style_user_push(obj: *mut EvasTextblock,
+                                                      *mut Evas_Textblock_Node_Format);
+    pub fn evas_object_textblock_style_user_push(obj: *mut Evas_Textblock,
                                                  ts:
-                                                     *mut EvasTextblockStyle);
-    pub fn evas_object_textblock_obstacle_add(obj: *mut EvasTextblock,
-                                              eo_obs: *mut EvasObject)
+                                                     *mut Evas_Textblock_Style);
+    pub fn evas_object_textblock_obstacle_add(obj: *mut Evas_Textblock,
+                                              eo_obs: *mut Evas_Object)
      -> EinaBool;
-    pub fn evas_object_textblock_obstacle_del(obj: *mut EvasTextblock,
-                                              eo_obs: *mut EvasObject)
+    pub fn evas_object_textblock_obstacle_del(obj: *mut Evas_Textblock,
+                                              eo_obs: *mut Evas_Object)
      -> EinaBool;
-    pub fn evas_object_textblock_obstacles_update(obj: *mut EvasTextblock);
-    pub fn evas_object_textgrid_add(e: *mut Evas) -> *mut EvasObject;
+    pub fn evas_object_textblock_obstacles_update(obj: *mut Evas_Textblock);
+    pub fn evas_object_textgrid_add(e: *mut Evas) -> *mut Evas_Object;
     pub fn evas_object_textgrid_supported_font_styles_set(obj:
-                                                              *mut EvasTextgrid,
+                                                              *mut Evas_Textgrid,
                                                           styles:
                                                               EvasTextgridFontStyle);
     pub fn evas_object_textgrid_supported_font_styles_get(obj:
-                                                              *const EvasTextgrid)
+                                                              *const Evas_Textgrid)
      -> EvasTextgridFontStyle;
-    pub fn evas_object_textgrid_size_set(obj: *mut EvasTextgrid,
+    pub fn evas_object_textgrid_size_set(obj: *mut Evas_Textgrid,
                                          w: c_int,
                                          h: c_int);
-    pub fn evas_object_textgrid_size_get(obj: *const EvasTextgrid,
+    pub fn evas_object_textgrid_size_get(obj: *const Evas_Textgrid,
                                          w: *mut c_int,
                                          h: *mut c_int);
-    pub fn evas_object_textgrid_cell_size_get(obj: *const EvasTextgrid,
+    pub fn evas_object_textgrid_cell_size_get(obj: *const Evas_Textgrid,
                                               width:
                                                   *mut c_int,
                                               height:
                                                   *mut c_int);
-    pub fn evas_object_textgrid_update_add(obj: *mut EvasTextgrid,
+    pub fn evas_object_textgrid_update_add(obj: *mut Evas_Textgrid,
                                            x: c_int,
                                            y: c_int,
                                            w: c_int,
                                            h: c_int);
-    pub fn evas_object_textgrid_cellrow_set(obj: *mut EvasTextgrid,
+    pub fn evas_object_textgrid_cellrow_set(obj: *mut Evas_Textgrid,
                                             y: c_int,
-                                            row: *const EvasTextgridCell);
-    pub fn evas_object_textgrid_cellrow_get(obj: *const EvasTextgrid,
+                                            row: *const Evas_Textgrid_Cell);
+    pub fn evas_object_textgrid_cellrow_get(obj: *const Evas_Textgrid,
                                             y: c_int)
-     -> *mut EvasTextgridCell;
-    pub fn evas_object_textgrid_palette_set(obj: *mut EvasTextgrid,
+     -> *mut Evas_Textgrid_Cell;
+    pub fn evas_object_textgrid_palette_set(obj: *mut Evas_Textgrid,
                                             pal: EvasTextgridPalette,
                                             idx: c_int,
                                             r: c_int,
                                             g: c_int,
                                             b: c_int,
                                             a: c_int);
-    pub fn evas_object_textgrid_palette_get(obj: *const EvasTextgrid,
+    pub fn evas_object_textgrid_palette_get(obj: *const Evas_Textgrid,
                                             pal: EvasTextgridPalette,
                                             idx: c_int,
                                             r: *mut c_int,
@@ -3176,335 +3176,335 @@ extern "C" {
                                          font_name:
                                              *mut *const c_char,
                                          font_size: *mut EvasFontSize);
-    pub fn evas_object_line_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_line_xy_set(obj: *mut EvasLine, x1: EvasCoord,
+    pub fn evas_object_line_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_line_xy_set(obj: *mut Evas_Line, x1: EvasCoord,
                                    y1: EvasCoord, x2: EvasCoord,
                                    y2: EvasCoord);
-    pub fn evas_object_line_xy_get(obj: *const EvasLine, x1: *mut EvasCoord,
+    pub fn evas_object_line_xy_get(obj: *const Evas_Line, x1: *mut EvasCoord,
                                    y1: *mut EvasCoord, x2: *mut EvasCoord,
                                    y2: *mut EvasCoord);
-    pub fn evas_object_polygon_add(e: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_polygon_point_add(obj: *mut EvasPolygon,
+    pub fn evas_object_polygon_add(e: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_polygon_point_add(obj: *mut Evas_Polygon,
                                          x: EvasCoord, y: EvasCoord);
-    pub fn evas_object_polygon_points_clear(obj: *mut EvasPolygon);
-    pub fn evas_object_smart_add(e: *mut Evas, s: *mut EvasSmart)
-     -> *mut EvasObject;
-    pub fn evas_object_smart_member_add(obj: *mut EvasObject,
-                                        smart_obj: *mut EvasObject);
-    pub fn evas_object_smart_member_del(obj: *mut EvasObject);
-    pub fn evas_object_smart_callback_add(obj: *mut EvasObject,
+    pub fn evas_object_polygon_points_clear(obj: *mut Evas_Polygon);
+    pub fn evas_object_smart_add(e: *mut Evas, s: *mut Evas_Smart)
+     -> *mut Evas_Object;
+    pub fn evas_object_smart_member_add(obj: *mut Evas_Object,
+                                        smart_obj: *mut Evas_Object);
+    pub fn evas_object_smart_member_del(obj: *mut Evas_Object);
+    pub fn evas_object_smart_callback_add(obj: *mut Evas_Object,
                                           event:
                                               *const c_char,
                                           func: EvasSmartCb,
                                           data:
                                               *const c_void);
-    pub fn evas_object_smart_callback_priority_add(obj: *mut EvasObject,
+    pub fn evas_object_smart_callback_priority_add(obj: *mut Evas_Object,
                                                    event:
                                                        *const c_char,
                                                    priority:
-                                                       EvasCallbackPriority,
+                                                       Evas_Callback_Priority,
                                                    func: EvasSmartCb,
                                                    data:
                                                        *const c_void);
-    pub fn evas_object_smart_callback_del(obj: *mut EvasObject,
+    pub fn evas_object_smart_callback_del(obj: *mut Evas_Object,
                                           event:
                                               *const c_char,
                                           func: EvasSmartCb)
      -> *mut c_void;
-    pub fn evas_object_smart_callback_del_full(obj: *mut EvasObject,
+    pub fn evas_object_smart_callback_del_full(obj: *mut Evas_Object,
                                                event:
                                                    *const c_char,
                                                func: EvasSmartCb,
                                                data:
                                                    *const c_void)
      -> *mut c_void;
-    pub fn evas_object_smart_callback_call(obj: *mut EvasObject,
+    pub fn evas_object_smart_callback_call(obj: *mut Evas_Object,
                                            event:
                                                *const c_char,
                                            event_info:
                                                *mut c_void);
-    pub fn evas_object_smart_interface_get(obj: *const EvasObject,
+    pub fn evas_object_smart_interface_get(obj: *const Evas_Object,
                                            name:
                                                *const c_char)
      -> *const c_void;
-    pub fn evas_object_smart_interface_data_get(obj: *const EvasObject,
+    pub fn evas_object_smart_interface_data_get(obj: *const Evas_Object,
                                                 iface:
-                                                    *const EvasSmartInterface)
+                                                    *const Evas_Smart_Interface)
      -> *mut c_void;
-    pub fn evas_object_smart_need_recalculate_set(obj: *mut EvasObjectSmart,
+    pub fn evas_object_smart_need_recalculate_set(obj: *mut Evas_Object_Smart,
                                                   value: EinaBool);
     pub fn evas_object_smart_need_recalculate_get(obj:
-                                                      *const EvasObjectSmart)
+                                                      *const Evas_Object_Smart)
      -> EinaBool;
-    pub fn evas_object_smart_data_set(obj: *mut EvasObjectSmart,
+    pub fn evas_object_smart_data_set(obj: *mut Evas_Object_Smart,
                                       data: *mut c_void);
-    pub fn evas_object_smart_members_get(obj: *const EvasObjectSmart)
-     -> *mut EinaList;
-    pub fn evas_object_smart_smart_get(obj: *const EvasObjectSmart)
-     -> *mut EvasSmart;
+    pub fn evas_object_smart_members_get(obj: *const Evas_Object_Smart)
+     -> *mut Eina_List;
+    pub fn evas_object_smart_smart_get(obj: *const Evas_Object_Smart)
+     -> *mut Evas_Smart;
     pub fn evas_object_smart_callbacks_descriptions_set(obj:
-                                                            *mut EvasObjectSmart,
+                                                            *mut Evas_Object_Smart,
                                                         descriptions:
-                                                            *const EvasSmartCbDescription)
+                                                            *const Evas_Smart_Cb_Description)
      -> EinaBool;
     pub fn evas_object_smart_callbacks_descriptions_get(obj:
-                                                            *const EvasObjectSmart,
+                                                            *const Evas_Object_Smart,
                                                         class_descriptions:
-                                                            *mut *mut *const EvasSmartCbDescription,
+                                                            *mut *mut *const Evas_Smart_Cb_Description,
                                                         class_count:
                                                             *mut c_uint,
                                                         instance_descriptions:
-                                                            *mut *mut *const EvasSmartCbDescription,
+                                                            *mut *mut *const Evas_Smart_Cb_Description,
                                                         instance_count:
                                                             *mut c_uint);
-    pub fn evas_object_smart_iterator_new(obj: *const EvasObjectSmart)
-     -> *mut EinaIterator;
+    pub fn evas_object_smart_iterator_new(obj: *const Evas_Object_Smart)
+     -> *mut Eina_Iterator;
     pub fn evas_object_smart_callback_description_find(obj:
-                                                           *const EvasObjectSmart,
+                                                           *const Evas_Object_Smart,
                                                        name:
                                                            *const c_char,
                                                        class_description:
-                                                           *mut *const EvasSmartCbDescription,
+                                                           *mut *const Evas_Smart_Cb_Description,
                                                        instance_description:
-                                                           *mut *const EvasSmartCbDescription);
-    pub fn evas_object_smart_calculate(obj: *mut EvasObjectSmart);
-    pub fn evas_object_smart_changed(obj: *mut EvasObjectSmart);
-    pub fn evas_object_box_add(evas: *mut Evas) -> *mut EvasObject;
-/*    pub fn evas_object_box_option_property_vget(o: *const EvasObject,
+                                                           *mut *const Evas_Smart_Cb_Description);
+    pub fn evas_object_smart_calculate(obj: *mut Evas_Object_Smart);
+    pub fn evas_object_smart_changed(obj: *mut Evas_Object_Smart);
+    pub fn evas_object_box_add(evas: *mut Evas) -> *mut Evas_Object;
+/*    pub fn evas_object_box_option_property_vget(o: *const Evas_Object,
                                                 opt:
-                                                    *mut EvasObjectBoxOption,
+                                                    *mut Evas_Object_Box_Option,
                                                 property:
                                                     c_int,
                                                 args: va_list) -> EinaBool;
-    pub fn evas_object_box_option_property_vset(o: *mut EvasObject,
+    pub fn evas_object_box_option_property_vset(o: *mut Evas_Object,
                                                 opt:
-                                                    *mut EvasObjectBoxOption,
+                                                    *mut Evas_Object_Box_Option,
                                                 property:
                                                     c_int,
                                                 args: va_list) -> EinaBool;
 */
-    pub fn evas_object_box_option_property_set(o: *mut EvasObject,
+    pub fn evas_object_box_option_property_set(o: *mut Evas_Object,
                                                opt:
-                                                   *mut EvasObjectBoxOption,
+                                                   *mut Evas_Object_Box_Option,
                                                property:
                                                    c_int, ...)
      -> EinaBool;
-    pub fn evas_object_box_option_property_get(o: *const EvasObject,
+    pub fn evas_object_box_option_property_get(o: *const Evas_Object,
                                                opt:
-                                                   *mut EvasObjectBoxOption,
+                                                   *mut Evas_Object_Box_Option,
                                                property:
                                                    c_int, ...)
      -> EinaBool;
-    pub fn evas_object_box_children_get(o: *const EvasObject)
-     -> *mut EinaList;
-    pub fn evas_object_box_align_set(obj: *mut EvasBox,
+    pub fn evas_object_box_children_get(o: *const Evas_Object)
+     -> *mut Eina_List;
+    pub fn evas_object_box_align_set(obj: *mut Evas_Box,
                                      horizontal: c_double,
                                      vertical: c_double);
-    pub fn evas_object_box_align_get(obj: *const EvasBox,
+    pub fn evas_object_box_align_get(obj: *const Evas_Box,
                                      horizontal:
                                          *mut c_double,
                                      vertical: *mut c_double);
-    pub fn evas_object_box_padding_set(obj: *mut EvasBox,
+    pub fn evas_object_box_padding_set(obj: *mut Evas_Box,
                                        horizontal: EvasCoord,
                                        vertical: EvasCoord);
-    pub fn evas_object_box_padding_get(obj: *const EvasBox,
+    pub fn evas_object_box_padding_get(obj: *const Evas_Box,
                                        horizontal: *mut EvasCoord,
                                        vertical: *mut EvasCoord);
-    pub fn evas_object_box_layout_set(obj: *mut EvasBox,
+    pub fn evas_object_box_layout_set(obj: *mut Evas_Box,
                                       cb: EvasObjectBoxLayout,
                                       data: *const c_void,
                                       free_data: EinaFreeCb);
-    pub fn evas_object_box_layout_horizontal(obj: *mut EvasBox,
-                                             _priv: *mut EvasObjectBoxData,
+    pub fn evas_object_box_layout_horizontal(obj: *mut Evas_Box,
+                                             _priv: *mut Evas_Object_Box_Data,
                                              data:
                                                  *mut c_void);
-    pub fn evas_object_box_layout_vertical(obj: *mut EvasBox,
-                                           _priv: *mut EvasObjectBoxData,
+    pub fn evas_object_box_layout_vertical(obj: *mut Evas_Box,
+                                           _priv: *mut Evas_Object_Box_Data,
                                            data: *mut c_void);
     pub fn evas_object_box_layout_homogeneous_max_size_horizontal(obj:
-                                                                      *mut EvasBox,
+                                                                      *mut Evas_Box,
                                                                   _priv:
-                                                                      *mut EvasObjectBoxData,
+                                                                      *mut Evas_Object_Box_Data,
                                                                   data:
                                                                       *mut c_void);
-    pub fn evas_object_box_layout_flow_vertical(obj: *mut EvasBox,
+    pub fn evas_object_box_layout_flow_vertical(obj: *mut Evas_Box,
                                                 _priv:
-                                                    *mut EvasObjectBoxData,
+                                                    *mut Evas_Object_Box_Data,
                                                 data:
                                                     *mut c_void);
-    pub fn evas_object_box_insert_after(obj: *mut EvasBox,
-                                        child: *mut EvasObject,
-                                        reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_object_box_remove_all(obj: *mut EvasBox, clear: EinaBool)
+    pub fn evas_object_box_insert_after(obj: *mut Evas_Box,
+                                        child: *mut Evas_Object,
+                                        reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_object_box_remove_all(obj: *mut Evas_Box, clear: EinaBool)
      -> EinaBool;
-    pub fn evas_object_box_iterator_new(obj: *const EvasBox)
-     -> *mut EinaIterator;
-    pub fn evas_object_box_add_to(obj: *mut EvasBox) -> *mut EvasObject;
-    pub fn evas_object_box_append(obj: *mut EvasBox, child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_object_box_option_property_id_get(obj: *const EvasBox,
+    pub fn evas_object_box_iterator_new(obj: *const Evas_Box)
+     -> *mut Eina_Iterator;
+    pub fn evas_object_box_add_to(obj: *mut Evas_Box) -> *mut Evas_Object;
+    pub fn evas_object_box_append(obj: *mut Evas_Box, child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_object_box_option_property_id_get(obj: *const Evas_Box,
                                                   name:
                                                       *const c_char)
      -> c_int;
-    pub fn evas_object_box_prepend(obj: *mut EvasBox,
-                                   child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_object_box_accessor_new(obj: *const EvasBox)
-     -> *mut EinaAccessor;
-    pub fn evas_object_box_remove_at(obj: *mut EvasBox,
+    pub fn evas_object_box_prepend(obj: *mut Evas_Box,
+                                   child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_object_box_accessor_new(obj: *const Evas_Box)
+     -> *mut Eina_Accessor;
+    pub fn evas_object_box_remove_at(obj: *mut Evas_Box,
                                      pos: c_uint)
      -> EinaBool;
-    pub fn evas_object_box_insert_before(obj: *mut EvasBox,
-                                         child: *mut EvasObject,
-                                         reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_object_box_option_property_name_get(obj: *const EvasBox,
+    pub fn evas_object_box_insert_before(obj: *mut Evas_Box,
+                                         child: *mut Evas_Object,
+                                         reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_object_box_option_property_name_get(obj: *const Evas_Box,
                                                     property:
                                                         c_int)
      -> *const c_char;
-    pub fn evas_object_box_layout_homogeneous_horizontal(obj: *mut EvasBox,
+    pub fn evas_object_box_layout_homogeneous_horizontal(obj: *mut Evas_Box,
                                                          _priv:
-                                                             *mut EvasObjectBoxData,
+                                                             *mut Evas_Object_Box_Data,
                                                          data:
                                                              *mut c_void);
     pub fn evas_object_box_layout_homogeneous_max_size_vertical(obj:
-                                                                    *mut EvasBox,
+                                                                    *mut Evas_Box,
                                                                 _priv:
-                                                                    *mut EvasObjectBoxData,
+                                                                    *mut Evas_Object_Box_Data,
                                                                 data:
                                                                     *mut c_void);
-    pub fn evas_object_box_insert_at(obj: *mut EvasBox,
-                                     child: *mut EvasObject,
+    pub fn evas_object_box_insert_at(obj: *mut Evas_Box,
+                                     child: *mut Evas_Object,
                                      pos: c_uint)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_object_box_remove(obj: *mut EvasBox, child: *mut EvasObject)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_object_box_remove(obj: *mut Evas_Box, child: *mut Evas_Object)
      -> EinaBool;
-    pub fn evas_object_box_layout_stack(obj: *mut EvasBox,
-                                        _priv: *mut EvasObjectBoxData,
+    pub fn evas_object_box_layout_stack(obj: *mut Evas_Box,
+                                        _priv: *mut Evas_Object_Box_Data,
                                         data: *mut c_void);
-    pub fn evas_object_box_layout_homogeneous_vertical(obj: *mut EvasBox,
+    pub fn evas_object_box_layout_homogeneous_vertical(obj: *mut Evas_Box,
                                                        _priv:
-                                                           *mut EvasObjectBoxData,
+                                                           *mut Evas_Object_Box_Data,
                                                        data:
                                                            *mut c_void);
-    pub fn evas_object_box_layout_flow_horizontal(obj: *mut EvasBox,
+    pub fn evas_object_box_layout_flow_horizontal(obj: *mut Evas_Box,
                                                   _priv:
-                                                      *mut EvasObjectBoxData,
+                                                      *mut Evas_Object_Box_Data,
                                                   data:
                                                       *mut c_void);
-    pub fn evas_object_table_add(evas: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_table_child_get(obj: *const EvasTable,
+    pub fn evas_object_table_add(evas: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_table_child_get(obj: *const Evas_Table,
                                        col: c_ushort,
                                        row: c_ushort)
-     -> *mut EvasObject;
-    pub fn evas_object_table_homogeneous_set(obj: *mut EvasTable,
+     -> *mut Evas_Object;
+    pub fn evas_object_table_homogeneous_set(obj: *mut Evas_Table,
                                              homogeneous:
                                                  EvasObjectTableHomogeneousMode);
-    pub fn evas_object_table_homogeneous_get(obj: *const EvasTable)
+    pub fn evas_object_table_homogeneous_get(obj: *const Evas_Table)
      -> EvasObjectTableHomogeneousMode;
-    pub fn evas_object_table_align_set(obj: *mut EvasTable,
+    pub fn evas_object_table_align_set(obj: *mut Evas_Table,
                                        horizontal: c_double,
                                        vertical: c_double);
-    pub fn evas_object_table_align_get(obj: *const EvasTable,
+    pub fn evas_object_table_align_get(obj: *const Evas_Table,
                                        horizontal:
                                            *mut c_double,
                                        vertical:
                                            *mut c_double);
-    pub fn evas_object_table_padding_set(obj: *mut EvasTable,
+    pub fn evas_object_table_padding_set(obj: *mut Evas_Table,
                                          horizontal: EvasCoord,
                                          vertical: EvasCoord);
-    pub fn evas_object_table_padding_get(obj: *const EvasTable,
+    pub fn evas_object_table_padding_get(obj: *const Evas_Table,
                                          horizontal: *mut EvasCoord,
                                          vertical: *mut EvasCoord);
-    pub fn evas_object_table_mirrored_set(obj: *mut EvasTable,
+    pub fn evas_object_table_mirrored_set(obj: *mut Evas_Table,
                                           mirrored: EinaBool);
-    pub fn evas_object_table_mirrored_get(obj: *const EvasTable)
+    pub fn evas_object_table_mirrored_get(obj: *const Evas_Table)
      -> EinaBool;
-    pub fn evas_object_table_col_row_size_get(obj: *const EvasTable,
+    pub fn evas_object_table_col_row_size_get(obj: *const Evas_Table,
                                               cols:
                                                   *mut c_int,
                                               rows:
                                                   *mut c_int);
-    pub fn evas_object_table_children_get(obj: *const EvasTable)
-     -> *mut EinaList;
-    pub fn evas_object_table_clear(obj: *mut EvasTable, clear: EinaBool);
-    pub fn evas_object_table_accessor_new(obj: *const EvasTable)
-     -> *mut EinaAccessor;
-    pub fn evas_object_table_iterator_new(obj: *const EvasTable)
-     -> *mut EinaIterator;
-    pub fn evas_object_table_add_to(obj: *mut EvasTable) -> *mut EvasObject;
-    pub fn evas_object_table_pack_get(obj: *const EvasTable,
-                                      child: *mut EvasObject,
+    pub fn evas_object_table_children_get(obj: *const Evas_Table)
+     -> *mut Eina_List;
+    pub fn evas_object_table_clear(obj: *mut Evas_Table, clear: EinaBool);
+    pub fn evas_object_table_accessor_new(obj: *const Evas_Table)
+     -> *mut Eina_Accessor;
+    pub fn evas_object_table_iterator_new(obj: *const Evas_Table)
+     -> *mut Eina_Iterator;
+    pub fn evas_object_table_add_to(obj: *mut Evas_Table) -> *mut Evas_Object;
+    pub fn evas_object_table_pack_get(obj: *const Evas_Table,
+                                      child: *mut Evas_Object,
                                       col: *mut c_ushort,
                                       row: *mut c_ushort,
                                       colspan: *mut c_ushort,
                                       rowspan: *mut c_ushort)
      -> EinaBool;
-    pub fn evas_object_table_pack(obj: *mut EvasTable,
-                                  child: *mut EvasObject,
+    pub fn evas_object_table_pack(obj: *mut Evas_Table,
+                                  child: *mut Evas_Object,
                                   col: c_ushort,
                                   row: c_ushort,
                                   colspan: c_ushort,
                                   rowspan: c_ushort)
      -> EinaBool;
-    pub fn evas_object_table_unpack(obj: *mut EvasTable,
-                                    child: *mut EvasObject) -> EinaBool;
-    pub fn evas_object_grid_add(evas: *mut Evas) -> *mut EvasObject;
-    pub fn evas_object_grid_mirrored_set(obj: *mut EvasGrid,
+    pub fn evas_object_table_unpack(obj: *mut Evas_Table,
+                                    child: *mut Evas_Object) -> EinaBool;
+    pub fn evas_object_grid_add(evas: *mut Evas) -> *mut Evas_Object;
+    pub fn evas_object_grid_mirrored_set(obj: *mut Evas_Grid,
                                          mirrored: EinaBool);
-    pub fn evas_object_grid_mirrored_get(obj: *const EvasGrid) -> EinaBool;
-    pub fn evas_object_grid_size_set(obj: *mut EvasGrid,
+    pub fn evas_object_grid_mirrored_get(obj: *const Evas_Grid) -> EinaBool;
+    pub fn evas_object_grid_size_set(obj: *mut Evas_Grid,
                                      w: c_int,
                                      h: c_int);
-    pub fn evas_object_grid_size_get(obj: *const EvasGrid,
+    pub fn evas_object_grid_size_get(obj: *const Evas_Grid,
                                      w: *mut c_int,
                                      h: *mut c_int);
-    pub fn evas_object_grid_children_get(obj: *const EvasGrid)
-     -> *mut EinaList;
-    pub fn evas_object_grid_accessor_new(obj: *const EvasGrid)
-     -> *mut EinaAccessor;
-    pub fn evas_object_grid_clear(obj: *mut EvasGrid, clear: EinaBool);
-    pub fn evas_object_grid_iterator_new(obj: *const EvasGrid)
-     -> *mut EinaIterator;
-    pub fn evas_object_grid_add_to(obj: *mut EvasGrid) -> *mut EvasObject;
-    pub fn evas_object_grid_unpack(obj: *mut EvasGrid,
-                                   child: *mut EvasObject) -> EinaBool;
-    pub fn evas_object_grid_pack_get(obj: *const EvasGrid,
-                                     child: *mut EvasObject,
+    pub fn evas_object_grid_children_get(obj: *const Evas_Grid)
+     -> *mut Eina_List;
+    pub fn evas_object_grid_accessor_new(obj: *const Evas_Grid)
+     -> *mut Eina_Accessor;
+    pub fn evas_object_grid_clear(obj: *mut Evas_Grid, clear: EinaBool);
+    pub fn evas_object_grid_iterator_new(obj: *const Evas_Grid)
+     -> *mut Eina_Iterator;
+    pub fn evas_object_grid_add_to(obj: *mut Evas_Grid) -> *mut Evas_Object;
+    pub fn evas_object_grid_unpack(obj: *mut Evas_Grid,
+                                   child: *mut Evas_Object) -> EinaBool;
+    pub fn evas_object_grid_pack_get(obj: *const Evas_Grid,
+                                     child: *mut Evas_Object,
                                      x: *mut c_int,
                                      y: *mut c_int,
                                      w: *mut c_int,
                                      h: *mut c_int)
      -> EinaBool;
-    pub fn evas_object_grid_pack(obj: *mut EvasGrid, child: *mut EvasObject,
+    pub fn evas_object_grid_pack(obj: *mut Evas_Grid, child: *mut Evas_Object,
                                  x: c_int,
                                  y: c_int,
                                  w: c_int,
                                  h: c_int) -> EinaBool;
-    pub fn evas_out_add(e: *mut Evas) -> *mut EvasOut;
-    pub fn evas_output_del(evo: *mut EvasOut);
-    pub fn evas_output_view_set(obj: *mut EvasOut, x: EvasCoord,
+    pub fn evas_out_add(e: *mut Evas) -> *mut Evas_Out;
+    pub fn evas_output_del(evo: *mut Evas_Out);
+    pub fn evas_output_view_set(obj: *mut Evas_Out, x: EvasCoord,
                                 y: EvasCoord, w: EvasCoord, h: EvasCoord);
-    pub fn evas_output_view_get(obj: *const EvasOut, x: *mut EvasCoord,
+    pub fn evas_output_view_get(obj: *const Evas_Out, x: *mut EvasCoord,
                                 y: *mut EvasCoord, w: *mut EvasCoord,
                                 h: *mut EvasCoord);
-    pub fn evas_output_engine_info_set(obj: *mut EvasOut,
-                                       info: *mut EvasEngineInfo)
+    pub fn evas_output_engine_info_set(obj: *mut Evas_Out,
+                                       info: *mut Evas_Engine_Info)
      -> EinaBool;
-    pub fn evas_output_engine_info_get(obj: *const EvasOut)
-     -> *mut EvasEngineInfo;
+    pub fn evas_output_engine_info_get(obj: *const Evas_Out)
+     -> *mut Evas_Engine_Info;
 
 //----------------------------------------------------------------------------------------------
 // Evas Eo
 //----------------------------------------------------------------------------------------------
-    pub fn evas_signal_interface_interface_get() -> *const EoClass;
-    pub fn evas_draggable_interface_interface_get() -> *const EoClass;
-    pub fn evas_clickable_interface_interface_get() -> *const EoClass;
-    pub fn evas_scrollable_interface_interface_get() -> *const EoClass;
-    pub fn evas_selectable_interface_interface_get() -> *const EoClass;
-    pub fn evas_zoomable_interface_interface_get() -> *const EoClass;
-    pub fn evas_canvas_class_get() -> *const EoClass;
+    pub fn evas_signal_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_draggable_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_clickable_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_scrollable_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_selectable_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_zoomable_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_canvas_class_get() -> *const Eo_Class;
     pub fn evas_canvas_output_framespace_set(x: EvasCoord, y: EvasCoord,
                                              w: EvasCoord, h: EvasCoord);
     pub fn evas_canvas_output_framespace_get(x: *mut EvasCoord,
@@ -3534,12 +3534,12 @@ extern "C" {
     pub fn evas_canvas_data_attach_get() -> *mut c_void;
     pub fn evas_canvas_font_hinting_set(hinting: EvasFontHintingFlags);
     pub fn evas_canvas_font_hinting_get() -> EvasFontHintingFlags;
-    pub fn evas_canvas_engine_info_set(info: *mut EvasEngineInfo)
+    pub fn evas_canvas_engine_info_set(info: *mut Evas_Engine_Info)
      -> EinaBool;
-    pub fn evas_canvas_engine_info_get() -> *mut EvasEngineInfo;
-    pub fn evas_canvas_focus_get() -> *mut EvasObject;
-    pub fn evas_canvas_object_top_get() -> *mut EvasObject;
-    pub fn evas_canvas_key_lock_get() -> *const EvasLock;
+    pub fn evas_canvas_engine_info_get() -> *mut Evas_Engine_Info;
+    pub fn evas_canvas_focus_get() -> *mut Evas_Object;
+    pub fn evas_canvas_object_top_get() -> *mut Evas_Object;
+    pub fn evas_canvas_key_lock_get() -> *const Evas_Lock;
     pub fn evas_canvas_pointer_canvas_xy_get(x: *mut EvasCoord,
                                              y: *mut EvasCoord);
     pub fn evas_canvas_event_down_count_get() -> c_int;
@@ -3553,14 +3553,14 @@ extern "C" {
     pub fn evas_canvas_image_max_size_get(maxw: *mut c_int,
                                           maxh: *mut c_int)
      -> EinaBool;
-    pub fn evas_canvas_object_bottom_get() -> *mut EvasObject;
-    pub fn evas_canvas_key_modifier_get() -> *const EvasModifier;
+    pub fn evas_canvas_object_bottom_get() -> *mut Evas_Object;
+    pub fn evas_canvas_key_modifier_get() -> *const Evas_Modifier;
     pub fn evas_canvas_pointer_button_down_mask_get()
      -> c_int;
-    pub fn evas_canvas_tree_objects_at_xy_get(stop: *mut EvasObject,
+    pub fn evas_canvas_tree_objects_at_xy_get(stop: *mut Evas_Object,
                                               x: c_int,
                                               y: c_int)
-     -> *mut EinaList;
+     -> *mut Eina_List;
     pub fn evas_canvas_event_feed_mouse_wheel(direction:
                                                   c_int,
                                               z: c_int,
@@ -3581,7 +3581,7 @@ extern "C" {
                                                *const c_void);
     pub fn evas_canvas_key_modifier_mask_get(keyname:
                                                  *const c_char)
-     -> EvasModifierMask;
+     -> Evas_Modifier_Mask;
     pub fn evas_canvas_key_modifier_add(keyname:
                                             *const c_char);
     pub fn evas_canvas_key_modifier_off(keyname:
@@ -3625,7 +3625,7 @@ extern "C" {
                                          include_pass_events_objects:
                                              EinaBool,
                                          include_hidden_objects: EinaBool)
-     -> *mut EinaList;
+     -> *mut Eina_List;
     pub fn evas_canvas_event_input_multi_up(d: c_int,
                                             x: c_int,
                                             y: c_int,
@@ -3657,7 +3657,7 @@ extern "C" {
                                                  *const c_void);
     pub fn evas_canvas_render_async() -> EinaBool;
     pub fn evas_canvas_render2() -> EinaBool;
-    pub fn evas_canvas_render2_updates() -> *mut EinaList;
+    pub fn evas_canvas_render2_updates() -> *mut Eina_List;
     pub fn evas_canvas_focus_out();
     pub fn evas_canvas_event_input_mouse_move(x: c_int,
                                               y: c_int,
@@ -3692,7 +3692,7 @@ extern "C" {
                                             include_pass_events_objects:
                                                 EinaBool,
                                             include_hidden_objects: EinaBool)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
     pub fn evas_canvas_key_modifier_on(keyname:
                                            *const c_char);
     pub fn evas_canvas_event_feed_mouse_up(b: c_int,
@@ -3709,16 +3709,16 @@ extern "C" {
     pub fn evas_canvas_event_refeed_event(event_copy:
                                               *mut c_void,
                                           event_type: EvasCallbackType);
-    pub fn evas_canvas_font_available_list() -> *mut EinaList;
+    pub fn evas_canvas_font_available_list() -> *mut Eina_List;
     pub fn evas_canvas_objects_in_rectangle_get(x: EvasCoord, y: EvasCoord,
                                                 w: EvasCoord, h: EvasCoord,
                                                 include_pass_events_objects:
                                                     EinaBool,
                                                 include_hidden_objects:
                                                     EinaBool)
-     -> *mut EinaList;
+     -> *mut Eina_List;
     pub fn evas_canvas_object_name_find(name: *const c_char)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
     pub fn evas_canvas_font_path_append(path: *const c_char);
     pub fn evas_canvas_touch_point_list_nth_id_get(n: c_uint)
      -> c_int;
@@ -3733,7 +3733,7 @@ extern "C" {
                                             w: c_int,
                                             h: c_int);
     pub fn evas_canvas_sync();
-    pub fn evas_canvas_font_path_list() -> *const EinaList;
+    pub fn evas_canvas_font_path_list() -> *const Eina_List;
     pub fn evas_canvas_image_cache_reload();
     pub fn evas_canvas_coord_world_x_to_screen(x: EvasCoord)
      -> c_int;
@@ -3751,7 +3751,7 @@ extern "C" {
                                                  c_uint,
                                              data:
                                                  *const c_void);
-    pub fn evas_canvas_render_updates() -> *mut EinaList;
+    pub fn evas_canvas_render_updates() -> *mut Eina_List;
     pub fn evas_canvas_image_cache_flush();
     pub fn evas_canvas_coord_screen_y_to_world(y: c_int)
      -> EvasCoord;
@@ -3777,7 +3777,7 @@ extern "C" {
                                                        EinaBool,
                                                    include_hidden_objects:
                                                        EinaBool)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
     pub fn evas_canvas_render();
     pub fn evas_canvas_event_feed_multi_up(d: c_int,
                                            x: c_int,
@@ -3838,11 +3838,11 @@ extern "C" {
                                               device: c_int,
                                               toolid: c_int,
                                               naxes: c_int,
-                                              axis: *const EvasAxis,
+                                              axis: *const Evas_Axis,
                                               data:
                                                   *const c_void);
-    pub fn evas_rectangle_class_get() -> *const EoClass;
-    pub fn evas_text_class_get() -> *const EoClass;
+    pub fn evas_rectangle_class_get() -> *const Eo_Class;
+    pub fn evas_text_class_get() -> *const Eo_Class;
     pub fn evas_obj_text_shadow_color_set(r: c_int,
                                           g: c_int,
                                           b: c_int,
@@ -3908,7 +3908,7 @@ extern "C" {
                                       cy: *mut EvasCoord,
                                       cw: *mut EvasCoord,
                                       ch: *mut EvasCoord) -> EinaBool;
-    pub fn evas_textblock_class_get() -> *const EoClass;
+    pub fn evas_textblock_class_get() -> *const Eo_Class;
     pub fn evas_obj_textblock_text_markup_set(text:
                                                   *const c_char);
     pub fn evas_obj_textblock_text_markup_get()
@@ -3923,15 +3923,15 @@ extern "C" {
                                                    *const c_char);
     pub fn evas_obj_textblock_legacy_newline_set(mode: EinaBool);
     pub fn evas_obj_textblock_legacy_newline_get() -> EinaBool;
-    pub fn evas_obj_textblock_style_set(ts: *const EvasTextblockStyle);
-    pub fn evas_obj_textblock_style_get() -> *const EvasTextblockStyle;
+    pub fn evas_obj_textblock_style_set(ts: *const Evas_Textblock_Style);
+    pub fn evas_obj_textblock_style_get() -> *const Evas_Textblock_Style;
     pub fn evas_obj_textblock_node_format_first_get()
-     -> *const EvasTextblockNodeFormat;
+     -> *const Evas_Textblock_Node_Format;
     pub fn evas_obj_textblock_size_formatted_get(w: *mut EvasCoord,
                                                  h: *mut EvasCoord);
     pub fn evas_obj_textblock_node_format_last_get()
-     -> *const EvasTextblockNodeFormat;
-    pub fn evas_obj_textblock_cursor_get() -> *mut EvasTextblockCursor;
+     -> *const Evas_Textblock_Node_Format;
+    pub fn evas_obj_textblock_cursor_get() -> *mut Evas_Textblock_Cursor;
     pub fn evas_obj_textblock_size_native_get(w: *mut EvasCoord,
                                               h: *mut EvasCoord);
     pub fn evas_obj_textblock_style_insets_get(l: *mut EvasCoord,
@@ -3948,22 +3948,22 @@ extern "C" {
     pub fn evas_obj_textblock_replace_char_get()
      -> *const c_char;
     pub fn evas_obj_textblock_style_user_pop();
-    pub fn evas_obj_textblock_cursor_new() -> *mut EvasTextblockCursor;
+    pub fn evas_obj_textblock_cursor_new() -> *mut Evas_Textblock_Cursor;
     pub fn evas_obj_textblock_node_format_list_get(anchor:
                                                        *const c_char)
-     -> *const EinaList;
+     -> *const Eina_List;
     pub fn evas_obj_textblock_style_user_peek()
-     -> *const EvasTextblockStyle;
+     -> *const Evas_Textblock_Style;
     pub fn evas_obj_textblock_node_format_remove_pair(n:
-                                                          *mut EvasTextblockNodeFormat);
+                                                          *mut Evas_Textblock_Node_Format);
     pub fn evas_obj_textblock_clear();
-    pub fn evas_obj_textblock_style_user_push(ts: *mut EvasTextblockStyle);
-    pub fn evas_obj_textblock_obstacle_add(eo_obs: *mut EvasObject)
+    pub fn evas_obj_textblock_style_user_push(ts: *mut Evas_Textblock_Style);
+    pub fn evas_obj_textblock_obstacle_add(eo_obs: *mut Evas_Object)
      -> EinaBool;
-    pub fn evas_obj_textblock_obstacle_del(eo_obs: *mut EvasObject)
+    pub fn evas_obj_textblock_obstacle_del(eo_obs: *mut Evas_Object)
      -> EinaBool;
     pub fn evas_obj_textblock_obstacles_update();
-    pub fn evas_textgrid_class_get() -> *const EoClass;
+    pub fn evas_textgrid_class_get() -> *const Eo_Class;
     pub fn evas_obj_textgrid_supported_font_styles_set(styles:
                                                            EvasTextgridFontStyle);
     pub fn evas_obj_textgrid_supported_font_styles_get()
@@ -3980,9 +3980,9 @@ extern "C" {
                                         w: c_int,
                                         h: c_int);
     pub fn evas_obj_textgrid_cellrow_set(y: c_int,
-                                         row: *const EvasTextgridCell);
+                                         row: *const Evas_Textgrid_Cell);
     pub fn evas_obj_textgrid_cellrow_get(y: c_int)
-     -> *mut EvasTextgridCell;
+     -> *mut Evas_Textgrid_Cell;
     pub fn evas_obj_textgrid_palette_set(pal: EvasTextgridPalette,
                                          idx: c_int,
                                          r: c_int,
@@ -3995,57 +3995,57 @@ extern "C" {
                                          g: *mut c_int,
                                          b: *mut c_int,
                                          a: *mut c_int);
-    pub fn evas_line_class_get() -> *const EoClass;
+    pub fn evas_line_class_get() -> *const Eo_Class;
     pub fn evas_obj_line_xy_set(x1: EvasCoord, y1: EvasCoord,
                                 x2: EvasCoord, y2: EvasCoord);
     pub fn evas_obj_line_xy_get(x1: *mut EvasCoord, y1: *mut EvasCoord,
                                 x2: *mut EvasCoord, y2: *mut EvasCoord);
-    pub fn evas_polygon_class_get() -> *const EoClass;
+    pub fn evas_polygon_class_get() -> *const Eo_Class;
     pub fn evas_obj_polygon_point_add(x: EvasCoord, y: EvasCoord);
     pub fn evas_obj_polygon_points_clear();
-    pub fn evas_object_smart_class_get() -> *const EoClass;
+    pub fn evas_object_smart_class_get() -> *const Eo_Class;
     pub fn evas_obj_smart_need_recalculate_set(value: EinaBool);
     pub fn evas_obj_smart_need_recalculate_get() -> EinaBool;
-    pub fn evas_obj_smart_clip_set(clip: *mut EvasObject);
+    pub fn evas_obj_smart_clip_set(clip: *mut Evas_Object);
     pub fn evas_obj_smart_color_set(r: c_int,
                                     g: c_int,
                                     b: c_int,
                                     a: c_int);
     pub fn evas_obj_smart_data_set(data: *mut c_void);
-    pub fn evas_obj_smart_members_get() -> *mut EinaList;
-    pub fn evas_obj_smart_get() -> *mut EvasSmart;
+    pub fn evas_obj_smart_members_get() -> *mut Eina_List;
+    pub fn evas_obj_smart_get() -> *mut Evas_Smart;
     pub fn evas_obj_smart_show();
     pub fn evas_obj_smart_move(x: EvasCoord, y: EvasCoord);
     pub fn evas_obj_smart_callbacks_descriptions_set(descriptions:
-                                                         *const EvasSmartCbDescription)
+                                                         *const Evas_Smart_Cb_Description)
      -> EinaBool;
     pub fn evas_obj_smart_callbacks_descriptions_get(class_descriptions:
-                                                         *mut *mut *const EvasSmartCbDescription,
+                                                         *mut *mut *const Evas_Smart_Cb_Description,
                                                      class_count:
                                                          *mut c_uint,
                                                      instance_descriptions:
-                                                         *mut *mut *const EvasSmartCbDescription,
+                                                         *mut *mut *const Evas_Smart_Cb_Description,
                                                      instance_count:
                                                          *mut c_uint);
-    pub fn evas_obj_smart_iterator_new() -> *mut EinaIterator;
+    pub fn evas_obj_smart_iterator_new() -> *mut Eina_Iterator;
     pub fn evas_obj_smart_callback_description_find(name:
                                                         *const c_char,
                                                     class_description:
-                                                        *mut *const EvasSmartCbDescription,
+                                                        *mut *const Evas_Smart_Cb_Description,
                                                     instance_description:
-                                                        *mut *const EvasSmartCbDescription);
+                                                        *mut *const Evas_Smart_Cb_Description);
     pub fn evas_obj_smart_hide();
     pub fn evas_obj_smart_calculate();
     pub fn evas_obj_smart_add();
-    pub fn evas_obj_smart_member_add(sub_obj: *mut EvasObject);
+    pub fn evas_obj_smart_member_add(sub_obj: *mut Evas_Object);
     pub fn evas_obj_smart_resize(w: EvasCoord, h: EvasCoord);
     pub fn evas_obj_smart_clip_unset();
     pub fn evas_obj_smart_changed();
-    pub fn evas_obj_smart_member_del(sub_obj: *mut EvasObject);
+    pub fn evas_obj_smart_member_del(sub_obj: *mut Evas_Object);
     pub fn evas_obj_smart_del();
-    pub fn evas_obj_smart_attach(s: *mut EvasSmart);
-    pub fn evas_smart_clipped_class_get() -> *const EoClass;
-    pub fn evas_box_class_get() -> *const EoClass;
+    pub fn evas_obj_smart_attach(s: *mut Evas_Smart);
+    pub fn evas_smart_clipped_class_get() -> *const Eo_Class;
+    pub fn evas_box_class_get() -> *const Eo_Class;
     pub fn evas_obj_box_align_set(horizontal: c_double,
                                   vertical: c_double);
     pub fn evas_obj_box_align_get(horizontal: *mut c_double,
@@ -4057,90 +4057,90 @@ extern "C" {
     pub fn evas_obj_box_layout_set(cb: EvasObjectBoxLayout,
                                    data: *const c_void,
                                    free_data: EinaFreeCb);
-    pub fn evas_obj_box_layout_horizontal(_priv: *mut EvasObjectBoxData,
+    pub fn evas_obj_box_layout_horizontal(_priv: *mut Evas_Object_Box_Data,
                                           data: *mut c_void);
-    pub fn evas_obj_box_layout_vertical(_priv: *mut EvasObjectBoxData,
+    pub fn evas_obj_box_layout_vertical(_priv: *mut Evas_Object_Box_Data,
                                         data: *mut c_void);
     pub fn evas_obj_box_layout_homogeneous_max_size_horizontal(_priv:
-                                                                   *mut EvasObjectBoxData,
+                                                                   *mut Evas_Object_Box_Data,
                                                                data:
                                                                    *mut c_void);
-    pub fn evas_obj_box_internal_remove(child: *mut EvasObject)
-     -> *mut EvasObject;
-    pub fn evas_obj_box_layout_flow_vertical(_priv: *mut EvasObjectBoxData,
+    pub fn evas_obj_box_internal_remove(child: *mut Evas_Object)
+     -> *mut Evas_Object;
+    pub fn evas_obj_box_layout_flow_vertical(_priv: *mut Evas_Object_Box_Data,
                                              data:
                                                  *mut c_void);
     pub fn evas_obj_box_internal_option_free(opt:
-                                                 *mut EvasObjectBoxOption);
-    pub fn evas_obj_box_insert_after(child: *mut EvasObject,
-                                     reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
+                                                 *mut Evas_Object_Box_Option);
+    pub fn evas_obj_box_insert_after(child: *mut Evas_Object,
+                                     reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
     pub fn evas_obj_box_remove_all(clear: EinaBool) -> EinaBool;
-    pub fn evas_obj_box_iterator_new() -> *mut EinaIterator;
-    pub fn evas_obj_box_add_to() -> *mut EvasObject;
-    pub fn evas_obj_box_append(child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
+    pub fn evas_obj_box_iterator_new() -> *mut Eina_Iterator;
+    pub fn evas_obj_box_add_to() -> *mut Evas_Object;
+    pub fn evas_obj_box_append(child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
     pub fn evas_obj_box_option_property_id_get(name:
                                                    *const c_char)
      -> c_int;
-    pub fn evas_obj_box_prepend(child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_obj_box_accessor_new() -> *mut EinaAccessor;
-    pub fn evas_obj_box_internal_append(child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
-/*    pub fn evas_obj_box_option_property_vset(opt: *mut EvasObjectBoxOption,
+    pub fn evas_obj_box_prepend(child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_obj_box_accessor_new() -> *mut Eina_Accessor;
+    pub fn evas_obj_box_internal_append(child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+/*    pub fn evas_obj_box_option_property_vset(opt: *mut Evas_Object_Box_Option,
                                              property: c_int,
                                              args: *mut va_list) -> EinaBool;
     pub fn evas_obj_box_internal_remove_at(pos: c_uint)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
 */
     pub fn evas_obj_box_remove_at(pos: c_uint) -> EinaBool;
-/*    pub fn evas_obj_box_option_property_vget(opt: *mut EvasObjectBoxOption,
+/*    pub fn evas_obj_box_option_property_vget(opt: *mut Evas_Object_Box_Option,
                                              property: c_int,
                                              args: *mut va_list) -> EinaBool;
 */
-    pub fn evas_obj_box_internal_insert_at(child: *mut EvasObject,
+    pub fn evas_obj_box_internal_insert_at(child: *mut Evas_Object,
                                            pos: c_uint)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_obj_box_insert_before(child: *mut EvasObject,
-                                      reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_obj_box_insert_before(child: *mut Evas_Object,
+                                      reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
     pub fn evas_obj_box_option_property_name_get(property:
                                                      c_int)
      -> *const c_char;
-    pub fn evas_obj_box_internal_insert_before(child: *mut EvasObject,
-                                               reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
+    pub fn evas_obj_box_internal_insert_before(child: *mut Evas_Object,
+                                               reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
     pub fn evas_obj_box_layout_homogeneous_horizontal(_priv:
-                                                          *mut EvasObjectBoxData,
+                                                          *mut Evas_Object_Box_Data,
                                                       data:
                                                           *mut c_void);
-    pub fn evas_obj_box_internal_option_new(child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
+    pub fn evas_obj_box_internal_option_new(child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
     pub fn evas_obj_box_layout_homogeneous_max_size_vertical(_priv:
-                                                                 *mut EvasObjectBoxData,
+                                                                 *mut Evas_Object_Box_Data,
                                                              data:
                                                                  *mut c_void);
-    pub fn evas_obj_box_internal_insert_after(child: *mut EvasObject,
-                                              reference: *const EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_obj_box_insert_at(child: *mut EvasObject,
+    pub fn evas_obj_box_internal_insert_after(child: *mut Evas_Object,
+                                              reference: *const Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_obj_box_insert_at(child: *mut Evas_Object,
                                   pos: c_uint)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_obj_box_internal_prepend(child: *mut EvasObject)
-     -> *mut EvasObjectBoxOption;
-    pub fn evas_obj_box_remove(child: *mut EvasObject) -> EinaBool;
-    pub fn evas_obj_box_layout_stack(_priv: *mut EvasObjectBoxData,
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_obj_box_internal_prepend(child: *mut Evas_Object)
+     -> *mut Evas_Object_Box_Option;
+    pub fn evas_obj_box_remove(child: *mut Evas_Object) -> EinaBool;
+    pub fn evas_obj_box_layout_stack(_priv: *mut Evas_Object_Box_Data,
                                      data: *mut c_void);
     pub fn evas_obj_box_layout_homogeneous_vertical(_priv:
-                                                        *mut EvasObjectBoxData,
+                                                        *mut Evas_Object_Box_Data,
                                                     data:
                                                         *mut c_void);
     pub fn evas_obj_box_layout_flow_horizontal(_priv:
-                                                   *mut EvasObjectBoxData,
+                                                   *mut Evas_Object_Box_Data,
                                                data:
                                                    *mut c_void);
-    pub fn evas_table_class_get() -> *const EoClass;
+    pub fn evas_table_class_get() -> *const Eo_Class;
     pub fn evas_obj_table_homogeneous_set(homogeneous:
                                               EvasObjectTableHomogeneousMode);
     pub fn evas_obj_table_homogeneous_get()
@@ -4157,53 +4157,53 @@ extern "C" {
     pub fn evas_obj_table_mirrored_get() -> EinaBool;
     pub fn evas_obj_table_col_row_size_get(cols: *mut c_int,
                                            rows: *mut c_int);
-    pub fn evas_obj_table_children_get() -> *mut EinaList;
+    pub fn evas_obj_table_children_get() -> *mut Eina_List;
     pub fn evas_obj_table_child_get(col: c_ushort,
                                     row: c_ushort)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
     pub fn evas_obj_table_clear(clear: EinaBool);
-    pub fn evas_obj_table_accessor_new() -> *mut EinaAccessor;
-    pub fn evas_obj_table_iterator_new() -> *mut EinaIterator;
-    pub fn evas_obj_table_add_to() -> *mut EvasObject;
-    pub fn evas_obj_table_pack_get(child: *mut EvasObject,
+    pub fn evas_obj_table_accessor_new() -> *mut Eina_Accessor;
+    pub fn evas_obj_table_iterator_new() -> *mut Eina_Iterator;
+    pub fn evas_obj_table_add_to() -> *mut Evas_Object;
+    pub fn evas_obj_table_pack_get(child: *mut Evas_Object,
                                    col: *mut c_ushort,
                                    row: *mut c_ushort,
                                    colspan: *mut c_ushort,
                                    rowspan: *mut c_ushort)
      -> EinaBool;
-    pub fn evas_obj_table_pack(child: *mut EvasObject,
+    pub fn evas_obj_table_pack(child: *mut Evas_Object,
                                col: c_ushort,
                                row: c_ushort,
                                colspan: c_ushort,
                                rowspan: c_ushort)
      -> EinaBool;
-    pub fn evas_obj_table_unpack(child: *mut EvasObject) -> EinaBool;
-    pub fn evas_grid_class_get() -> *const EoClass;
+    pub fn evas_obj_table_unpack(child: *mut Evas_Object) -> EinaBool;
+    pub fn evas_grid_class_get() -> *const Eo_Class;
     pub fn evas_obj_grid_mirrored_set(mirrored: EinaBool);
     pub fn evas_obj_grid_mirrored_get() -> EinaBool;
     pub fn evas_obj_grid_size_set(w: c_int,
                                   h: c_int);
     pub fn evas_obj_grid_size_get(w: *mut c_int,
                                   h: *mut c_int);
-    pub fn evas_obj_grid_children_get() -> *mut EinaList;
-    pub fn evas_obj_grid_accessor_new() -> *mut EinaAccessor;
+    pub fn evas_obj_grid_children_get() -> *mut Eina_List;
+    pub fn evas_obj_grid_accessor_new() -> *mut Eina_Accessor;
     pub fn evas_obj_grid_clear(clear: EinaBool);
-    pub fn evas_obj_grid_iterator_new() -> *mut EinaIterator;
-    pub fn evas_obj_grid_add_to() -> *mut EvasObject;
-    pub fn evas_obj_grid_unpack(child: *mut EvasObject) -> EinaBool;
-    pub fn evas_obj_grid_pack_get(child: *mut EvasObject,
+    pub fn evas_obj_grid_iterator_new() -> *mut Eina_Iterator;
+    pub fn evas_obj_grid_add_to() -> *mut Evas_Object;
+    pub fn evas_obj_grid_unpack(child: *mut Evas_Object) -> EinaBool;
+    pub fn evas_obj_grid_pack_get(child: *mut Evas_Object,
                                   x: *mut c_int,
                                   y: *mut c_int,
                                   w: *mut c_int,
                                   h: *mut c_int) -> EinaBool;
-    pub fn evas_obj_grid_pack(child: *mut EvasObject,
+    pub fn evas_obj_grid_pack(child: *mut Evas_Object,
                               x: c_int,
                               y: c_int,
                               w: c_int,
                               h: c_int) -> EinaBool;
-    pub fn evas_common_interface_interface_get() -> *const EoClass;
-    pub fn evas_common_evas_get() -> *mut EvasCommonInterface;
-    pub fn evas_object_class_get() -> *const EoClass;
+    pub fn evas_common_interface_interface_get() -> *const Eo_Class;
+    pub fn evas_common_evas_get() -> *mut Evas_Common_Interface;
+    pub fn evas_object_class_get() -> *const Eo_Class;
     pub fn evas_obj_size_hint_max_set(w: EvasCoord, h: EvasCoord);
     pub fn evas_obj_size_hint_max_get(w: *mut EvasCoord, h: *mut EvasCoord);
     pub fn evas_obj_size_hint_request_set(w: EvasCoord, h: EvasCoord);
@@ -4219,15 +4219,15 @@ extern "C" {
     pub fn evas_obj_render_op_get() -> EvasRenderOp;
     pub fn evas_obj_freeze_events_set(freeze: EinaBool);
     pub fn evas_obj_freeze_events_get() -> EinaBool;
-    pub fn evas_obj_map_set(map: *const EvasMap);
-    pub fn evas_obj_map_get() -> *const EvasMap;
+    pub fn evas_obj_map_set(map: *const Evas_Map);
+    pub fn evas_obj_map_get() -> *const Evas_Map;
     pub fn evas_obj_size_hint_aspect_set(aspect: EvasAspectControl,
                                          w: EvasCoord, h: EvasCoord);
     pub fn evas_obj_size_hint_aspect_get(aspect: *mut EvasAspectControl,
                                          w: *mut EvasCoord,
                                          h: *mut EvasCoord);
-    pub fn evas_obj_clip_set(clip: *mut EvasObject);
-    pub fn evas_obj_clip_get() -> *mut EvasObject;
+    pub fn evas_obj_clip_set(clip: *mut Evas_Object);
+    pub fn evas_obj_clip_get() -> *mut Evas_Object;
     pub fn evas_obj_size_hint_padding_set(l: EvasCoord, r: EvasCoord,
                                           t: EvasCoord, b: EvasCoord);
     pub fn evas_obj_size_hint_padding_get(l: *mut EvasCoord,
@@ -4265,43 +4265,43 @@ extern "C" {
     pub fn evas_obj_anti_alias_set(anti_alias: EinaBool);
     pub fn evas_obj_anti_alias_get() -> EinaBool;
     pub fn evas_obj_smart_data_get() -> *mut c_void;
-    pub fn evas_obj_smart_clipped_clipper_get() -> *mut EvasObject;
-    pub fn evas_obj_clipees_get() -> *const EinaList;
-    pub fn evas_obj_smart_parent_get() -> *mut EvasObject;
+    pub fn evas_obj_smart_clipped_clipper_get() -> *mut Evas_Object;
+    pub fn evas_obj_clipees_get() -> *const Eina_List;
+    pub fn evas_obj_smart_parent_get() -> *mut Evas_Object;
     pub fn evas_obj_size_hint_display_mode_set(dispmode: EvasDisplayMode);
     pub fn evas_obj_size_hint_display_mode_get() -> EvasDisplayMode;
     pub fn evas_obj_no_render_set(enable: EinaBool);
     pub fn evas_obj_no_render_get() -> EinaBool;
     pub fn evas_obj_clipees_has() -> EinaBool;
     pub fn evas_obj_key_grab(keyname: *const c_char,
-                             modifiers: EvasModifierMask,
-                             not_modifiers: EvasModifierMask,
+                             modifiers: Evas_Modifier_Mask,
+                             not_modifiers: Evas_Modifier_Mask,
                              exclusive: EinaBool) -> EinaBool;
     pub fn evas_obj_smart_type_check(_type: *const c_char)
      -> EinaBool;
     pub fn evas_obj_name_child_find(name: *const c_char,
                                     recurse: c_int)
-     -> *mut EvasObject;
+     -> *mut Evas_Object;
     pub fn evas_obj_key_ungrab(keyname: *const c_char,
-                               modifiers: EvasModifierMask,
-                               not_modifiers: EvasModifierMask);
+                               modifiers: Evas_Modifier_Mask,
+                               not_modifiers: Evas_Modifier_Mask);
     pub fn evas_obj_clip_unset();
     pub fn evas_obj_smart_move_children_relative(dx: EvasCoord,
                                                  dy: EvasCoord);
     pub fn evas_obj_smart_type_check_ptr(_type: *const c_char)
      -> EinaBool;
-    pub fn evas_out_class_get() -> *const EoClass;
+    pub fn evas_out_class_get() -> *const Eo_Class;
     pub fn evas_out_view_set(x: EvasCoord, y: EvasCoord, w: EvasCoord,
                              h: EvasCoord);
     pub fn evas_out_view_get(x: *mut EvasCoord, y: *mut EvasCoord,
                              w: *mut EvasCoord, h: *mut EvasCoord);
-    pub fn evas_out_engine_info_set(info: *mut EvasEngineInfo) -> EinaBool;
-    pub fn evas_out_engine_info_get() -> *mut EvasEngineInfo;
-    pub fn evas_canvas3d_object_class_get() -> *const EoClass;
+    pub fn evas_out_engine_info_set(info: *mut Evas_Engine_Info) -> EinaBool;
+    pub fn evas_out_engine_info_get() -> *mut Evas_Engine_Info;
+    pub fn evas_canvas3d_object_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_object_update_notify();
     pub fn evas_canvas3d_object_change_notify(state: EvasCanvas3DState,
                                               _ref:
-                                                  *mut EvasCanvas3DObject);
+                                                  *mut Evas_Canvas3D_Object);
     pub fn evas_canvas3d_object_callback_register(event:
                                                       *const c_char,
                                                   data:
@@ -4309,26 +4309,26 @@ extern "C" {
     pub fn evas_canvas3d_object_callback_unregister(event:
                                                         *const c_char);
     pub fn evas_canvas3d_object_change(state: EvasCanvas3DState,
-                                       _ref: *mut EvasCanvas3DObject);
+                                       _ref: *mut Evas_Canvas3D_Object);
     pub fn evas_canvas3d_object_type_get() -> EvasCanvas3DObjectType;
     pub fn evas_canvas3d_object_type_set(_type: EvasCanvas3DObjectType);
     pub fn evas_canvas3d_object_dirty_get(state: EvasCanvas3DState)
      -> EinaBool;
     pub fn evas_canvas3d_object_update();
-    pub fn evas_canvas3d_texture_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_texture_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_texture_source_visible_set(visible: EinaBool);
     pub fn evas_canvas3d_texture_source_visible_get() -> EinaBool;
     pub fn evas_canvas3d_texture_atlas_enable_set(use_atlas: EinaBool);
     pub fn evas_canvas3d_texture_atlas_enable_get() -> EinaBool;
-    pub fn evas_canvas3d_texture_data_set(color_format: EvasColorspace,
+    pub fn evas_canvas3d_texture_data_set(color_format: Evas_Colorspace,
                                           w: c_int,
                                           h: c_int,
                                           data:
                                               *const c_void);
     pub fn evas_canvas3d_texture_file_set(file: *const c_char,
                                           key: *const c_char);
-    pub fn evas_canvas3d_texture_source_set(source: *mut EvasObject);
-    pub fn evas_canvas3d_texture_color_format_get() -> EvasColorspace;
+    pub fn evas_canvas3d_texture_source_set(source: *mut Evas_Object);
+    pub fn evas_canvas3d_texture_color_format_get() -> Evas_Colorspace;
     pub fn evas_canvas3d_texture_size_get(w: *mut c_int,
                                           h: *mut c_int);
     pub fn evas_canvas3d_texture_wrap_set(s: EvasCanvas3DWrapMode,
@@ -4342,7 +4342,7 @@ extern "C" {
                                                 *mut EvasCanvas3DTextureFilter,
                                             mag:
                                                 *mut EvasCanvas3DTextureFilter);
-    pub fn evas_canvas3d_material_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_material_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_material_enable_set(attrib:
                                                  EvasCanvas3DMaterialAttrib,
                                              enable: EinaBool);
@@ -4354,10 +4354,10 @@ extern "C" {
     pub fn evas_canvas3d_material_texture_set(attrib:
                                                   EvasCanvas3DMaterialAttrib,
                                               texture:
-                                                  *mut EvasCanvas3DTexture);
+                                                  *mut Evas_Canvas3D_Texture);
     pub fn evas_canvas3d_material_texture_get(attrib:
                                                   EvasCanvas3DMaterialAttrib)
-     -> *mut EvasCanvas3DTexture;
+     -> *mut Evas_Canvas3D_Texture;
     pub fn evas_canvas3d_material_color_set(attrib:
                                                 EvasCanvas3DMaterialAttrib,
                                             r: EvasReal, g: EvasReal,
@@ -4368,7 +4368,7 @@ extern "C" {
                                             g: *mut EvasReal,
                                             b: *mut EvasReal,
                                             a: *mut EvasReal);
-    pub fn evas_canvas3d_light_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_light_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_light_directional_set(directional: EinaBool);
     pub fn evas_canvas3d_light_directional_get() -> EinaBool;
     pub fn evas_canvas3d_light_spot_exponent_set(exponent: EvasReal);
@@ -4420,7 +4420,7 @@ extern "C" {
                                                     top: EvasReal,
                                                     dnear: EvasReal,
                                                     dfar: EvasReal);
-    pub fn evas_canvas3d_primitive_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_primitive_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_primitive_form_set(form:
                                                 EvasCanvas3DMeshPrimitive);
     pub fn evas_canvas3d_primitive_form_get() -> EvasCanvas3DMeshPrimitive;
@@ -4438,7 +4438,7 @@ extern "C" {
                                                  tex_scale_y: EvasReal);
     pub fn evas_canvas3d_primitive_tex_scale_get(tex_scale_x: *mut EvasReal,
                                                  tex_scale_y: *mut EvasReal);
-    pub fn evas_canvas3d_mesh_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_mesh_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_mesh_shade_mode_set(mode: EvasCanvas3DShadeMode);
     pub fn evas_canvas3d_mesh_shade_mode_get() -> EvasCanvas3DShadeMode;
     pub fn evas_canvas3d_mesh_color_pick_enable_set(enabled: EinaBool);
@@ -4459,9 +4459,9 @@ extern "C" {
     pub fn evas_canvas3d_mesh_blending_enable_get() -> EinaBool;
     pub fn evas_canvas3d_mesh_frame_material_set(frame: c_int,
                                                  material:
-                                                     *mut EvasCanvas3DMaterial);
+                                                     *mut Evas_Canvas3D_Material);
     pub fn evas_canvas3d_mesh_frame_material_get(frame: c_int)
-     -> *mut EvasCanvas3DMaterial;
+     -> *mut Evas_Canvas3D_Material;
     pub fn evas_canvas3d_mesh_vertex_assembly_set(assembly:
                                                       EvasCanvas3DVertexAssembly);
     pub fn evas_canvas3d_mesh_vertex_assembly_get()
@@ -4542,32 +4542,32 @@ extern "C" {
                                                     *mut EvasCanvas3DBlendFunc);
     pub fn evas_canvas3d_mesh_from_primitive_set(frame: c_int,
                                                  primitive:
-                                                     *mut EvasCanvas3DPrimitive);
-    pub fn evas_canvas3d_node_class_get() -> *const EoClass;
+                                                     *mut Evas_Canvas3D_Primitive);
+    pub fn evas_canvas3d_node_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_node_position_inherit_set(inherit: EinaBool);
     pub fn evas_canvas3d_node_position_inherit_get() -> EinaBool;
     pub fn evas_canvas3d_node_orientation_inherit_set(inherit: EinaBool);
     pub fn evas_canvas3d_node_orientation_inherit_get() -> EinaBool;
     pub fn evas_canvas3d_node_scale_inherit_set(inherit: EinaBool);
     pub fn evas_canvas3d_node_scale_inherit_get() -> EinaBool;
-    pub fn evas_canvas3d_node_camera_set(camera: *mut EvasCanvas3DObject);
-    pub fn evas_canvas3d_node_camera_get() -> *mut EvasCanvas3DObject;
-    pub fn evas_canvas3d_node_light_set(light: *mut EvasCanvas3DLight);
-    pub fn evas_canvas3d_node_light_get() -> *mut EvasCanvas3DLight;
-    pub fn evas_canvas3d_node_mesh_frame_set(mesh: *mut EvasCanvas3DMesh,
+    pub fn evas_canvas3d_node_camera_set(camera: *mut Evas_Canvas3D_Object);
+    pub fn evas_canvas3d_node_camera_get() -> *mut Evas_Canvas3D_Object;
+    pub fn evas_canvas3d_node_light_set(light: *mut Evas_Canvas3D_Light);
+    pub fn evas_canvas3d_node_light_get() -> *mut Evas_Canvas3D_Light;
+    pub fn evas_canvas3d_node_mesh_frame_set(mesh: *mut Evas_Canvas3D_Mesh,
                                              frame: c_int);
-    pub fn evas_canvas3d_node_mesh_frame_get(mesh: *mut EvasCanvas3DMesh)
+    pub fn evas_canvas3d_node_mesh_frame_get(mesh: *mut Evas_Canvas3D_Mesh)
      -> c_int;
     pub fn evas_canvas3d_node_billboard_target_set(target:
-                                                       *mut EvasCanvas3DNode);
+                                                       *mut Evas_Canvas3D_Node);
     pub fn evas_canvas3d_node_billboard_target_get()
-     -> *mut EvasCanvas3DNode;
+     -> *mut Evas_Canvas3D_Node;
     pub fn evas_canvas3d_node_constructor(_type: EvasCanvas3DNodeType);
     pub fn evas_canvas3d_node_type_get() -> EvasCanvas3DNodeType;
-    pub fn evas_canvas3d_node_member_add(member: *mut EvasCanvas3DNode);
-    pub fn evas_canvas3d_node_member_del(member: *mut EvasCanvas3DNode);
-    pub fn evas_canvas3d_node_parent_get() -> *mut EvasCanvas3DNode;
-    pub fn evas_canvas3d_node_member_list_get() -> *const EinaList;
+    pub fn evas_canvas3d_node_member_add(member: *mut Evas_Canvas3D_Node);
+    pub fn evas_canvas3d_node_member_del(member: *mut Evas_Canvas3D_Node);
+    pub fn evas_canvas3d_node_parent_get() -> *mut Evas_Canvas3D_Node;
+    pub fn evas_canvas3d_node_member_list_get() -> *const Eina_List;
     pub fn evas_canvas3d_node_position_set(x: EvasReal, y: EvasReal,
                                            z: EvasReal);
     pub fn evas_canvas3d_node_orientation_set(x: EvasReal, y: EvasReal,
@@ -4596,9 +4596,9 @@ extern "C" {
                                           up_space: EvasCanvas3DSpace,
                                           ux: EvasReal, uy: EvasReal,
                                           uz: EvasReal);
-    pub fn evas_canvas3d_node_mesh_add(mesh: *mut EvasCanvas3DMesh);
-    pub fn evas_canvas3d_node_mesh_del(mesh: *mut EvasCanvas3DMesh);
-    pub fn evas_canvas3d_node_mesh_list_get() -> *const EinaList;
+    pub fn evas_canvas3d_node_mesh_add(mesh: *mut Evas_Canvas3D_Mesh);
+    pub fn evas_canvas3d_node_mesh_del(mesh: *mut Evas_Canvas3D_Mesh);
+    pub fn evas_canvas3d_node_mesh_list_get() -> *const Eina_List;
     pub fn evas_canvas3d_node_bounding_box_get(x: *mut EvasReal,
                                                y: *mut EvasReal,
                                                z: *mut EvasReal,
@@ -4609,7 +4609,7 @@ extern "C" {
                                                   y: *mut EvasReal,
                                                   z: *mut EvasReal,
                                                   r: *mut EvasReal);
-    pub fn evas_canvas3d_camera_class_get() -> *const EoClass;
+    pub fn evas_canvas3d_camera_class_get() -> *const Eo_Class;
     pub fn evas_canvas3d_camera_projection_matrix_set(matrix:
                                                           *const EvasReal);
     pub fn evas_canvas3d_camera_projection_matrix_get(matrix: *mut EvasReal);
@@ -4630,17 +4630,17 @@ extern "C" {
                                                      dnear: EvasReal,
                                                      dfar: EvasReal);
     pub fn evas_canvas3d_camera_node_visible_get(camera_node:
-                                                     *mut EvasCanvas3DNode,
+                                                     *mut Evas_Canvas3D_Node,
                                                  node:
-                                                     *mut EvasCanvas3DNode,
+                                                     *mut Evas_Canvas3D_Node,
                                                  key:
                                                      EvasCanvas3DFrustumMode)
      -> EinaBool;
-    pub fn evas_canvas3d_scene_class_get() -> *const EoClass;
-    pub fn evas_canvas3d_scene_root_node_set(node: *mut EvasCanvas3DNode);
-    pub fn evas_canvas3d_scene_root_node_get() -> *mut EvasCanvas3DNode;
-    pub fn evas_canvas3d_scene_camera_node_set(node: *mut EvasCanvas3DNode);
-    pub fn evas_canvas3d_scene_camera_node_get() -> *mut EvasCanvas3DNode;
+    pub fn evas_canvas3d_scene_class_get() -> *const Eo_Class;
+    pub fn evas_canvas3d_scene_root_node_set(node: *mut Evas_Canvas3D_Node);
+    pub fn evas_canvas3d_scene_root_node_get() -> *mut Evas_Canvas3D_Node;
+    pub fn evas_canvas3d_scene_camera_node_set(node: *mut Evas_Canvas3D_Node);
+    pub fn evas_canvas3d_scene_camera_node_get() -> *mut Evas_Canvas3D_Node;
     pub fn evas_canvas3d_scene_shadows_depth_set(depth_offset: EvasReal,
                                                  depth_constant: EvasReal);
     pub fn evas_canvas3d_scene_shadows_depth_get(depth_offset: *mut EvasReal,
@@ -4659,28 +4659,28 @@ extern "C" {
                                                     b: *mut EvasReal,
                                                     a: *mut EvasReal);
     pub fn evas_canvas3d_scene_pick(x: EvasReal, y: EvasReal,
-                                    node: *mut *mut EvasCanvas3DNode,
-                                    mesh: *mut *mut EvasCanvas3DMesh,
+                                    node: *mut *mut Evas_Canvas3D_Node,
+                                    mesh: *mut *mut Evas_Canvas3D_Mesh,
                                     s: *mut EvasReal, t: *mut EvasReal)
      -> EinaBool;
     pub fn evas_canvas3d_scene_exist(x: EvasReal, y: EvasReal,
-                                     node: *mut EvasCanvas3DNode)
-     -> *mut EvasCanvas3DNode;
+                                     node: *mut Evas_Canvas3D_Node)
+     -> *mut Evas_Canvas3D_Node;
     pub fn evas_canvas3d_scene_pick_member_list_get(x: EvasReal,
                                                     y: EvasReal)
-     -> *mut EinaList;
+     -> *mut Eina_List;
     pub fn evas_canvas3d_scene_shadows_enable_set(shadows_enabled: EinaBool);
     pub fn evas_canvas3d_scene_shadows_enable_get() -> EinaBool;
     pub fn evas_canvas3d_scene_color_pick_enable_get() -> EinaBool;
     pub fn evas_canvas3d_scene_color_pick_enable_set(color_pick: EinaBool)
      -> EinaBool;
-    pub fn evas_image_class_get() -> *const EoClass;
+    pub fn evas_image_class_get() -> *const Eo_Class;
     pub fn evas_obj_image_load_dpi_set(dpi: c_double);
     pub fn evas_obj_image_load_dpi_get() -> c_double;
     pub fn evas_obj_image_source_clip_set(source_clip: EinaBool);
     pub fn evas_obj_image_source_clip_get() -> EinaBool;
-    pub fn evas_obj_image_source_set(src: *mut EvasObject) -> EinaBool;
-    pub fn evas_obj_image_source_get() -> *mut EvasObject;
+    pub fn evas_obj_image_source_set(src: *mut Evas_Object) -> EinaBool;
+    pub fn evas_obj_image_source_get() -> *mut Evas_Object;
     pub fn evas_obj_image_filled_set(filled: EinaBool);
     pub fn evas_obj_image_filled_get() -> EinaBool;
     pub fn evas_obj_image_content_hint_set(hint: EvasImageContentHint);
@@ -4707,8 +4707,8 @@ extern "C" {
     pub fn evas_obj_image_border_scale_get() -> c_double;
     pub fn evas_obj_image_pixels_dirty_set(dirty: EinaBool);
     pub fn evas_obj_image_pixels_dirty_get() -> EinaBool;
-    pub fn evas_obj_image_video_surface_set(surf: *mut EvasVideoSurface);
-    pub fn evas_obj_image_video_surface_get() -> *const EvasVideoSurface;
+    pub fn evas_obj_image_video_surface_set(surf: *mut Evas_Video_Surface);
+    pub fn evas_obj_image_video_surface_get() -> *const Evas_Video_Surface;
     pub fn evas_obj_image_video_surface_caps_set(caps:
                                                      c_uint);
     pub fn evas_obj_image_video_surface_caps_get() -> c_uint;
@@ -4718,33 +4718,33 @@ extern "C" {
     pub fn evas_obj_image_border_center_fill_get() -> EvasBorderFillMode;
     pub fn evas_obj_image_source_visible_set(visible: EinaBool);
     pub fn evas_obj_image_source_visible_get() -> EinaBool;
-    pub fn evas_obj_image_native_surface_set(surf: *mut EvasNativeSurface);
-    pub fn evas_obj_image_native_surface_get() -> *mut EvasNativeSurface;
+    pub fn evas_obj_image_native_surface_set(surf: *mut Evas_Native_Surface);
+    pub fn evas_obj_image_native_surface_get() -> *mut Evas_Native_Surface;
     pub fn evas_obj_image_load_scale_down_set(scale_down:
                                                   c_int);
     pub fn evas_obj_image_load_scale_down_get() -> c_int;
-    pub fn evas_obj_image_scale_hint_set(hint: EvasImageScaleHint);
-    pub fn evas_obj_image_scale_hint_get() -> EvasImageScaleHint;
+    pub fn evas_obj_image_scale_hint_set(hint: Evas_Image_Scale_Hint);
+    pub fn evas_obj_image_scale_hint_get() -> Evas_Image_Scale_Hint;
     pub fn evas_obj_image_source_events_set(source: EinaBool);
     pub fn evas_obj_image_source_events_get() -> EinaBool;
-    pub fn evas_obj_image_colorspace_set(cspace: EvasColorspace);
-    pub fn evas_obj_image_colorspace_get() -> EvasColorspace;
+    pub fn evas_obj_image_colorspace_set(cspace: Evas_Colorspace);
+    pub fn evas_obj_image_colorspace_get() -> Evas_Colorspace;
     pub fn evas_obj_image_pixels_get_callback_set(func:
-                                                      EvasObjectImagePixelsGetCb,
+                                                      Evas_ObjectImagePixelsGetCb,
                                                   data:
                                                       *mut c_void);
     pub fn evas_obj_image_data_copy_set(data: *mut c_void);
     pub fn evas_obj_image_animated_frame_set(frame_index:
                                                  c_int);
     pub fn evas_obj_image_region_support_get() -> EinaBool;
-    pub fn evas_obj_image_load_error_get() -> EvasLoadError;
+    pub fn evas_obj_image_load_error_get() -> Evas_Load_Error;
     pub fn evas_obj_image_animated_frame_count_get() -> c_int;
     pub fn evas_obj_image_stride_get() -> c_int;
     pub fn evas_obj_image_animated_loop_type_get()
-     -> EvasImageAnimatedLoopHint;
+     -> Evas_Image_Animated_Loop_hint;
     pub fn evas_obj_image_animated_loop_count_get() -> c_int;
-    pub fn evas_obj_image_scene_set(scene: *mut EvasCanvas3DScene);
-    pub fn evas_obj_image_scene_get() -> *mut EvasCanvas3DScene;
+    pub fn evas_obj_image_scene_set(scene: *mut Evas_Canvas3D_Scene);
+    pub fn evas_obj_image_scene_get() -> *mut Evas_Canvas3D_Scene;
     pub fn evas_obj_image_orient_set(orient: EvasImageOrient);
     pub fn evas_obj_image_orient_get() -> EvasImageOrient;
     pub fn evas_obj_image_snapshot_set(s: EinaBool);
@@ -4763,36 +4763,36 @@ extern "C" {
     pub fn evas_obj_image_data_get(for_writing: EinaBool)
      -> *mut c_void;
     pub fn evas_obj_image_preload_cancel();
-    pub fn evas_vg_class_get() -> *const EoClass;
-    pub fn evas_obj_vg_root_node_get() -> *mut EflVg;
-    pub fn efl_vg_base_class_get() -> *const EoClass;
-    pub fn efl_vg_bounds_get(r: *mut EinaRectangle);
+    pub fn evas_vg_class_get() -> *const Eo_Class;
+    pub fn evas_obj_vg_root_node_get() -> *mut Efl_Vg;
+    pub fn efl_vg_base_class_get() -> *const Eo_Class;
+    pub fn efl_vg_bounds_get(r: *mut Eina_Rectangle);
     pub fn efl_vg_name_set(name: *const c_char);
     pub fn efl_vg_name_get() -> *const c_char;
-    pub fn efl_vg_transformation_set(m: *const EinaMatrix3);
-    pub fn efl_vg_transformation_get() -> *const EinaMatrix3;
+    pub fn efl_vg_transformation_set(m: *const Eina_Matrix3);
+    pub fn efl_vg_transformation_get() -> *const Eina_Matrix3;
     pub fn efl_vg_origin_set(x: c_double,
                              y: c_double);
     pub fn efl_vg_origin_get(x: *mut c_double,
                              y: *mut c_double);
-    pub fn efl_vg_mask_set(m: *mut EflVg);
-    pub fn efl_vg_mask_get() -> *mut EflVg;
-    pub fn efl_vg_interpolate(from: *const EflVgBase,
-                              to: *const EflVgBase,
+    pub fn efl_vg_mask_set(m: *mut Efl_Vg);
+    pub fn efl_vg_mask_get() -> *mut Efl_Vg;
+    pub fn efl_vg_interpolate(from: *const Efl_Vg_Base,
+                              to: *const Efl_Vg_Base,
                               pos_map: c_double) -> EinaBool;
-    pub fn efl_vg_dup(from: *const EflVgBase);
-    pub fn efl_vg_container_class_get() -> *const EoClass;
+    pub fn efl_vg_dup(from: *const Efl_Vg_Base);
+    pub fn efl_vg_container_class_get() -> *const Eo_Class;
     pub fn efl_vg_container_child_get(name: *const c_char)
-     -> *mut EflVgBase;
-    pub fn efl_vg_container_children_get() -> *mut EinaIterator;
-    pub fn efl_vg_shape_class_get() -> *const EoClass;
-    pub fn efl_vg_shape_fill_set(f: *mut EflVg);
-    pub fn efl_vg_shape_fill_get() -> *mut EflVg;
-    pub fn efl_vg_shape_stroke_fill_set(f: *mut EflVg);
-    pub fn efl_vg_shape_stroke_fill_get() -> *mut EflVg;
-    pub fn efl_vg_shape_stroke_marker_set(m: *mut EflVg);
-    pub fn efl_vg_shape_stroke_marker_get() -> *mut EflVg;
-    pub fn efl_vg_gradient_class_get() -> *const EoClass;
-    pub fn efl_vg_gradient_linear_class_get() -> *const EoClass;
-    pub fn efl_vg_gradient_radial_class_get() -> *const EoClass;
+     -> *mut Efl_Vg_Base;
+    pub fn efl_vg_container_children_get() -> *mut Eina_Iterator;
+    pub fn efl_vg_shape_class_get() -> *const Eo_Class;
+    pub fn efl_vg_shape_fill_set(f: *mut Efl_Vg);
+    pub fn efl_vg_shape_fill_get() -> *mut Efl_Vg;
+    pub fn efl_vg_shape_stroke_fill_set(f: *mut Efl_Vg);
+    pub fn efl_vg_shape_stroke_fill_get() -> *mut Efl_Vg;
+    pub fn efl_vg_shape_stroke_marker_set(m: *mut Efl_Vg);
+    pub fn efl_vg_shape_stroke_marker_get() -> *mut Efl_Vg;
+    pub fn efl_vg_gradient_class_get() -> *const Eo_Class;
+    pub fn efl_vg_gradient_linear_class_get() -> *const Eo_Class;
+    pub fn efl_vg_gradient_radial_class_get() -> *const Eo_Class;
 }

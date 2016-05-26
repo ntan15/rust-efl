@@ -1,66 +1,79 @@
-use EinaAccessor;
-use eina_ffi;
-//use eina_ffi::*;
+#![allow(dead_code)]
+use eina_ffi::*;
 
 use libc::*;
 use std::ptr;
 
-trait EAccessor {
-	fn get_data(&mut self, position: c_uint) -> Option<*mut c_void>;
-	fn get_container(&mut self) -> Option<&mut c_void>;
-	fn exec_over<T>(&mut self, cb: eina_ffi::EinaEachCb, start: c_uint, end: c_uint, fdata: &T);
-	fn lock(&mut self) -> bool; 
-	fn unlock(&mut self) -> bool;
+pub struct EinaAccessor {
+    pub ptr: *mut Eina_Accessor,
 }
 
-impl EAccessor for EinaAccessor {
-	pub fn get_data(&mut self, position: c_uint) -> Option<*mut c_void> {
-		unsafe {
-			let data: *mut c_void = ptr::null_mut();
-			let result = eina_ffi::eina_accessor_data_get(self as *mut EinaAccessor, position, &mut data as *mut *mut _ as *mut *mut c_void);
-			match result {
-				EINA_TRUE => Some(data),
-				_ => None,
-			}
-		}
-	}
+impl EinaAccessor {
+    /// Gets the data of an accessor at the given position.
+    pub fn get_data(&mut self, position: c_uint) -> Option<&mut c_void> {
+        unsafe {
+            let mut data: *mut c_void = ptr::null_mut();
+            match eina_accessor_data_get(self.ptr, position, &mut data as *mut *mut _ as *mut *mut c_void) {
+             EINA_TRUE => Some(&mut*data),
+                _ => None,
+            }
+        }
+    }
 
-	pub fn get_container(&mut self) -> Option<&mut c_void> {
-		unsafe {
-			let container = eina_ffi::eina_accessor_container_get(self as *mut EinaAccessor);
-			match container.is_null() {
-				false => Some(&mut *container),
-				true => None,
-			}
-		}
-	}
+    /// Gets the container of an accessor
+    pub fn get_container(&mut self) -> Option<&mut c_void> {
+        unsafe {
+            let container = eina_accessor_container_get(self.ptr);
+            match container.is_null() {
+                false => Some(&mut*container),
+                true => None,
+            }
 
-	pub fn exec_over<T>(&mut self, cb: eina_ffi::EinaEachCb, start: c_uint, end: c_uint, fdata: &T) {
-		unsafe {
-			eina_ffi::eina_accessor_over(self as *mut EinaAccessor, cb, start, end, fdata as *const _ as *const c_void);
-		}
-	}
+        }
+    }
 
-	pub fn lock(&mut self) -> bool {
-		unsafe {
-			let result = eina_ffi::eina_accessor_lock(self as *mut EinaAccessor);
-			match result {
-				EINA_TRUE => true,
-				EINA_FALSE => false,
-			}
-		}
-	}
-	
-	pub fn unlock(&mut self) -> bool {
-		unsafe {
-			let result = eina_ffi::eina_accessor_unlock(self as *mut EinaAccessor);
-			match result {
-				EINA_TRUE => true,
-				EINA_FALSE => false,
-			}
+    /// Iterates over container and executes callback on chosen elements
+    pub fn exec_over<T>(&mut self, cb: EinaEachCb, start: c_uint, end: c_uint, fdata: &T) {
+        unsafe {
+            eina_accessor_over(self.ptr, cb, start, end, fdata as *const _ as *const c_void);
+        }
+    }
 
-		}
+    /// Locks the container of the accessor
+    pub fn lock(&mut self) -> bool {
+        unsafe {
+            match eina_accessor_lock(self.ptr) {
+                EINA_TRUE => true,
+                _ => false,
+            }
+        }
+    }
 
-	}
+    /// Unlock the container of the accessor
+    ///
+    /// None of the existing eina data structures are lockable
+    pub fn unlock(&mut self) -> bool {
+        unsafe {
+            match eina_accessor_unlock(self.ptr) {
+                EINA_TRUE => true,
+                _ => false,
+            }
+        }
+    }
 }
 
+impl Drop for EinaAccessor {
+    fn drop(&mut self) {
+        unsafe {
+            eina_accessor_free(self.ptr);
+        }
+    }
+}
+
+impl Clone for EinaAccessor {
+    fn clone(&self) -> Self {
+        unsafe {
+            EinaAccessor{ptr: eina_accessor_clone(self.ptr)}
+        }
+    }
+}

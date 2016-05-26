@@ -1,0 +1,11 @@
+[package]
+name = "evas"
+version = "0.1.0"
+authors = ["Nigel Tan <ntan2@gmail.com>"]
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.evas-sys]
+path = "../../efl-sys/evas-sys"
+version = "0.1"

@@ -1,3 +1,4 @@
+#![allow(non_camel_case_types)]
 extern crate libc;
 extern crate eo_sys;
 extern crate eina_sys;
@@ -20,7 +21,7 @@ pub enum EflGfxPathCommand {
 }
 
 #[repr(C)]
-pub struct EflGfxDash {
+pub struct Efl_Gfx_Dash {
     pub length: c_double,
     pub gap: c_double,
 }
@@ -44,7 +45,7 @@ pub enum EflGfxJoin {
 }
 
 #[repr(C)]
-pub struct EflGfxGradientStop {
+pub struct Efl_Gfx_Gradient_Stop {
     pub offset: c_double,
     pub r: c_int,
     pub g: c_int,
@@ -73,19 +74,19 @@ pub enum EflGfxFillSpread {
 }
 
 #[repr(C)]
-pub struct EflModelChildrenEvent {
+pub struct Efl_Model_Children_Event {
     pub child: *mut Eo,
     pub index: c_uint,
 }
 
-pub type EflControl = Eo;
-pub type EflFile = Eo;
-pub type EflImage = Eo;
-pub type EflPlayer = Eo;
-pub type EflText = Eo;
-pub type EflTextProperties = Eo;
-pub type EflFontSize = c_int;
-pub type EflModelBase = Eo;
+pub type Efl_Control = Eo;
+pub type Efl_File = Eo;
+pub type Efl_Image = Eo;
+pub type Efl_Player = Eo;
+pub type Efl_Text = Eo;
+pub type Efl_Text_Properties = Eo;
+pub type Efl_Font_Size = c_int;
+pub type Efl_Model_Base = Eo;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
@@ -102,50 +103,50 @@ pub enum EflModelLoadStatus {
 }
 
 #[repr(C)]
-pub struct EflModelPropertyEvent {
-    pub changed_properties: *mut EinaArray,
-    pub invalidated_properties: *mut EinaArray,
+pub struct Efl_Model_Property_Event {
+    pub changed_properties: *mut Eina_Array,
+    pub invalidated_properties: *mut Eina_Array,
 }
 
 #[repr(C)]
-pub struct EflModelLoad {
+pub struct Efl_Model_Load {
     pub status: EflModelLoadStatus,
 }
 
-pub type EflGfxBase = Eo;
-pub type EflGfxStack = Eo;
-pub type EflGfxFill = Eo;
-pub type EflGfxView = Eo;
-pub type EflGfxShape = Eo;
-pub type EflGfxGradientBase = Eo;
-pub type EflGfxGradientLinear = Eo;
-pub type EflGfxGradientRadial = Eo;
-pub type EflGfxFilter = Eo;
+pub type Efl_Gfx_Base = Eo;
+pub type Efl_Gfx_Stack = Eo;
+pub type Efl_Gfx_Fill = Eo;
+pub type Efl_Gfx_View = Eo;
+pub type Efl_Gfx_Shape = Eo;
+pub type Efl_Gfx_Gradient_Base = Eo;
+pub type Efl_Gfx_Gradient_Linear = Eo;
+pub type Efl_Gfx_Gradient_Radial = Eo;
+pub type Efl_Gfx_Filter = Eo;
 
 #[link(name = "efl")]
 extern "C" {
-    pub static _EFL_FILE_EVENT_ASYNC_OPENED: EoEventDescription;
-    pub static _EFL_FILE_EVENT_ASYNC_ERROR: EoEventDescription;
-    pub static _EFL_MODEL_BASE_EVENT_LOAD_STATUS: EoEventDescription;
-    pub static _EFL_MODEL_BASE_EVENT_PROPERTIES_CHANGED: EoEventDescription;
-    pub static _EFL_MODEL_BASE_EVENT_CHILD_ADDED: EoEventDescription;
-    pub static _EFL_MODEL_BASE_EVENT_CHILD_REMOVED: EoEventDescription;
+    pub static _EFL_FILE_EVENT_ASYNC_OPENED: Eo_Event_Description;
+    pub static _EFL_FILE_EVENT_ASYNC_ERROR: Eo_Event_Description;
+    pub static _EFL_MODEL_BASE_EVENT_LOAD_STATUS: Eo_Event_Description;
+    pub static _EFL_MODEL_BASE_EVENT_PROPERTIES_CHANGED: Eo_Event_Description;
+    pub static _EFL_MODEL_BASE_EVENT_CHILD_ADDED: Eo_Event_Description;
+    pub static _EFL_MODEL_BASE_EVENT_CHILD_REMOVED: Eo_Event_Description;
     pub static _EFL_MODEL_BASE_EVENT_CHILDREN_COUNT_CHANGED:
-               EoEventDescription;
-    pub static _EFL_GFX_CHANGED: EoEventDescription;
-    pub static _EFL_GFX_PATH_CHANGED: EoEventDescription;
+               Eo_Event_Description;
+    pub static _EFL_GFX_CHANGED: Eo_Event_Description;
+    pub static _EFL_GFX_PATH_CHANGED: Eo_Event_Description;
 }
 #[link(name = "efl")]
 extern "C" {
-    pub fn efl_control_interface_get() -> *const EoClass;
+    pub fn efl_control_interface_get() -> *const Eo_Class;
     pub fn efl_control_priority_set(priority: c_int);
     pub fn efl_control_priority_get() -> c_int;
     pub fn efl_control_suspend_set(suspend: EinaBool);
     pub fn efl_control_suspend_get() -> EinaBool;
-    pub fn efl_file_interface_get() -> *const EoClass;
-    pub fn efl_file_mmap_set(f: *const EinaFile,
+    pub fn efl_file_interface_get() -> *const Eo_Class;
+    pub fn efl_file_mmap_set(f: *const Eina_File,
                              key: *const c_char) -> EinaBool;
-    pub fn efl_file_mmap_get(f: *mut *const EinaFile,
+    pub fn efl_file_mmap_get(f: *mut *const Eina_File,
                              key: *mut *const c_char);
     pub fn efl_file_set(file: *const c_char,
                         key: *const c_char) -> EinaBool;
@@ -158,7 +159,7 @@ extern "C" {
                          flags: *const c_char) -> EinaBool;
     pub fn efl_file_eject();
     pub fn efl_file_async_wait() -> EinaBool;
-    pub fn efl_image_interface_get() -> *const EoClass;
+    pub fn efl_image_interface_get() -> *const Eo_Class;
     pub fn efl_image_animated_get() -> EinaBool;
     pub fn efl_image_load_size_set(w: c_int,
                                    h: c_int);
@@ -167,7 +168,7 @@ extern "C" {
     pub fn efl_image_smooth_scale_set(smooth_scale: EinaBool);
     pub fn efl_image_smooth_scale_get() -> EinaBool;
     pub fn efl_image_ratio_get() -> c_double;
-    pub fn efl_player_interface_get() -> *const EoClass;
+    pub fn efl_player_interface_get() -> *const Eo_Class;
     pub fn efl_player_playable_get() -> EinaBool;
     pub fn efl_player_play_set(play: EinaBool);
     pub fn efl_player_play_get() -> EinaBool;
@@ -182,30 +183,30 @@ extern "C" {
     pub fn efl_player_audio_mute_get() -> EinaBool;
     pub fn efl_player_length_get() -> c_double;
     pub fn efl_player_seekable_get() -> EinaBool;
-    pub fn efl_text_interface_get() -> *const EoClass;
+    pub fn efl_text_interface_get() -> *const Eo_Class;
     pub fn efl_text_set(text: *const c_char);
     pub fn efl_text_get() -> *const c_char;
-    pub fn efl_text_properties_interface_get() -> *const EoClass;
+    pub fn efl_text_properties_interface_get() -> *const Eo_Class;
     pub fn efl_text_properties_font_set(font: *const c_char,
-                                        size: EflFontSize);
+                                        size: Efl_Font_Size);
     pub fn efl_text_properties_font_get(font: *mut *const c_char,
-                                        size: *mut EflFontSize);
+                                        size: *mut Efl_Font_Size);
     pub fn efl_text_properties_font_source_set(font_source: *const c_char);
     pub fn efl_text_properties_font_source_get() -> *const c_char;
-    pub fn efl_model_base_interface_get() -> *const EoClass;
+    pub fn efl_model_base_interface_get() -> *const Eo_Class;
     pub fn efl_model_load_status_get() -> EflModelLoadStatus;
-    pub fn efl_model_properties_get(properties: *const *mut EinaArray)
+    pub fn efl_model_properties_get(properties: *const *mut Eina_Array)
      -> EflModelLoadStatus;
     pub fn efl_model_property_set(property: *const c_char,
-                                  value: *const EinaValue)
+                                  value: *const Eina_Value)
      -> EflModelLoadStatus;
     pub fn efl_model_property_get(property: *const c_char,
-                                  value: *mut *const EinaValue)
+                                  value: *mut *const Eina_Value)
      -> EflModelLoadStatus;
     pub fn efl_model_children_slice_get(start: c_uint,
                                         count: c_uint,
                                         children_accessor:
-                                            *mut *mut EinaAccessor)
+                                            *mut *mut Eina_Accessor)
      -> EflModelLoadStatus;
     pub fn efl_model_children_count_get(children_count: *mut c_uint)
      -> EflModelLoadStatus;
@@ -213,9 +214,9 @@ extern "C" {
     pub fn efl_model_unload();
     pub fn efl_model_properties_load();
     pub fn efl_model_children_load();
-    pub fn efl_model_child_add() -> *mut EoBase;
-    pub fn efl_model_child_del(child: *mut EoBase) -> EflModelLoadStatus;
-    pub fn efl_gfx_base_interface_get() -> *const EoClass;
+    pub fn efl_model_child_add() -> *mut Eo_Base;
+    pub fn efl_model_child_del(child: *mut Eo_Base) -> EflModelLoadStatus;
+    pub fn efl_gfx_base_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_position_set(x: c_int,
                                 y: c_int);
     pub fn efl_gfx_position_get(x: *mut c_int,
@@ -244,16 +245,16 @@ extern "C" {
                                   a: *mut c_int) -> EinaBool;
     pub fn efl_gfx_visible_set(v: EinaBool);
     pub fn efl_gfx_visible_get() -> EinaBool;
-    pub fn efl_gfx_stack_interface_get() -> *const EoClass;
+    pub fn efl_gfx_stack_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_stack_layer_set(l: c_short);
     pub fn efl_gfx_stack_layer_get() -> c_short;
-    pub fn efl_gfx_stack_below_get() -> *mut EflGfxStack;
-    pub fn efl_gfx_stack_above_get() -> *mut EflGfxStack;
-    pub fn efl_gfx_stack_below(below: *mut EflGfxStack);
+    pub fn efl_gfx_stack_below_get() -> *mut Efl_Gfx_Stack;
+    pub fn efl_gfx_stack_above_get() -> *mut Efl_Gfx_Stack;
+    pub fn efl_gfx_stack_below(below: *mut Efl_Gfx_Stack);
     pub fn efl_gfx_stack_raise();
-    pub fn efl_gfx_stack_above(above: *mut EflGfxStack);
+    pub fn efl_gfx_stack_above(above: *mut Efl_Gfx_Stack);
     pub fn efl_gfx_stack_lower();
-    pub fn efl_gfx_fill_interface_get() -> *const EoClass;
+    pub fn efl_gfx_fill_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_fill_spread_set(spread: EflGfxFillSpread);
     pub fn efl_gfx_fill_spread_get() -> EflGfxFillSpread;
     pub fn efl_gfx_fill_set(x: c_int,
@@ -264,12 +265,12 @@ extern "C" {
                             y: *mut c_int,
                             w: *mut c_int,
                             h: *mut c_int);
-    pub fn efl_gfx_view_interface_get() -> *const EoClass;
+    pub fn efl_gfx_view_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_view_size_set(w: c_int,
                                  h: c_int);
     pub fn efl_gfx_view_size_get(w: *mut c_int,
                                  h: *mut c_int);
-    pub fn efl_gfx_shape_mixin_get() -> *const EoClass;
+    pub fn efl_gfx_shape_mixin_get() -> *const Eo_Class;
     pub fn efl_gfx_shape_stroke_scale_get() -> c_double;
     pub fn efl_gfx_shape_stroke_scale_set(s: c_double);
     pub fn efl_gfx_shape_stroke_color_get(r: *mut c_int,
@@ -284,9 +285,9 @@ extern "C" {
     pub fn efl_gfx_shape_stroke_width_set(w: c_double);
     pub fn efl_gfx_shape_stroke_location_get() -> c_double;
     pub fn efl_gfx_shape_stroke_location_set(centered: c_double);
-    pub fn efl_gfx_shape_stroke_dash_get(dash: *mut *const EflGfxDash,
+    pub fn efl_gfx_shape_stroke_dash_get(dash: *mut *const Efl_Gfx_Dash,
                                          length: *mut c_uint);
-    pub fn efl_gfx_shape_stroke_dash_set(dash: *const EflGfxDash,
+    pub fn efl_gfx_shape_stroke_dash_set(dash: *const Efl_Gfx_Dash,
                                          length: c_uint);
     pub fn efl_gfx_shape_stroke_cap_get() -> EflGfxCap;
     pub fn efl_gfx_shape_stroke_cap_set(c: EflGfxCap);
@@ -302,8 +303,8 @@ extern "C" {
                                      y: *mut c_double);
     pub fn efl_gfx_shape_current_ctrl_get(x: *mut c_double,
                                           y: *mut c_double);
-    pub fn efl_gfx_shape_dup(dup_from: *const EoBase);
-    pub fn efl_gfx_shape_bounds_get(r: *mut EinaRectangle);
+    pub fn efl_gfx_shape_dup(dup_from: *const Eo_Base);
+    pub fn efl_gfx_shape_bounds_get(r: *mut Eina_Rectangle);
     pub fn efl_gfx_shape_reset();
     pub fn efl_gfx_shape_append_move_to(x: c_double,
                                         y: c_double);
@@ -343,18 +344,18 @@ extern "C" {
                                      rx: c_double,
                                      ry: c_double);
     pub fn efl_gfx_shape_append_svg_path(svg_path_data: *const c_char);
-    pub fn efl_gfx_shape_interpolate(from: *const EoBase, to: *const EoBase,
+    pub fn efl_gfx_shape_interpolate(from: *const Eo_Base, to: *const Eo_Base,
                                      pos_map: c_double)
      -> EinaBool;
-    pub fn efl_gfx_shape_equal_commands(with: *const EoBase) -> EinaBool;
-    pub fn efl_gfx_gradient_base_interface_get() -> *const EoClass;
-    pub fn efl_gfx_gradient_stop_set(colors: *const EflGfxGradientStop,
+    pub fn efl_gfx_shape_equal_commands(with: *const Eo_Base) -> EinaBool;
+    pub fn efl_gfx_gradient_base_interface_get() -> *const Eo_Class;
+    pub fn efl_gfx_gradient_stop_set(colors: *const Efl_Gfx_Gradient_Stop,
                                      length: c_uint);
-    pub fn efl_gfx_gradient_stop_get(colors: *mut *const EflGfxGradientStop,
+    pub fn efl_gfx_gradient_stop_get(colors: *mut *const Efl_Gfx_Gradient_Stop,
                                      length: *mut c_uint);
     pub fn efl_gfx_gradient_spread_set(s: EflGfxGradientSpread);
     pub fn efl_gfx_gradient_spread_get() -> EflGfxGradientSpread;
-    pub fn efl_gfx_gradient_linear_interface_get() -> *const EoClass;
+    pub fn efl_gfx_gradient_linear_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_gradient_linear_start_set(x: c_double,
                                              y: c_double);
     pub fn efl_gfx_gradient_linear_start_get(x: *mut c_double,
@@ -363,7 +364,7 @@ extern "C" {
                                            y: c_double);
     pub fn efl_gfx_gradient_linear_end_get(x: *mut c_double,
                                            y: *mut c_double);
-    pub fn efl_gfx_gradient_radial_interface_get() -> *const EoClass;
+    pub fn efl_gfx_gradient_radial_interface_get() -> *const Eo_Class;
     pub fn efl_gfx_gradient_radial_center_set(x: c_double,
                                               y: c_double);
     pub fn efl_gfx_gradient_radial_center_get(x: *mut c_double,
@@ -374,5 +375,5 @@ extern "C" {
                                              y: c_double);
     pub fn efl_gfx_gradient_radial_focal_get(x: *mut c_double,
                                              y: *mut c_double);
-    pub fn efl_gfx_filter_interface_get() -> *const EoClass;
+    pub fn efl_gfx_filter_interface_get() -> *const Eo_Class;
 }

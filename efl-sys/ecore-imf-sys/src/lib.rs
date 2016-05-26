@@ -1,3 +1,4 @@
+#![allow(non_camel_case_types)]
 extern crate libc;
 extern crate eina_sys;
 
@@ -9,248 +10,247 @@ use eina_sys::*;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelEvent {
-    ECORE_IMF_INPUT_PANEL_STATE_EVENT = 0,
-    ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT = 1,
-    ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT = 2,
-    ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT = 3,
-    ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT = 4,
-    ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT = 5,
+    EcoreImfInputPanelStateEvent = 0,
+    EcoreImfInputPanelLanguageEvent = 1,
+    EcoreImfInputPanelShiftModeEvent = 2,
+    EcoreImfInputPanelGeometryEvent = 3,
+    EcoreImfCandidatePanelStateEvent = 4,
+    EcoreImfCandidatePanelGeometryEvent = 5,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelState {
-    ECORE_IMF_INPUT_PANEL_STATE_SHOW = 0,
-    ECORE_IMF_INPUT_PANEL_STATE_HIDE = 1,
-    ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW = 2,
+    EcoreImfInputPanelStateShow = 0,
+    EcoreImfInputPanelStateHide = 1,
+    EcoreImfInputPanelStateWillShow = 2,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelShiftMode {
-    ECORE_IMF_INPUT_PANEL_SHIFT_MODE_OFF = 0,
-    ECORE_IMF_INPUT_PANEL_SHIFT_MODE_ON = 1,
+    EcoreImfInputPanelShiftModeOff = 0,
+    EcoreImfInputPanelShiftModeOn = 1,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfCandidatePanelState {
-    ECORE_IMF_CANDIDATE_PANEL_SHOW = 0,
-    ECORE_IMF_CANDIDATE_PANEL_HIDE = 1,
+    EcoreImfCandidatePanelShow = 0,
+    EcoreImfCandidatePanelHide = 1,
 }
-pub type EcoreImfEvent = EcoreUnionImfEvent;
-pub enum EcoreImfContext { }
-pub type EcoreImfEventCb =
-    Option<unsafe extern "C" fn(data: *mut c_void,
-                                ctx: *mut EcoreImfContext,
+pub type Ecore_Imf_Event = EcoreUnionImfEvent;
+pub enum Ecore_Imf_Context { }
+pub type EcoreImfEventCb = Option<unsafe extern "C" fn(data: *mut c_void,
+                                ctx: *mut Ecore_Imf_Context,
                                 event_info: *mut c_void)>;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfCallbackType {
-    ECORE_IMF_CALLBACK_PREEDIT_START = 0,
-    ECORE_IMF_CALLBACK_PREEDIT_END = 1,
-    ECORE_IMF_CALLBACK_PREEDIT_CHANGED = 2,
-    ECORE_IMF_CALLBACK_COMMIT = 3,
-    ECORE_IMF_CALLBACK_DELETE_SURROUNDING = 4,
-    ECORE_IMF_CALLBACK_SELECTION_SET = 5,
-    ECORE_IMF_CALLBACK_PRIVATE_COMMAND_SEND = 6,
+    EcoreImfCallbackPreeditStart = 0,
+    EcoreImfCallbackPreeditEnd = 1,
+    EcoreImfCallbackPreeditChanged = 2,
+    EcoreImfCallbackCommit = 3,
+    EcoreImfCallbackDeleteSurrounding = 4,
+    EcoreImfCallbackSelectionSet = 5,
+    EcoreImfCallbackPrivateCommandSend = 6,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
-pub enum EcoreImfEventType {
-    ECORE_IMF_EVENT_MOUSE_DOWN = 0,
-    ECORE_IMF_EVENT_MOUSE_UP = 1,
-    ECORE_IMF_EVENT_MOUSE_IN = 2,
-    ECORE_IMF_EVENT_MOUSE_OUT = 3,
-    ECORE_IMF_EVENT_MOUSE_MOVE = 4,
-    ECORE_IMF_EVENT_MOUSE_WHEEL = 5,
-    ECORE_IMF_EVENT_KEY_DOWN = 6,
-    ECORE_IMF_EVENT_KEY_UP = 7,
+pub enum Ecore_Imf_EventType {
+    EcoreImfEventMouseDown = 0,
+    EcoreImfEventMouseUp = 1,
+    EcoreImfEventMouseIn = 2,
+    EcoreImfEventMouseOut = 3,
+    EcoreImfEventMouseMove = 4,
+    EcoreImfEventMouseWheel = 5,
+    EcoreImfEventKeyDown = 6,
+    EcoreImfEventKeyUp = 7,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfKeyboardModifiers {
-    ECORE_IMF_KEYBOARD_MODIFIER_NONE = 0,
-    ECORE_IMF_KEYBOARD_MODIFIER_CTRL = 1,
-    ECORE_IMF_KEYBOARD_MODIFIER_ALT = 2,
-    ECORE_IMF_KEYBOARD_MODIFIER_SHIFT = 4,
-    ECORE_IMF_KEYBOARD_MODIFIER_WIN = 8,
-    ECORE_IMF_KEYBOARD_MODIFIER_ALTGR = 16,
+    EcoreImfKeyboardModifierNone = 0,
+    EcoreImfKeyboardModifierCtrl = 1,
+    EcoreImfKeyboardModifierAlt = 2,
+    EcoreImfKeyboardModifierShift = 4,
+    EcoreImfKeyboardModifierWin = 8,
+    EcoreImfKeyboardModifierAltgr = 16,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfKeyboardLocks {
-    ECORE_IMF_KEYBOARD_LOCK_NONE = 0,
-    ECORE_IMF_KEYBOARD_LOCK_NUM = 1,
-    ECORE_IMF_KEYBOARD_LOCK_CAPS = 2,
-    ECORE_IMF_KEYBOARD_LOCK_SCROLL = 4,
+    EcoreImfKeyboardLockNone = 0,
+    EcoreImfKeyboardLockNum = 1,
+    EcoreImfKeyboardLockCaps = 2,
+    EcoreImfKeyboardLockScroll = 4,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfMouseFlags {
-    ECORE_IMF_MOUSE_NONE = 0,
-    ECORE_IMF_MOUSE_DOUBLE_CLICK = 1,
-    ECORE_IMF_MOUSE_TRIPLE_CLICK = 2,
+    EcoreImfMouseNone = 0,
+    EcoreImfMouseDoubleClick = 1,
+    EcoreImfMouseTripleClick = 2,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputMode {
-    ECORE_IMF_INPUT_MODE_ALPHA = 1,
-    ECORE_IMF_INPUT_MODE_NUMERIC = 2,
-    ECORE_IMF_INPUT_MODE_SPECIAL = 4,
-    ECORE_IMF_INPUT_MODE_HEXA = 8,
-    ECORE_IMF_INPUT_MODE_TELE = 16,
-    ECORE_IMF_INPUT_MODE_FULL = 7,
-    ECORE_IMF_INPUT_MODE_INVISIBLE = 536870912,
-    ECORE_IMF_INPUT_MODE_AUTOCAP = 1073741824,
+    EcoreImfInputModeAlpha = 1,
+    EcoreImfInputModeNumeric = 2,
+    EcoreImfInputModeSpecial = 4,
+    EcoreImfInputModeHexa = 8,
+    EcoreImfInputModeTele = 16,
+    EcoreImfInputModeFull = 7,
+    EcoreImfInputModeInvisible = 536870912,
+    EcoreImfInputModeAutocap = 1073741824,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfPreeditType {
-    ECORE_IMF_PREEDIT_TYPE_NONE = 0,
-    ECORE_IMF_PREEDIT_TYPE_SUB1 = 1,
-    ECORE_IMF_PREEDIT_TYPE_SUB2 = 2,
-    ECORE_IMF_PREEDIT_TYPE_SUB3 = 3,
-    ECORE_IMF_PREEDIT_TYPE_SUB4 = 4,
-    ECORE_IMF_PREEDIT_TYPE_SUB5 = 5,
-    ECORE_IMF_PREEDIT_TYPE_SUB6 = 6,
-    ECORE_IMF_PREEDIT_TYPE_SUB7 = 7,
+    EcoreImfPreeditTypeNone = 0,
+    EcoreImfPreeditTypeSub1 = 1,
+    EcoreImfPreeditTypeSub2 = 2,
+    EcoreImfPreeditTypeSub3 = 3,
+    EcoreImfPreeditTypeSub4 = 4,
+    EcoreImfPreeditTypeSub5 = 5,
+    EcoreImfPreeditTypeSub6 = 6,
+    EcoreImfPreeditTypeSub7 = 7,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfAutocapitalType {
-    ECORE_IMF_AUTOCAPITAL_TYPE_NONE = 0,
-    ECORE_IMF_AUTOCAPITAL_TYPE_WORD = 1,
-    ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE = 2,
-    ECORE_IMF_AUTOCAPITAL_TYPE_ALLCHARACTER = 3,
+    EcoreImfAutocapitalTypeNone = 0,
+    EcoreImfAutocapitalTypeWord = 1,
+    EcoreImfAutocapitalTypeSentence = 2,
+    EcoreImfAutocapitalTypeAllcharacter = 3,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelLayout {
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL = 0,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER = 1,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_EMAIL = 2,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_URL = 3,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_PHONENUMBER = 4,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_IP = 5,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_MONTH = 6,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY = 7,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_INVALID = 8,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_HEX = 9,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL = 10,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD = 11,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_DATETIME = 12,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_EMOTICON = 13,
+    EcoreImfInputPanelLayoutNormal = 0,
+    EcoreImfInputPanelLayoutNumber = 1,
+    EcoreImfInputPanelLayoutEmail = 2,
+    EcoreImfInputPanelLayoutUrl = 3,
+    EcoreImfInputPanelLayoutPhonenumber = 4,
+    EcoreImfInputPanelLayoutIp = 5,
+    EcoreImfInputPanelLayoutMonth = 6,
+    EcoreImfInputPanelLayoutNumberonly = 7,
+    EcoreImfInputPanelLayoutInvalid = 8,
+    EcoreImfInputPanelLayoutHex = 9,
+    EcoreImfInputPanelLayoutTerminal = 10,
+    EcoreImfInputPanelLayoutPassword = 11,
+    EcoreImfInputPanelLayoutDatetime = 12,
+    EcoreImfInputPanelLayoutEmoticon = 13,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelLang {
-    ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC = 0,
-    ECORE_IMF_INPUT_PANEL_LANG_ALPHABET = 1,
+    EcoreImfInputPanelLangAutomatic = 0,
+    EcoreImfInputPanelLangAlphabet = 1,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputPanelReturnKeyType {
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT = 0,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DONE = 1,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_GO = 2,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_JOIN = 3,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_LOGIN = 4,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_NEXT = 5,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEARCH = 6,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEND = 7,
-    ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN = 8,
+    EcoreImfInputPanelReturnKeyTypeDefault = 0,
+    EcoreImfInputPanelReturnKeyTypeDone = 1,
+    EcoreImfInputPanelReturnKeyTypeGo = 2,
+    EcoreImfInputPanelReturnKeyTypeJoin = 3,
+    EcoreImfInputPanelReturnKeyTypeLogin = 4,
+    EcoreImfInputPanelReturnKeyTypeNext = 5,
+    EcoreImfInputPanelReturnKeyTypeSearch = 6,
+    EcoreImfInputPanelReturnKeyTypeSend = 7,
+    EcoreImfInputPanelReturnKeyTypeSignin = 8,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfInputHints {
-    ECORE_IMF_INPUT_HINT_NONE = 0,
-    ECORE_IMF_INPUT_HINT_AUTO_COMPLETE = 1,
-    ECORE_IMF_INPUT_HINT_SENSITIVE_DATA = 2,
+    EcoreImfInputHintNone = 0,
+    EcoreImfInputHintAutoComplete = 1,
+    EcoreImfInputHintSensitiveData = 2,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreAnonEnum7 {
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_NORMAL = 0,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_FILENAME = 1,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_PERSON_NAME = 2,
+    EcoreImfInputPanelLayoutNormalVariationNormal = 0,
+    EcoreImfInputPanelLayoutNormalVariationFilename = 1,
+    EcoreImfInputPanelLayoutNormalVariationPersonName = 2,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreAnonEnum8 {
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL = 0,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED = 1,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL = 2,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL = 3,
+    EcoreImfInputPanelLayoutNumberonlyVariationNormal = 0,
+    EcoreImfInputPanelLayoutNumberonlyVariationSigned = 1,
+    EcoreImfInputPanelLayoutNumberonlyVariationDecimal = 2,
+    EcoreImfInputPanelLayoutNumberonlyVariationSignedAndDecimal = 3,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreAnonEnum9 {
-    ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NORMAL = 0,
-    ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY = 1,
+    EcoreImfInputPanelLayoutPasswordVariationNormal = 0,
+    EcoreImfInputPanelLayoutPasswordVariationNumberonly = 1,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfBidiDirction {
-    ECORE_IMF_BIDI_DIRECTION_NEUTRAL = 0,
-    ECORE_IMF_BIDI_DIRECTION_LTR = 1,
-    ECORE_IMF_BIDI_DIRECTION_RTL = 2,
+    EcoreImfBidiDirectionNeutral = 0,
+    EcoreImfBidiDirectionLtr = 1,
+    EcoreImfBidiDirectionRtl = 2,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfDeviceClass {
-    ECORE_IMF_DEVICE_CLASS_NONE = 0,
-    ECORE_IMF_DEVICE_CLASS_SEAT = 1,
-    ECORE_IMF_DEVICE_CLASS_KEYBOARD = 2,
-    ECORE_IMF_DEVICE_CLASS_MOUSE = 3,
-    ECORE_IMF_DEVICE_CLASS_TOUCH = 4,
-    ECORE_IMF_DEVICE_CLASS_PEN = 5,
-    ECORE_IMF_DEVICE_CLASS_POINTER = 6,
-    ECORE_IMF_DEVICE_CLASS_GAMEPAD = 7,
+    EcoreImfDeviceClassNone = 0,
+    EcoreImfDeviceClassSeat = 1,
+    EcoreImfDeviceClassKeyboard = 2,
+    EcoreImfDeviceClassMouse = 3,
+    EcoreImfDeviceClassTouch = 4,
+    EcoreImfDeviceClassPen = 5,
+    EcoreImfDeviceClassPointer = 6,
+    EcoreImfDeviceClassGamepad = 7,
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
 pub enum EcoreImfDeviceSubclass {
-    ECORE_IMF_DEVICE_SUBCLASS_NONE = 0,
-    ECORE_IMF_DEVICE_SUBCLASS_FINGER = 1,
-    ECORE_IMF_DEVICE_SUBCLASS_FINGERNAIL = 2,
-    ECORE_IMF_DEVICE_SUBCLASS_KNUCKLE = 3,
-    ECORE_IMF_DEVICE_SUBCLASS_PALM = 4,
-    ECORE_IMF_DEVICE_SUBCLASS_HAND_SIZE = 5,
-    ECORE_IMF_DEVICE_SUBCLASS_HAND_FLAT = 6,
-    ECORE_IMF_DEVICE_SUBCLASS_PEN_TIP = 7,
-    ECORE_IMF_DEVICE_SUBCLASS_TRACKPAD = 8,
-    ECORE_IMF_DEVICE_SUBCLASS_TRACKPOINT = 9,
-    ECORE_IMF_DEVICE_SUBCLASS_TRACKBALL = 10,
+    EcoreImfDeviceSubclassNone = 0,
+    EcoreImfDeviceSubclassFinger = 1,
+    EcoreImfDeviceSubclassFingernail = 2,
+    EcoreImfDeviceSubclassKnuckle = 3,
+    EcoreImfDeviceSubclassPalm = 4,
+    EcoreImfDeviceSubclassHandSize = 5,
+    EcoreImfDeviceSubclassHandFlat = 6,
+    EcoreImfDeviceSubclassPenTip = 7,
+    EcoreImfDeviceSubclassTrackpad = 8,
+    EcoreImfDeviceSubclassTrackpoint = 9,
+    EcoreImfDeviceSubclassTrackball = 10,
 }
 #[repr(C)]
-pub struct EcoreImfEventPreeditStart {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Preedit_Start {
+    pub ctx: *mut Ecore_Imf_Context,
 }
 #[repr(C)]
-pub struct EcoreImfEventPreeditEnd {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Preedit_End {
+    pub ctx: *mut Ecore_Imf_Context,
 }
 #[repr(C)]
-pub struct EcoreImfEventPreeditChanged {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Preedit_Changed {
+    pub ctx: *mut Ecore_Imf_Context,
 }
 #[repr(C)]
-pub struct EcoreImfEventCommit {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Commit {
+    pub ctx: *mut Ecore_Imf_Context,
     pub _str: *mut c_char,
 }
 #[repr(C)]
-pub struct EcoreImfEventDeleteSurrounding {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Delete_Surrounding {
+    pub ctx: *mut Ecore_Imf_Context,
     pub offset: c_int,
     pub n_chars: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventSelection {
-    pub ctx: *mut EcoreImfContext,
+pub struct Ecore_Imf_Event_Selection {
+    pub ctx: *mut Ecore_Imf_Context,
     pub start: c_int,
     pub end: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseDown {
+pub struct Ecore_Imf_Event_Mouse_Down {
     pub button: c_int,
     pub output: Struct_Unnamed21,
     pub canvas: Struct_Unnamed22,
@@ -270,7 +270,7 @@ pub struct Struct_Unnamed22 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseUp {
+pub struct Ecore_Imf_Event_Mouse_Up {
     pub button: c_int,
     pub output: Struct_Unnamed23,
     pub canvas: Struct_Unnamed24,
@@ -290,7 +290,7 @@ pub struct Struct_Unnamed24 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseIn {
+pub struct Ecore_Imf_Event_Mouse_In {
     pub buttons: c_int,
     pub output: EcoreStructUnnamed25,
     pub canvas: EcoreStructUnnamed26,
@@ -309,7 +309,7 @@ pub struct EcoreStructUnnamed26 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseOut {
+pub struct Ecore_Imf_Event_Mouse_Out {
     pub buttons: c_int,
     pub output: EcoreStructUnnamed27,
     pub canvas: EcoreStructUnnamed28,
@@ -328,7 +328,7 @@ pub struct EcoreStructUnnamed28 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseMove {
+pub struct Ecore_Imf_Event_Mouse_Move {
     pub buttons: c_int,
     pub cur: EcoreStructUnnamed29,
     pub prev: EcoreStructUnnamed29,
@@ -352,7 +352,7 @@ pub struct EcoreStructUnnamed31 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventMouseWheel {
+pub struct Ecore_Imf_Event_Mouse_Wheel {
     pub direction: c_int,
     pub z: c_int,
     pub output: EcoreStructUnnamed32,
@@ -372,7 +372,7 @@ pub struct EcoreStructUnnamed33 {
     pub y: c_int,
 }
 #[repr(C)]
-pub struct EcoreImfEventKeyDown {
+pub struct Ecore_Imf_Event_Key_Down {
     pub keyname: *const c_char,
     pub modifiers: EcoreImfKeyboardModifiers,
     pub locks: EcoreImfKeyboardLocks,
@@ -385,7 +385,7 @@ pub struct EcoreImfEventKeyDown {
     pub dev_subclass: EcoreImfDeviceSubclass,
 }
 #[repr(C)]
-pub struct EcoreImfEventKeyUp {
+pub struct Ecore_Imf_Event_Key_Up {
     pub keyname: *const c_char,
     pub modifiers: EcoreImfKeyboardModifiers,
     pub locks: EcoreImfKeyboardLocks,
@@ -402,132 +402,128 @@ pub struct EcoreUnionImfEvent {
     pub _bindgen_data_: [u64; 8usize],
 }
 impl EcoreUnionImfEvent {
-    pub unsafe fn mouse_down(&mut self) -> *mut EcoreImfEventMouseDown {
+    pub unsafe fn mouse_down(&mut self) -> *mut Ecore_Imf_Event_Mouse_Down {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn mouse_up(&mut self) -> *mut EcoreImfEventMouseUp {
+    pub unsafe fn mouse_up(&mut self) -> *mut Ecore_Imf_Event_Mouse_Up {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn mouse_in(&mut self) -> *mut EcoreImfEventMouseIn {
+    pub unsafe fn mouse_in(&mut self) -> *mut Ecore_Imf_Event_Mouse_In {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn mouse_out(&mut self) -> *mut EcoreImfEventMouseOut {
+    pub unsafe fn mouse_out(&mut self) -> *mut Ecore_Imf_Event_Mouse_Out {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn mouse_move(&mut self) -> *mut EcoreImfEventMouseMove {
+    pub unsafe fn mouse_move(&mut self) -> *mut Ecore_Imf_Event_Mouse_Move {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn mouse_wheel(&mut self) -> *mut EcoreImfEventMouseWheel {
+    pub unsafe fn mouse_wheel(&mut self) -> *mut Ecore_Imf_Event_Mouse_Wheel {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn key_down(&mut self) -> *mut EcoreImfEventKeyDown {
+    pub unsafe fn key_down(&mut self) -> *mut Ecore_Imf_Event_Key_Down {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
-    pub unsafe fn key_up(&mut self) -> *mut EcoreImfEventKeyUp {
+    pub unsafe fn key_up(&mut self) -> *mut Ecore_Imf_Event_Key_Up {
         let raw: *mut u8 = ::std::mem::transmute(&self._bindgen_data_);
         ::std::mem::transmute(raw.offset(0))
     }
 }
 #[repr(C)]
-pub struct EcoreImfPreeditAttr {
+pub struct Ecore_Imf_Preedit_Attr {
     pub preedit_type: EcoreImfPreeditType,
     pub start_index: c_uint,
     pub end_index: c_uint,
 }
 #[repr(C)]
-pub struct EcoreImfContextClass {
-    pub add: Option<unsafe extern "C" fn(ctx:
-                                                            *mut EcoreImfContext)>,
-    pub del: Option<unsafe extern "C" fn(ctx:
-                                                            *mut EcoreImfContext)>,
-    pub client_window_set: Option<unsafe extern "C" fn(ctx:
-                                                                          *mut EcoreImfContext,
+pub struct Ecore_Imf_Context_Class {
+    pub add: Option<unsafe extern "C" fn(ctx: *mut Ecore_Imf_Context)>,
+    pub del: Option<unsafe extern "C" fn(ctx: *mut Ecore_Imf_Context)>,
+    pub client_window_set: Option<unsafe extern "C" fn(ctx: *mut Ecore_Imf_Context,
                                                                       window:
                                                                           *mut c_void)>,
-    pub client_canvas_set: Option<unsafe extern "C" fn(ctx:
-                                                                          *mut EcoreImfContext,
+    pub client_canvas_set: Option<unsafe extern "C" fn(ctx: *mut Ecore_Imf_Context,
                                                                       canvas:
                                                                           *mut c_void)>,
     pub show: Option<unsafe extern "C" fn(ctx:
-                                                             *mut EcoreImfContext)>,
+                                                             *mut Ecore_Imf_Context)>,
     pub hide: Option<unsafe extern "C" fn(ctx:
-                                                             *mut EcoreImfContext)>,
+                                                             *mut Ecore_Imf_Context)>,
     pub preedit_string_get: Option<unsafe extern "C" fn(ctx:
-                                                                           *mut EcoreImfContext,
+                                                                           *mut Ecore_Imf_Context,
                                                                        str:
                                                                            *mut *mut c_char,
                                                                        cursor_pos:
                                                                            *mut c_int)>,
     pub focus_in: Option<unsafe extern "C" fn(ctx:
-                                                                 *mut EcoreImfContext)>,
+                                                                 *mut Ecore_Imf_Context)>,
     pub focus_out: Option<unsafe extern "C" fn(ctx:
-                                                                  *mut EcoreImfContext)>,
+                                                                  *mut Ecore_Imf_Context)>,
     pub reset: Option<unsafe extern "C" fn(ctx:
-                                                              *mut EcoreImfContext)>,
+                                                              *mut Ecore_Imf_Context)>,
     pub cursor_position_set: Option<unsafe extern "C" fn(ctx:
-                                                                            *mut EcoreImfContext,
+                                                                            *mut Ecore_Imf_Context,
                                                                         cursor_pos:
                                                                             c_int)>,
     pub use_preedit_set: Option<unsafe extern "C" fn(ctx:
-                                                                        *mut EcoreImfContext,
+                                                                        *mut Ecore_Imf_Context,
                                                                     use_preedit:
                                                                         EinaBool)>,
     pub input_mode_set: Option<unsafe extern "C" fn(ctx:
-                                                                       *mut EcoreImfContext,
+                                                                       *mut Ecore_Imf_Context,
                                                                    input_mode:
                                                                        EcoreImfInputMode)>,
     pub filter_event: Option<unsafe extern "C" fn(ctx:
-                                                                     *mut EcoreImfContext,
+                                                                     *mut Ecore_Imf_Context,
                                                                  _type:
-                                                                     EcoreImfEventType,
+                                                                     Ecore_Imf_EventType,
                                                                  event:
-                                                                     *mut EcoreImfEvent)
+                                                                     *mut Ecore_Imf_Event)
                                                 -> EinaBool>,
     pub preedit_string_with_attributes_get: Option<unsafe extern "C" fn(ctx:
-                                                                                           *mut EcoreImfContext,
+                                                                                           *mut Ecore_Imf_Context,
                                                                                        str:
                                                                                            *mut *mut c_char,
                                                                                        attrs:
-                                                                                           *mut *mut EinaList,
+                                                                                           *mut *mut Eina_List,
                                                                                        cursor_pos:
                                                                                            *mut c_int)>,
     pub prediction_allow_set: Option<unsafe extern "C" fn(ctx:
-                                                                             *mut EcoreImfContext,
+                                                                             *mut Ecore_Imf_Context,
                                                                          prediction:
                                                                              EinaBool)>,
     pub autocapital_type_set: Option<unsafe extern "C" fn(ctx:
-                                                                             *mut EcoreImfContext,
+                                                                             *mut Ecore_Imf_Context,
                                                                          autocapital_type:
                                                                              EcoreImfAutocapitalType)>,
     pub control_panel_show: Option<unsafe extern "C" fn(ctx:
-                                                                           *mut EcoreImfContext)>,
+                                                                           *mut Ecore_Imf_Context)>,
     pub control_panel_hide: Option<unsafe extern "C" fn(ctx:
-                                                                           *mut EcoreImfContext)>,
+                                                                           *mut Ecore_Imf_Context)>,
     pub input_panel_layout_set: Option<unsafe extern "C" fn(ctx:
-                                                                               *mut EcoreImfContext,
+                                                                               *mut Ecore_Imf_Context,
                                                                            layout:
                                                                                EcoreImfInputPanelLayout)>,
     pub input_panel_layout_get: Option<unsafe extern "C" fn(ctx:
-                                                                               *mut EcoreImfContext)
+                                                                               *mut Ecore_Imf_Context)
                                                           ->
                                                               EcoreImfInputPanelLayout>,
     pub input_panel_language_set: Option<unsafe extern "C" fn(ctx:
-                                                                                 *mut EcoreImfContext,
+                                                                                 *mut Ecore_Imf_Context,
                                                                              lang:
                                                                                  EcoreImfInputPanelLang)>,
     pub input_panel_language_get: Option<unsafe extern "C" fn(ctx:
-                                                                                 *mut EcoreImfContext)
+                                                                                 *mut Ecore_Imf_Context)
                                                             ->
                                                                 EcoreImfInputPanelLang>,
     pub cursor_location_set: Option<unsafe extern "C" fn(ctx:
-                                                                            *mut EcoreImfContext,
+                                                                            *mut Ecore_Imf_Context,
                                                                         x:
                                                                             c_int,
                                                                         y:
@@ -537,31 +533,31 @@ pub struct EcoreImfContextClass {
                                                                         h:
                                                                             c_int)>,
     pub input_panel_imdata_set: Option<unsafe extern "C" fn(ctx:
-                                                                               *mut EcoreImfContext,
+                                                                               *mut Ecore_Imf_Context,
                                                                            data:
                                                                                *const c_void,
                                                                            len:
                                                                                c_int)>,
     pub input_panel_imdata_get: Option<unsafe extern "C" fn(ctx:
-                                                                               *mut EcoreImfContext,
+                                                                               *mut Ecore_Imf_Context,
                                                                            data:
                                                                                *mut c_void,
                                                                            len:
                                                                                *mut c_int)>,
     pub input_panel_return_key_type_set: Option<unsafe extern "C" fn(ctx:
-                                                                                        *mut EcoreImfContext,
+                                                                                        *mut Ecore_Imf_Context,
                                                                                     return_key_type:
                                                                                         EcoreImfInputPanelReturnKeyType)>,
     pub input_panel_return_key_disabled_set: Option<unsafe extern "C" fn(ctx:
-                                                                                            *mut EcoreImfContext,
+                                                                                            *mut Ecore_Imf_Context,
                                                                                         disabled:
                                                                                             EinaBool)>,
     pub input_panel_caps_lock_mode_set: Option<unsafe extern "C" fn(ctx:
-                                                                                       *mut EcoreImfContext,
+                                                                                       *mut Ecore_Imf_Context,
                                                                                    mode:
                                                                                        EinaBool)>,
     pub input_panel_geometry_get: Option<unsafe extern "C" fn(ctx:
-                                                                                 *mut EcoreImfContext,
+                                                                                 *mut Ecore_Imf_Context,
                                                                              x:
                                                                                  *mut c_int,
                                                                              y:
@@ -571,39 +567,39 @@ pub struct EcoreImfContextClass {
                                                                              h:
                                                                                  *mut c_int)>,
     pub input_panel_state_get: Option<unsafe extern "C" fn(ctx:
-                                                                              *mut EcoreImfContext)
+                                                                              *mut Ecore_Imf_Context)
                                                          ->
                                                              EcoreImfInputPanelState>,
     pub input_panel_event_callback_add: Option<unsafe extern "C" fn(ctx:
-                                                                                       *mut EcoreImfContext,
+                                                                                       *mut Ecore_Imf_Context,
                                                                                    _type:
                                                                                        EcoreImfInputPanelEvent,
                                                                                    func:
                                                                                        Option<unsafe extern "C" fn(data:
                                                                                                                                       *mut c_void,
                                                                                                                                   ctx:
-                                                                                                                                      *mut EcoreImfContext,
+                                                                                                                                      *mut Ecore_Imf_Context,
                                                                                                                                   value:
                                                                                                                                       c_int)>,
                                                                                    data:
                                                                                        *mut c_void)>,
     pub input_panel_event_callback_del: Option<unsafe extern "C" fn(ctx:
-                                                                                       *mut EcoreImfContext,
+                                                                                       *mut Ecore_Imf_Context,
                                                                                    _type:
                                                                                        EcoreImfInputPanelEvent,
                                                                                    func:
                                                                                        Option<unsafe extern "C" fn(data:
                                                                                                                                       *mut c_void,
                                                                                                                                   ctx:
-                                                                                                                                      *mut EcoreImfContext,
+                                                                                                                                      *mut Ecore_Imf_Context,
                                                                                                                                   value:
                                                                                                                                       c_int)>)>,
     pub input_panel_language_locale_get: Option<unsafe extern "C" fn(ctx:
-                                                                                        *mut EcoreImfContext,
+                                                                                        *mut Ecore_Imf_Context,
                                                                                     lang:
                                                                                         *mut *mut c_char)>,
     pub candidate_panel_geometry_get: Option<unsafe extern "C" fn(ctx:
-                                                                                     *mut EcoreImfContext,
+                                                                                     *mut Ecore_Imf_Context,
                                                                                  x:
                                                                                      *mut c_int,
                                                                                  y:
@@ -613,16 +609,16 @@ pub struct EcoreImfContextClass {
                                                                                  h:
                                                                                      *mut c_int)>,
     pub input_hint_set: Option<unsafe extern "C" fn(ctx:
-                                                                       *mut EcoreImfContext,
+                                                                       *mut Ecore_Imf_Context,
                                                                    input_hints:
                                                                        EcoreImfInputHints)>,
     pub bidi_direction_set: Option<unsafe extern "C" fn(ctx:
-                                                                           *mut EcoreImfContext,
+                                                                           *mut Ecore_Imf_Context,
                                                                        direction:
                                                                            EcoreImfBidiDirction)>,
 }
 #[repr(C)]
-pub struct EcoreImfContextInfo {
+pub struct Ecore_Imf_Context_Info {
     pub id: *const c_char,
     pub description: *const c_char,
     pub default_locales: *const c_char,
@@ -642,77 +638,77 @@ extern "C" {
 extern "C" {
     pub fn ecore_imf_init() -> c_int;
     pub fn ecore_imf_shutdown() -> c_int;
-    pub fn ecore_imf_module_register(info: *const EcoreImfContextInfo,
+    pub fn ecore_imf_module_register(info: *const Ecore_Imf_Context_Info,
                                      imf_module_create:
                                          Option<extern "C" fn()
                                                                    ->
-                                                                       *mut EcoreImfContext>,
+                                                                       *mut Ecore_Imf_Context>,
                                      imf_module_exit:
                                          Option<extern "C" fn()
                                                                    ->
-                                                                       *mut EcoreImfContext>);
+                                                                       *mut Ecore_Imf_Context>);
     pub fn ecore_imf_input_panel_hide() -> EinaBool;
-    pub fn ecore_imf_context_available_ids_get() -> *mut EinaList;
+    pub fn ecore_imf_context_available_ids_get() -> *mut Eina_List;
     pub fn ecore_imf_context_available_ids_by_canvas_type_get(canvas_type:
                                                                   *const c_char)
-     -> *mut EinaList;
+     -> *mut Eina_List;
     pub fn ecore_imf_context_default_id_get()
      -> *const c_char;
     pub fn ecore_imf_context_default_id_by_canvas_type_get(canvas_type:
                                                                *const c_char)
      -> *const c_char;
     pub fn ecore_imf_context_info_by_id_get(id: *const c_char)
-     -> *const EcoreImfContextInfo;
+     -> *const Ecore_Imf_Context_Info;
     pub fn ecore_imf_context_add(id: *const c_char)
-     -> *mut EcoreImfContext;
-    pub fn ecore_imf_context_info_get(ctx: *mut EcoreImfContext)
-     -> *const EcoreImfContextInfo;
-    pub fn ecore_imf_context_del(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_client_window_set(ctx: *mut EcoreImfContext,
+     -> *mut Ecore_Imf_Context;
+    pub fn ecore_imf_context_info_get(ctx: *mut Ecore_Imf_Context)
+     -> *const Ecore_Imf_Context_Info;
+    pub fn ecore_imf_context_del(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_client_window_set(ctx: *mut Ecore_Imf_Context,
                                                window:
                                                    *mut c_void);
-    pub fn ecore_imf_context_client_window_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_client_window_get(ctx: *mut Ecore_Imf_Context)
      -> *mut c_void;
-    pub fn ecore_imf_context_client_canvas_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_client_canvas_set(ctx: *mut Ecore_Imf_Context,
                                                canvas:
                                                    *mut c_void);
-    pub fn ecore_imf_context_client_canvas_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_client_canvas_get(ctx: *mut Ecore_Imf_Context)
      -> *mut c_void;
-    pub fn ecore_imf_context_show(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_hide(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_preedit_string_get(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_show(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_hide(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_preedit_string_get(ctx: *mut Ecore_Imf_Context,
                                                 str:
                                                     *mut *mut c_char,
                                                 cursor_pos:
                                                     *mut c_int);
     pub fn ecore_imf_context_preedit_string_with_attributes_get(ctx:
-                                                                    *mut EcoreImfContext,
+                                                                    *mut Ecore_Imf_Context,
                                                                 str:
                                                                     *mut *mut c_char,
                                                                 attrs:
-                                                                    *mut *mut EinaList,
+                                                                    *mut *mut Eina_List,
                                                                 cursor_pos:
                                                                     *mut c_int);
-    pub fn ecore_imf_context_focus_in(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_focus_out(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_reset(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_cursor_position_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_focus_in(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_focus_out(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_reset(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_cursor_position_set(ctx: *mut Ecore_Imf_Context,
                                                  cursor_pos:
                                                      c_int);
-    pub fn ecore_imf_context_cursor_location_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_cursor_location_set(ctx: *mut Ecore_Imf_Context,
                                                  x: c_int,
                                                  y: c_int,
                                                  w: c_int,
                                                  h: c_int);
-    pub fn ecore_imf_context_use_preedit_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_use_preedit_set(ctx: *mut Ecore_Imf_Context,
                                              use_preedit: EinaBool);
     pub fn ecore_imf_context_retrieve_surrounding_callback_set(ctx:
-                                                                   *mut EcoreImfContext,
+                                                                   *mut Ecore_Imf_Context,
                                                                func:
                                                                    Option<unsafe extern "C" fn(data:
                                                                                                                   *mut c_void,
                                                                                                               ctx:
-                                                                                                                  *mut EcoreImfContext,
+                                                                                                                  *mut Ecore_Imf_Context,
                                                                                                               text:
                                                                                                                   *mut *mut c_char,
                                                                                                               cursor_pos:
@@ -722,151 +718,151 @@ extern "C" {
                                                                data:
                                                                    *const c_void);
     pub fn ecore_imf_context_retrieve_selection_callback_set(ctx:
-                                                                 *mut EcoreImfContext,
+                                                                 *mut Ecore_Imf_Context,
                                                              func:
                                                                  Option<unsafe extern "C" fn(data:
                                                                                                                 *mut c_void,
                                                                                                             ctx:
-                                                                                                                *mut EcoreImfContext,
+                                                                                                                *mut Ecore_Imf_Context,
                                                                                                             text:
                                                                                                                 *mut *mut c_char)
                                                                                            ->
                                                                                                EinaBool>,
                                                              data:
                                                                  *const c_void);
-    pub fn ecore_imf_context_input_mode_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_input_mode_set(ctx: *mut Ecore_Imf_Context,
                                             input_mode: EcoreImfInputMode);
-    pub fn ecore_imf_context_input_mode_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_input_mode_get(ctx: *mut Ecore_Imf_Context)
      -> EcoreImfInputMode;
-    pub fn ecore_imf_context_filter_event(ctx: *mut EcoreImfContext,
-                                          _type: EcoreImfEventType,
-                                          event: *mut EcoreImfEvent)
+    pub fn ecore_imf_context_filter_event(ctx: *mut Ecore_Imf_Context,
+                                          _type: Ecore_Imf_EventType,
+                                          event: *mut Ecore_Imf_Event)
      -> EinaBool;
-    pub fn ecore_imf_context_new(ctxc: *const EcoreImfContextClass)
-     -> *mut EcoreImfContext;
-    pub fn ecore_imf_context_data_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_new(ctxc: *const Ecore_Imf_Context_Class)
+     -> *mut Ecore_Imf_Context;
+    pub fn ecore_imf_context_data_set(ctx: *mut Ecore_Imf_Context,
                                       data: *mut c_void);
-    pub fn ecore_imf_context_data_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_data_get(ctx: *mut Ecore_Imf_Context)
      -> *mut c_void;
-    pub fn ecore_imf_context_surrounding_get(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_surrounding_get(ctx: *mut Ecore_Imf_Context,
                                              text:
                                                  *mut *mut c_char,
                                              cursor_pos:
                                                  *mut c_int)
      -> EinaBool;
-    pub fn ecore_imf_context_selection_get(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_selection_get(ctx: *mut Ecore_Imf_Context,
                                            text:
                                                *mut *mut c_char)
      -> EinaBool;
     pub fn ecore_imf_context_preedit_start_event_add(ctx:
-                                                         *mut EcoreImfContext);
+                                                         *mut Ecore_Imf_Context);
     pub fn ecore_imf_context_preedit_end_event_add(ctx:
-                                                       *mut EcoreImfContext);
+                                                       *mut Ecore_Imf_Context);
     pub fn ecore_imf_context_preedit_changed_event_add(ctx:
-                                                           *mut EcoreImfContext);
-    pub fn ecore_imf_context_commit_event_add(ctx: *mut EcoreImfContext,
+                                                           *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_commit_event_add(ctx: *mut Ecore_Imf_Context,
                                               str:
                                                   *const c_char);
     pub fn ecore_imf_context_delete_surrounding_event_add(ctx:
-                                                              *mut EcoreImfContext,
+                                                              *mut Ecore_Imf_Context,
                                                           offset:
                                                               c_int,
                                                           n_chars:
                                                               c_int);
-    pub fn ecore_imf_context_event_callback_add(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_event_callback_add(ctx: *mut Ecore_Imf_Context,
                                                 _type:
                                                     EcoreImfCallbackType,
                                                 func: EcoreImfEventCb,
                                                 data:
                                                     *const c_void);
-    pub fn ecore_imf_context_event_callback_del(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_event_callback_del(ctx: *mut Ecore_Imf_Context,
                                                 _type:
                                                     EcoreImfCallbackType,
                                                 func: EcoreImfEventCb)
      -> *mut c_void;
-    pub fn ecore_imf_context_event_callback_call(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_event_callback_call(ctx: *mut Ecore_Imf_Context,
                                                  _type:
                                                      EcoreImfCallbackType,
                                                  event_info:
                                                      *mut c_void);
-    pub fn ecore_imf_context_prediction_allow_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_prediction_allow_set(ctx: *mut Ecore_Imf_Context,
                                                   prediction: EinaBool);
-    pub fn ecore_imf_context_prediction_allow_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_prediction_allow_get(ctx: *mut Ecore_Imf_Context)
      -> EinaBool;
-    pub fn ecore_imf_context_autocapital_type_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_autocapital_type_set(ctx: *mut Ecore_Imf_Context,
                                                   autocapital_type:
                                                       EcoreImfAutocapitalType);
-    pub fn ecore_imf_context_autocapital_type_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_autocapital_type_get(ctx: *mut Ecore_Imf_Context)
      -> EcoreImfAutocapitalType;
-    pub fn ecore_imf_context_input_hint_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_input_hint_set(ctx: *mut Ecore_Imf_Context,
                                             hints: EcoreImfInputHints);
-    pub fn ecore_imf_context_input_hint_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_input_hint_get(ctx: *mut Ecore_Imf_Context)
      -> EcoreImfInputHints;
-    pub fn ecore_imf_context_control_panel_show(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_control_panel_hide(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_input_panel_show(ctx: *mut EcoreImfContext);
-    pub fn ecore_imf_context_input_panel_hide(ctx: *mut EcoreImfContext);
+    pub fn ecore_imf_context_control_panel_show(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_control_panel_hide(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_input_panel_show(ctx: *mut Ecore_Imf_Context);
+    pub fn ecore_imf_context_input_panel_hide(ctx: *mut Ecore_Imf_Context);
     pub fn ecore_imf_context_input_panel_layout_set(ctx:
-                                                        *mut EcoreImfContext,
+                                                        *mut Ecore_Imf_Context,
                                                     layout:
                                                         EcoreImfInputPanelLayout);
     pub fn ecore_imf_context_input_panel_layout_get(ctx:
-                                                        *mut EcoreImfContext)
+                                                        *mut Ecore_Imf_Context)
      -> EcoreImfInputPanelLayout;
     pub fn ecore_imf_context_input_panel_layout_variation_set(ctx:
-                                                                  *mut EcoreImfContext,
+                                                                  *mut Ecore_Imf_Context,
                                                               variation:
                                                                   c_int);
     pub fn ecore_imf_context_input_panel_layout_variation_get(ctx:
-                                                                  *mut EcoreImfContext)
+                                                                  *mut Ecore_Imf_Context)
      -> c_int;
     pub fn ecore_imf_context_input_panel_language_set(ctx:
-                                                          *mut EcoreImfContext,
+                                                          *mut Ecore_Imf_Context,
                                                       lang:
                                                           EcoreImfInputPanelLang);
     pub fn ecore_imf_context_input_panel_language_get(ctx:
-                                                          *mut EcoreImfContext)
+                                                          *mut Ecore_Imf_Context)
      -> EcoreImfInputPanelLang;
     pub fn ecore_imf_context_input_panel_enabled_set(ctx:
-                                                         *mut EcoreImfContext,
+                                                         *mut Ecore_Imf_Context,
                                                      enabled: EinaBool);
     pub fn ecore_imf_context_input_panel_enabled_get(ctx:
-                                                         *mut EcoreImfContext)
+                                                         *mut Ecore_Imf_Context)
      -> EinaBool;
     pub fn ecore_imf_context_input_panel_imdata_set(ctx:
-                                                        *mut EcoreImfContext,
+                                                        *mut Ecore_Imf_Context,
                                                     data:
                                                         *const c_void,
                                                     len:
                                                         c_int);
     pub fn ecore_imf_context_input_panel_imdata_get(ctx:
-                                                        *mut EcoreImfContext,
+                                                        *mut Ecore_Imf_Context,
                                                     data:
                                                         *mut c_void,
                                                     len:
                                                         *mut c_int);
     pub fn ecore_imf_context_input_panel_return_key_type_set(ctx:
-                                                                 *mut EcoreImfContext,
+                                                                 *mut Ecore_Imf_Context,
                                                              return_key_type:
                                                                  EcoreImfInputPanelReturnKeyType);
     pub fn ecore_imf_context_input_panel_return_key_type_get(ctx:
-                                                                 *mut EcoreImfContext)
+                                                                 *mut Ecore_Imf_Context)
      -> EcoreImfInputPanelReturnKeyType;
     pub fn ecore_imf_context_input_panel_return_key_disabled_set(ctx:
-                                                                     *mut EcoreImfContext,
+                                                                     *mut Ecore_Imf_Context,
                                                                  disabled:
                                                                      EinaBool);
     pub fn ecore_imf_context_input_panel_return_key_disabled_get(ctx:
-                                                                     *mut EcoreImfContext)
+                                                                     *mut Ecore_Imf_Context)
      -> EinaBool;
     pub fn ecore_imf_context_input_panel_caps_lock_mode_set(ctx:
-                                                                *mut EcoreImfContext,
+                                                                *mut Ecore_Imf_Context,
                                                             mode: EinaBool);
     pub fn ecore_imf_context_input_panel_caps_lock_mode_get(ctx:
-                                                                *mut EcoreImfContext)
+                                                                *mut Ecore_Imf_Context)
      -> EinaBool;
     pub fn ecore_imf_context_input_panel_geometry_get(ctx:
-                                                          *mut EcoreImfContext,
+                                                          *mut Ecore_Imf_Context,
                                                       x:
                                                           *mut c_int,
                                                       y:
@@ -876,46 +872,46 @@ extern "C" {
                                                       h:
                                                           *mut c_int);
     pub fn ecore_imf_context_input_panel_state_get(ctx:
-                                                       *mut EcoreImfContext)
+                                                       *mut Ecore_Imf_Context)
      -> EcoreImfInputPanelState;
     pub fn ecore_imf_context_input_panel_event_callback_add(ctx:
-                                                                *mut EcoreImfContext,
+                                                                *mut Ecore_Imf_Context,
                                                             _type:
                                                                 EcoreImfInputPanelEvent,
                                                             func:
                                                                 Option<unsafe extern "C" fn(data:
                                                                                                                *mut c_void,
                                                                                                            ctx:
-                                                                                                               *mut EcoreImfContext,
+                                                                                                               *mut Ecore_Imf_Context,
                                                                                                            value:
                                                                                                                c_int)>,
                                                             data:
                                                                 *const c_void);
     pub fn ecore_imf_context_input_panel_event_callback_del(ctx:
-                                                                *mut EcoreImfContext,
+                                                                *mut Ecore_Imf_Context,
                                                             _type:
                                                                 EcoreImfInputPanelEvent,
                                                             func:
                                                                 Option<unsafe extern "C" fn(data:
                                                                                                                *mut c_void,
                                                                                                            ctx:
-                                                                                                               *mut EcoreImfContext,
+                                                                                                               *mut Ecore_Imf_Context,
                                                                                                            value:
                                                                                                                c_int)>);
     pub fn ecore_imf_context_input_panel_event_callback_call(ctx:
-                                                                 *mut EcoreImfContext,
+                                                                 *mut Ecore_Imf_Context,
                                                              _type:
                                                                  EcoreImfInputPanelEvent,
                                                              value:
                                                                  c_int);
     pub fn ecore_imf_context_input_panel_event_callback_clear(ctx:
-                                                                  *mut EcoreImfContext);
+                                                                  *mut Ecore_Imf_Context);
     pub fn ecore_imf_context_input_panel_language_locale_get(ctx:
-                                                                 *mut EcoreImfContext,
+                                                                 *mut Ecore_Imf_Context,
                                                              lang:
                                                                  *mut *mut c_char);
     pub fn ecore_imf_context_candidate_panel_geometry_get(ctx:
-                                                              *mut EcoreImfContext,
+                                                              *mut Ecore_Imf_Context,
                                                           x:
                                                               *mut c_int,
                                                           y:
@@ -925,15 +921,15 @@ extern "C" {
                                                           h:
                                                               *mut c_int);
     pub fn ecore_imf_context_input_panel_show_on_demand_set(ctx:
-                                                                *mut EcoreImfContext,
+                                                                *mut Ecore_Imf_Context,
                                                             ondemand:
                                                                 EinaBool);
     pub fn ecore_imf_context_input_panel_show_on_demand_get(ctx:
-                                                                *mut EcoreImfContext)
+                                                                *mut Ecore_Imf_Context)
      -> EinaBool;
-    pub fn ecore_imf_context_bidi_direction_set(ctx: *mut EcoreImfContext,
+    pub fn ecore_imf_context_bidi_direction_set(ctx: *mut Ecore_Imf_Context,
                                                 direction:
                                                     EcoreImfBidiDirction);
-    pub fn ecore_imf_context_bidi_direction_get(ctx: *mut EcoreImfContext)
+    pub fn ecore_imf_context_bidi_direction_get(ctx: *mut Ecore_Imf_Context)
      -> EcoreImfBidiDirction;
 }
